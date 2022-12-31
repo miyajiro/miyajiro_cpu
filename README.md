@@ -1,2 +1,64 @@
 # miyajiro_cpu
 self made 32 bit CPU. (subset of risc-V)
+## 命令
+https://github.com/jameslzhu/riscv-card/blob/master/riscv-card.pdf
+### "{命令形式}\_{命令の大区分}\_{命令の小区分}"
+- R_BASE_INTEGER_REG
+  - add
+  - sub
+  - xor
+  - or
+  - and
+  - sll
+  - srl
+  - sra
+  - slt
+  - sltu
+- I_BASE_INTEGER_IMM
+  - addi
+  - xori
+  - ori
+  - andi
+  - slli
+  - srli
+  - srai
+  - slti
+  - sltiu
+- I_BASE_LOAD
+  - lb
+  - lh
+  - lw
+  - lbu
+  - lhu
+- S_BASE_STORE
+  - sb
+  - sh
+  - sw
+- B_BASE_BRANCH
+  - beq
+  - bne
+  - blt
+  - bge
+  - bltu
+  - bgeu
+- J_BASE_JAL
+  - jal
+- I_BASE_JALR
+  - jalr
+- U_BASE_LUI
+  - lui
+- U_BASE_AUIPC
+  - auipc
+- I_BASE_ECALL
+  - ecall
+- I_BASE_EBREAK
+  - ebreak
+- R_MULEXT_INTEGER
+  - mul
+  - mulh
+  - mulsu
+  - mulu
+  - div
+  - divu
+  - rem
+  - remu
