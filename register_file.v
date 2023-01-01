@@ -13,13 +13,13 @@ module REGISTER_FILE (
 wire [31:0] _write_sel;
 
 wire [31:0] _r_data[31:0];
-wire [31:0] debug_zero, debug_ra, debug_sp, debug_gp, debug_tp, debug_t0, debug_t1, debug_t2, debug_s0_fp, debug_s1, debug_a0, debug_a1, debug_a2, debug_a3, debug_a4, debug_a5, debug_a6, debug_a7, debug_s2, debug_s3, debug_s4, debug_s5, debug_s6, debug_s7, debug_s8, debug_s9, debug_s10, debug_s11, debug_t3, debug_t4, debug_t5, debug_t6;
+wire [31:0] debug_zero, debug_ra, debug_sp, debug_hp, debug_rc, debug_t0, debug_t1, debug_t2, debug_s0_fp, debug_s1, debug_a0, debug_a1, debug_a2, debug_a3, debug_a4, debug_a5, debug_a6, debug_a7, debug_s2, debug_s3, debug_s4, debug_s5, debug_s6, debug_s7, debug_s8, debug_s9, debug_s10, debug_s11, debug_t3, debug_t4, debug_t5, debug_t6;
 
 assign debug_zero = _r0_data;
 assign debug_ra = _r1_data;
 assign debug_sp = _r2_data;
-assign debug_gp = _r3_data;
-assign debug_tp = _r4_data;
+assign debug_hp = _r3_data;
+assign debug_rc = _r4_data;
 assign debug_t0 = _r5_data;
 assign debug_t1 = _r6_data;
 assign debug_t2 = _r7_data;
@@ -124,8 +124,8 @@ assign read_data2 = mux_reg(read_address2, regs);
 REGISTER r0(reset_n, clk, _write_sel[0], 32'h0, _r0_data);        // zero
 REGISTER r1(reset_n, clk, _write_sel[1], write_data, _r1_data);       // ra
 REGISTER r2(reset_n, clk, _write_sel[2], write_data, _r2_data);       // sp
-REGISTER r3(reset_n, clk, _write_sel[3], write_data, _r3_data);       // gp
-REGISTER r4(reset_n, clk, _write_sel[4], write_data, _r4_data);       // tp
+REGISTER r3(reset_n, clk, _write_sel[3], write_data, _r3_data);       // hp
+REGISTER r4(reset_n, clk, _write_sel[4], write_data, _r4_data);       // rc
 REGISTER r5(reset_n, clk, _write_sel[5], write_data, _r5_data);       // t0
 REGISTER r6(reset_n, clk, _write_sel[6], write_data, _r6_data);       // t1
 REGISTER r7(reset_n, clk, _write_sel[7], write_data, _r7_data);       // t2
