@@ -1,4 +1,4 @@
-`include "include/define.v"
+`include "define.v"
 
 module DECODER(
     input [31:0] instruction,

@@ -1,4 +1,4 @@
-`include "include/define.v"
+`include "define.v"
 
 module RAM(
     input clk,
