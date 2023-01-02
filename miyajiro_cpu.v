@@ -304,7 +304,7 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
 
 // WB
 wire wb_reg_combined_wren;
-assign wb_reg_combined_wren = (stage_controller_reg_wren & (wb_reg_wren == REG_WRITE_ENABLE));
+assign wb_reg_combined_wren = (stage_controller_reg_wren & (wb_reg_wren == `REG_WRITE_ENABLE));
 
 reg [31:0] wb_reg_write_data;
 always @* begin
