@@ -19,7 +19,7 @@ module EX_MEM_PIPELINE_REGISTER(
     output reg [1:0] next_pc_src,
     output reg reg_write_data_src,
     output reg reg_wren,
-    output reg ram_wren,
+    output reg ram_wren
 );
 
 always @(posedge clk) begin
