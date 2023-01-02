@@ -40,7 +40,7 @@ always @(posedge clk) begin
         alu_rd_result <= in_alu_rd_result;
         alu_rd_result_is_zero <= in_alu_rd_result_is_zero;
         alu_pc_result <= in_alu_pc_result;
-        next_pc_src <= in_next_pc;
+        next_pc_src <= in_next_pc_src;
         reg_write_data_src <= in_reg_write_data_src;
         reg_wren <= in_reg_wren;
         ram_wren <= in_ram_wren;
