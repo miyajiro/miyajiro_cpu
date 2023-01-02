@@ -28,6 +28,7 @@ STAGE_CONTROLLER stage_controller(
 );
 
 // IF
+wire wb_next_pc; // WBステージで設定.
 wire [31:0] if_pc_data;
 PC pc(
     .reset_n(reset_n),
@@ -90,14 +91,19 @@ DECODER decoder(
 
 wire [31:0] id_rs1_data;
 wire [31:0] id_rs2_data;
+
+wire wb_reg_combined_wren;
+wire [4:0] wb_rd_address;
+reg [31:0] wb_reg_write_data;
+
 REGISTER_FILE regfile(
     .reset_n(reset_n),
     .clk(clk),
     .reg_wren(wb_reg_combined_wren),
     .read_address1(id_rs1_address),
     .read_address2(id_rs2_address),
-    .write_address(wb_rd_address), // WBステージの信号を用いる.
-    .write_data(wb_reg_write_data), // WBステージの信号を用いる.
+    .write_address(wb_rd_address), // WBステージで設定.
+    .write_data(wb_reg_write_data), // WBステージで設定.
     .read_data1(id_rs1_data),
     .read_data2(id_rs2_data)
 );
@@ -280,10 +286,8 @@ RAM ram(
 // MEM -> WB
 wire [31:0] wb_ram_data;
 wire [31:0] wb_alu_rd_result;
-wire [4:0] wb_rd_address;
 wire wb_reg_write_data_src;
 wire wb_reg_wren;
-wire wb_next_pc;
 MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
@@ -303,10 +307,8 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
 );
 
 // WB
-wire wb_reg_combined_wren;
 assign wb_reg_combined_wren = (stage_controller_reg_wren & (wb_reg_wren == `REG_WRITE_ENABLE));
 
-reg [31:0] wb_reg_write_data;
 always @* begin
     wb_reg_write_data <=
         wb_reg_write_data_src == `REG_WRITE_DATA_SRC_ALU
