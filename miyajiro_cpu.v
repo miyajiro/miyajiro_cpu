@@ -237,9 +237,6 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
 );
 
 // MEM
-wire mem_wb_pc_src;
-assign mem_wb_pc_src = (mem_branch & mem_alu_rd_result_is_zero);
-
 reg [`RAM_ADDRESS_BITWIDTH - 1:0] ram_addr;
 always @* begin
     ram_addr <= mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
