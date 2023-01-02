@@ -1,3 +1,5 @@
+`include "include/define.v"
+
 module ALU (
     input [3:0] operator,
     input [31:0] operand1,
