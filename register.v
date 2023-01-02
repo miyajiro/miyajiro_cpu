@@ -12,7 +12,7 @@ always @(posedge clk) begin
     end
     else begin
         if(write) begin
-            data <= in_data
+            data <= in_data;
         end
     end
 end
