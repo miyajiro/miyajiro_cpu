@@ -168,7 +168,7 @@ assign ex_alu_rd_operand2 =
     ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_4
         ? 4 :
     ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_12
-        ? 12
+        ? 12 :
     ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_UPPER_IMM
         ? (ex_imm << 12)
     : 0;
