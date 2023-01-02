@@ -11,37 +11,37 @@ module ALU (
 always @(*) begin
     case(operator)
         `ALU_OPERATOR_ADD: begin
-            result = operand1 + operand2;
+            result <= operand1 + operand2;
         end
         `ALU_OPERATOR_SUB: begin
-            result = operand1 - operand2;
+            result <= operand1 - operand2;
         end
         `ALU_OPERATOR_XOR: begin
-            result = operand1 ^ operand2;
+            result <= operand1 ^ operand2;
         end
         `ALU_OPERATOR_OR: begin
-            result = operand1 | operand2;
+            result <= operand1 | operand2;
         end
         `ALU_OPERATOR_SLL: begin
-            result = operand1 << operand2;
+            result <= operand1 << operand2;
         end
         `ALU_OPERATOR_SRL: begin
-            result = operand1 >> operand2;
+            result <= operand1 >> operand2;
         end
         `ALU_OPERATOR_SRA: begin
-            result = $signed(operand1) >>> operand2;
+            result <= $signed(operand1) >>> operand2;
         end
         `ALU_OPERATOR_SLT: begin
-            result = $signed(operand1) < $signed(operand2) ? 32'b1 : 32'b0;
+            result <= $signed(operand1) < $signed(operand2) ? 32'b1 : 32'b0;
         end
         `ALU_OPERATOR_SLTU: begin
-            result = operand1 < operand2 ? 32'b1 : 32'b0;
+            result <= operand1 < operand2 ? 32'b1 : 32'b0;
         end
         default: begin
-            result = 4'bx;
+            result <= 4'bx;
         end
     endcase
-    result_is_zero = (result == 32'h0) ? `ALU_RESULT_IS_ZERO : `ALU_RESULT_IS_NOT_ZERO;
+    result_is_zero <= (result == 32'h0) ? `ALU_RESULT_IS_ZERO : `ALU_RESULT_IS_NOT_ZERO;
 end
 
 endmodule

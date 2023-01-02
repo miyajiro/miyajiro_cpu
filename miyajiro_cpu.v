@@ -242,7 +242,7 @@ assign mem_wb_pc_src = (mem_branch & mem_alu_rd_result_is_zero);
 
 reg [`RAM_ADDRESS_BITWIDTH - 1:0] ram_addr;
 always @* begin
-    ram_addr = mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
+    ram_addr <= mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
 end
 
 wire [31:0] mem_pc_data_plus_4;
@@ -251,20 +251,20 @@ reg [31:0] mem_next_pc;
 always @* begin
     case(mem_next_pc_src)
         `NEXT_PC_SRC_ALWAYS_NOT_BRANCH: begin
-            mem_next_pc = mem_pc_data_plus_4;
+            mem_next_pc <= mem_pc_data_plus_4;
         end
         `NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_ZERO: begin
-            mem_next_pc = mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_ZERO
+            mem_next_pc <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_ZERO
                 ? mem_alu_pc_result
                 : mem_pc_data_plus_4;
         end
         `NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_NOT_ZERO: begin
-            mem_next_pc = mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_NOT_ZERO
+            mem_next_pc <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_NOT_ZERO
                 ? mem_alu_pc_result
                 : mem_pc_data_plus_4;
         end
         `NEXT_PC_SRC_ALWAYS_BRANCH: begin
-            mem_next_pc = mem_alu_pc_result;
+            mem_next_pc <= mem_alu_pc_result;
         end
     endcase
 end
@@ -311,7 +311,7 @@ assign wb_reg_combined_wren = (stage_controller_reg_wren & (wb_reg_wren == REG_W
 
 reg [31:0] wb_reg_write_data;
 always @* begin
-    wb_reg_write_data =
+    wb_reg_write_data <=
         wb_reg_write_data_src == `REG_WRITE_DATA_SRC_ALU
             ? wb_alu_rd_result :
         wb_reg_write_data_src == `REG_WRITE_DATA_SRC_RAM

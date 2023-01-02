@@ -50,40 +50,40 @@ always @(posedge clk) begin
 end
 
 always @(stage) begin
-    pc_wren = 0;
-    if_id_wren = 0;
-    id_ex_wren = 0;
-    ex_mem_wren = 0;
-    mem_wb_wren = 0;
-    ram_wren = 0;
-    reg_wren = 0;
-    stage_reset_n = 1;
+    pc_wren <= 0;
+    if_id_wren <= 0;
+    id_ex_wren <= 0;
+    ex_mem_wren <= 0;
+    mem_wb_wren <= 0;
+    ram_wren <= 0;
+    reg_wren <= 0;
+    stage_reset_n <= 1;
 
     case(stage)
         `STAGE_INIT:begin
-            stage_reset_n = 0;
+            stage_reset_n <= 0;
         end
         `STAGE_IF:begin
         end
         `STAGE_IF_WAIT:begin
-            if_id_wren = 1;
+            if_id_wren <= 1;
         end
         `STAGE_ID:begin
-            id_ex_wren = 1;
+            id_ex_wren <= 1;
         end
         `STAGE_EX:begin
-            ex_mem_wren = 1;
+            ex_mem_wren <= 1;
         end
         `STAGE_MEM:begin
-            pc_wren = 1;
-            ram_wren = 1;
+            pc_wren <= 1;
+            ram_wren <= 1;
         end
         `STAGE_MEM_WAIT:begin
-            mem_wb_wren = 1;
+            mem_wb_wren <= 1;
         end
         `STAGE_WB:begin
-            reg_wren = 1;
-            stage_reset_n = 0;
+            reg_wren <= 1;
+            stage_reset_n <= 0;
         end
         default:begin
         end
