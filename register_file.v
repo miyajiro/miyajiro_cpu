@@ -7,7 +7,7 @@ module REGISTER_FILE (
     input [4:0] write_address,
     input [31:0] write_data,
     output [31:0] read_data1,
-    output [31:0] read_data2,
+    output [31:0] read_data2
 );
 
 wire [31:0] _write_sel;
