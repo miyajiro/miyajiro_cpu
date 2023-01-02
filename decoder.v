@@ -38,21 +38,16 @@ always @* begin
     rs1_address <= instruction[19:15];
     rs2_address <= instruction[24:20];
     rd_address <= instruction[11:7];
-    alu_rd_operator <= 0; // set when used.
-    alu_rd_operand1_src <= 0; // set when used.
-    alu_rd_operand2_src <= 0; // set when used.
-    alu_pc_operand1_src <= 0; // set when used.
-    next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH; // default
-    reg_write_data_src <= 0; // set when used.
-    reg_wren <= `REG_WRITE_DISABLE; // default
-    ram_wren <= `RAM_WRITE_DISABLE; // default
 
     case(opcode)
         `OPCODE_R_BASE_INTEGER_REG: begin
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_RS1;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_RS2;
+            alu_pc_operand1_src <= 0;
+            next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_wren <= `REG_WRITE_ENABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
             case(funct3)
                 `FUNCT3_ADD_SUB: begin
                     case(funct7)
@@ -99,8 +94,11 @@ always @* begin
 
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_RS1;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_IMM;
+            alu_pc_operand1_src <= 0;
+            next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_wren <= `REG_WRITE_ENABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
             case(funct3)
                 `FUNCT3_ADDI: begin
                     alu_rd_operator <= `ALU_OPERATOR_ADD;
@@ -141,8 +139,11 @@ always @* begin
             alu_rd_operator <= `ALU_OPERATOR_ADD;
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_RS1;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_IMM;
+            alu_pc_operand1_src <= 0;
+            next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_RAM;
             reg_wren <= `REG_WRITE_ENABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_S_BASE_STORE: begin
             imm <= imm_s;
@@ -150,6 +151,10 @@ always @* begin
             alu_rd_operator <= `ALU_OPERATOR_ADD;
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_RS1;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_IMM;
+            alu_pc_operand1_src <= 0;
+            next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
+            reg_write_data_src <= 0;
+            reg_wren <= `REG_WRITE_DISABLE;
             ram_wren <= `RAM_WRITE_ENABLE;
         end
         `OPCODE_B_BASE_BRANCH: begin
@@ -158,6 +163,9 @@ always @* begin
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_RS1;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_RS2;
             alu_pc_operand1_src <= `ALU_PC_OPERAND1_SRC_PC;
+            reg_write_data_src <= 0;
+            reg_wren <= `REG_WRITE_DISABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
             case(funct3)
                 `FUNCT3_BEQ: begin
                     alu_rd_operator <= `ALU_OPERATOR_SUB;
@@ -195,6 +203,7 @@ always @* begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_wren <= `REG_WRITE_ENABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_I_BASE_JALR: begin
             imm <= imm_i;
@@ -206,6 +215,7 @@ always @* begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_wren <= `REG_WRITE_ENABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_U_BASE_LUI: begin
             imm <= imm_u;
@@ -213,8 +223,11 @@ always @* begin
             alu_rd_operator <= `ALU_OPERATOR_SLL;
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_IMM;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_12;
+            alu_pc_operand1_src <= 0;
+            next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_wren <= `REG_WRITE_ENABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_U_BASE_AUIPC: begin
             imm <= imm_u;
@@ -222,8 +235,11 @@ always @* begin
             alu_rd_operator <= `ALU_OPERATOR_ADD;
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_PC;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_UPPER_IMM;
+            alu_pc_operand1_src <= 0;
+            next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_wren <= `REG_WRITE_ENABLE;
+            ram_wren <= `RAM_WRITE_DISABLE;
         end
     endcase
 end
