@@ -42,7 +42,7 @@ ROM rom(
     .clk(clk),
     .reset_n(reset_n),
     .address(if_pc_data[`ROM_ADDRESS_BITWIDTH - 1:0]),
-    .data(if_rom_data),
+    .data(if_rom_data)
 );
 
 // IF -> ID
@@ -85,7 +85,7 @@ DECODER decoder(
     .next_pc_src(id_next_pc_src),
     .reg_write_data_src(id_reg_write_data_src),
     .reg_wren(id_reg_wren),
-    .ram_wren(id_ram_wren),
+    .ram_wren(id_ram_wren)
 );
 
 wire [31:0] id_rs1_data;
@@ -145,7 +145,7 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .alu_pc_operand1_src(ex_alu_pc_operand1_src),
     .reg_write_data_src(ex_reg_write_data_src),
     .reg_wren(ex_reg_wren),
-    .ram_wren(ex_ram_wren),
+    .ram_wren(ex_ram_wren)
 );
 
 // EX
@@ -233,7 +233,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .next_pc_src(mem_next_pc_src),
     .reg_write_data_src(mem_reg_write_data_src),
     .reg_wren(mem_reg_wren),
-    .ram_wren(mem_ram_wren),
+    .ram_wren(mem_ram_wren)
 );
 
 // MEM
@@ -302,7 +302,7 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
     .rd_address(wb_rd_address),
     .reg_write_data_src(wb_reg_write_data_src),
     .reg_wren(wb_reg_wren),
-    .next_pc(wb_next_pc),
+    .next_pc(wb_next_pc)
 );
 
 // WB
