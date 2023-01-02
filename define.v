@@ -115,8 +115,8 @@
 `define FUNCT7_SLTU             7'h00
 
 `define FUNCT7_IMM_5_11_SLLI    7'h00
-`define FUNCT7_IMM_5_11_SLLI    7'h00
-`define FUNCT7_IMM_5_11_SLLI    7'h20
+`define FUNCT7_IMM_5_11_SRLI    7'h00
+`define FUNCT7_IMM_5_11_SRAI    7'h20
 
 `define FUNCT7_MUL              7'h01
 `define FUNCT7_MULH             7'h01
@@ -138,6 +138,10 @@
 `define ALU_OPERATOR_SRA      4'h7
 `define ALU_OPERATOR_SLT      4'h8
 `define ALU_OPERATOR_SLTU     4'h9
+
+// ALU_RESULT
+`define ALU_RESULT_IS_NOT_ZERO  2'h0
+`define ALU_RESULT_IS_ZERO      2'h1
 
 // REG_NUM
 `define ZERO_REG_NUM    5'h00

@@ -117,10 +117,10 @@ always @* begin
                 end
                 `FUNCT3_SRLI_SRAI: begin
                     case(funct7)
-                        `FUNCT7_SRLI: begin
+                        `FUNCT7_IMM_5_11_SRLI: begin
                             alu_rd_operator <= `ALU_OPERATOR_SRL;
                         end
-                        `FUNCT7_SRAI: begin
+                        `FUNCT7_IMM_5_11_SRAI: begin
                             alu_rd_operator <= `ALU_OPERATOR_SRA;
                         end
                     endcase
