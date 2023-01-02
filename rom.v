@@ -21,6 +21,6 @@ always @(posedge clk) begin
     end
 end
 
-assign rom_data = _rom[_address]
+assign rom_data = _rom[_address];
 
 endmodule
