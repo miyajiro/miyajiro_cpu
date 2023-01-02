@@ -13,7 +13,7 @@ module DECODER(
     output reg [1:0] next_pc_src,
     output reg reg_write_data_src,
     output reg reg_wren,
-    output reg ram_wren,
+    output reg ram_wren
 );
 
 wire [6:0] opcode;
