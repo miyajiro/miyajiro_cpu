@@ -4,8 +4,8 @@ reg reset_n;
 reg clk;
 
 MIYAJIRO_CPU miyajiro_cpu(
-    .reset_n(reset_n)
-    .clk(clk),
+    .reset_n(reset_n),
+    .clk(clk)
 );
 
 initial begin
