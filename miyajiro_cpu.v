@@ -117,7 +117,7 @@ wire [4:0] ex_rd_address;
 wire [3:0] ex_alu_rd_operator;
 wire [1:0] ex_alu_rd_operand1_src;
 wire [2:0] ex_alu_rd_operand2_src;
-wire [1:0] ex_alu_pc_operand1_src;
+wire ex_alu_pc_operand1_src;
 wire [1:0] ex_next_pc_src;
 wire ex_reg_write_data_src;
 wire ex_reg_wren;
