@@ -10,7 +10,7 @@ MIYAJIRO_CPU miyajiro_cpu(
 );
 
 initial begin
-    reset_n <= 1'b1;
+    reset_n <= 1'b0;
     clk <= 1'b0;
 end
 
@@ -32,7 +32,7 @@ endtask
 
 initial begin
     wait_posedge_clk(10);
-    reset_n <= 1'b0;
+    reset_n <= 1'b1;
     wait_posedge_clk(110);
     $finish;
 end
