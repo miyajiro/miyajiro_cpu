@@ -14,13 +14,15 @@ module STAGE_CONTROLLER(
 );
 
 reg [2:0] stage;
+wire [2:0] _stage;
+assign _stage = stage;
 
 always @(posedge clk) begin
     if(!reset_n) begin
         stage <= `STAGE_INIT;
     end
     else begin
-        case (stage)
+        case (_stage)
             `STAGE_INIT:begin
                 stage <= `STAGE_IF;
             end
@@ -49,8 +51,8 @@ always @(posedge clk) begin
     end
 end
 
-always @(stage) begin
-    case(stage)
+always @(_stage) begin
+    case(_stage)
         `STAGE_INIT:begin
             pc_wren <= 0;
             if_id_wren <= 0;
