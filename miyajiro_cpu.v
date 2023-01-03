@@ -7,7 +7,7 @@ module MIYAJIRO_CPU(
 
 // STAGE_CONTROLLER
 wire stage_controller_stage_reset_n;
-wire stage_controller_wb_if_wren
+wire stage_controller_wb_if_wren;
 wire stage_controller_if_id_wren;
 wire stage_controller_id_ex_wren;
 wire stage_controller_ex_mem_wren;
