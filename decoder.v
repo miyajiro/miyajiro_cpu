@@ -10,7 +10,7 @@ module DECODER(
     output reg [3:0] alu_rd_operator,
     output reg [1:0] alu_rd_operand1_src,
     output reg [2:0] alu_rd_operand2_src,
-    output reg [1:0] alu_pc_operand1_src,
+    output reg alu_pc_operand1_src,
     output reg [1:0] next_pc_src,
     output reg reg_write_data_src,
     output reg reg_wren,

@@ -68,7 +68,7 @@ wire [4:0] id_rd_address;
 wire [3:0] id_alu_rd_operator;
 wire [1:0] id_alu_rd_operand1_src;
 wire [2:0] id_alu_rd_operand2_src;
-wire [1:0] id_alu_pc_operand1_src;
+wire id_alu_pc_operand1_src;
 wire [1:0] id_next_pc_src;
 wire id_reg_write_data_src;
 wire id_reg_wren;
