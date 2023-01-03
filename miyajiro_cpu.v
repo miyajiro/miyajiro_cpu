@@ -38,7 +38,7 @@ WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
     .clk(clk),
     .wren(stage_controller_wb_if_wren),
     .in_pc_data(wb_pc_data),
-    .pc_data(if_pc_data)
+    .pc_data(if_next_pc)
 );
 
 // IF
