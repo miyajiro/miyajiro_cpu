@@ -1,4 +1,4 @@
-`timescale 100ns / 100ps
+`timescale 10ns / 10ps
 module testbench_miyajiro_cpu ();
 // CLK
 reg reset_n;

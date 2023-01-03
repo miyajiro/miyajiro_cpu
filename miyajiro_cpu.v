@@ -1,4 +1,3 @@
-`timescale 100ns / 100ps
 `include "define.v"
 module MIYAJIRO_CPU(
     input reset_n,
