@@ -11,7 +11,7 @@ module ID_EX_PIPELINE_REGISTER (
     input [1:0] in_alu_rd_operand1_src,
     input [2:0] in_alu_rd_operand2_src,
     input in_alu_pc_operand1_src,
-    input in_next_pc_src,
+    input [1:0] in_next_pc_src,
     input in_reg_write_data_src,
     input in_reg_wren,
     input in_ram_wren,
@@ -24,7 +24,7 @@ module ID_EX_PIPELINE_REGISTER (
     output reg [1:0] alu_rd_operand1_src,
     output reg [2:0] alu_rd_operand2_src,
     output reg alu_pc_operand1_src,
-    output reg next_pc_src,
+    output reg [1:0] next_pc_src,
     output reg reg_write_data_src,
     output reg reg_wren,
     output reg ram_wren
