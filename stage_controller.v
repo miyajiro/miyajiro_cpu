@@ -141,7 +141,7 @@ always @(_stage) begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 1;
-            stage_reset_n <= 0;
+            stage_reset_n <= 1;
         end
         default:begin
         end
