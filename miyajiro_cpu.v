@@ -7,6 +7,7 @@ module MIYAJIRO_CPU(
 
 // STAGE_CONTROLLER
 wire stage_controller_stage_reset_n;
+wire stage_controller_wb_if_wren
 wire stage_controller_if_id_wren;
 wire stage_controller_id_ex_wren;
 wire stage_controller_ex_mem_wren;
@@ -19,6 +20,7 @@ STAGE_CONTROLLER stage_controller(
     .reset_n(reset_n),
     .clk(clk),
     .pc_wren(stage_controller_pc_wren),
+    .wb_if_wren(stage_controller_wb_if_wren),
     .if_id_wren(stage_controller_if_id_wren),
     .id_ex_wren(stage_controller_id_ex_wren),
     .ex_mem_wren(stage_controller_ex_mem_wren),
@@ -28,14 +30,24 @@ STAGE_CONTROLLER stage_controller(
     .stage_reset_n(stage_controller_stage_reset_n)
 );
 
+// WB -> IF
+wire [31:0] wb_next_pc;
+wire [31:0] if_next_pc;
+WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
+    .reset_n(stage_controller_stage_reset_n),
+    .clk(clk),
+    .wren(stage_controller_wb_if_wren),
+    .in_pc_data(wb_pc_data),
+    .pc_data(if_pc_data)
+);
+
 // IF
-wire [31:0] wb_next_pc; // WBステージで設定.
 wire [31:0] if_pc_data;
 PC pc(
     .reset_n(reset_n),
     .clk(clk),
     .wren(stage_controller_pc_wren),
-    .next_pc_data(wb_next_pc),
+    .next_pc_data(if_next_pc),
     .pc_data(if_pc_data)
 );
 

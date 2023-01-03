@@ -5,6 +5,7 @@ module STAGE_CONTROLLER(
     input reset_n,
     input clk,
     output reg pc_wren,
+    output reg wb_if_wren,
     output reg if_id_wren,
     output reg id_ex_wren,
     output reg ex_mem_wren,
@@ -56,6 +57,7 @@ always @(_stage) begin
     case(_stage)
         `STAGE_INIT:begin
             pc_wren <= 0;
+            wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
             ex_mem_wren <= 0;
@@ -66,6 +68,7 @@ always @(_stage) begin
         end
         `STAGE_IF:begin
             pc_wren <= 0;
+            wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
             ex_mem_wren <= 0;
@@ -76,6 +79,7 @@ always @(_stage) begin
         end
         `STAGE_IF_WAIT:begin
             pc_wren <= 0;
+            wb_if_wren <= 0;
             if_id_wren <= 1;
             id_ex_wren <= 0;
             ex_mem_wren <= 0;
@@ -86,6 +90,7 @@ always @(_stage) begin
         end
         `STAGE_ID:begin
             pc_wren <= 0;
+            wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 1;
             ex_mem_wren <= 0;
@@ -96,6 +101,7 @@ always @(_stage) begin
         end
         `STAGE_EX:begin
             pc_wren <= 0;
+            wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
             ex_mem_wren <= 1;
@@ -106,6 +112,7 @@ always @(_stage) begin
         end
         `STAGE_MEM:begin
             pc_wren <= 1;
+            wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
             ex_mem_wren <= 0;
@@ -116,6 +123,7 @@ always @(_stage) begin
         end
         `STAGE_MEM_WAIT:begin
             pc_wren <= 0;
+            wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
             ex_mem_wren <= 0;
@@ -126,6 +134,7 @@ always @(_stage) begin
         end
         `STAGE_WB:begin
             pc_wren <= 0;
+            wb_if_wren <= 1;
             if_id_wren <= 0;
             id_ex_wren <= 0;
             ex_mem_wren <= 0;
