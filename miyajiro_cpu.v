@@ -219,7 +219,6 @@ wire mem_reg_wren;
 wire mem_ram_wren;
 
 wire [31:0] mem_ram_write_data;
-wire [31:0] mem_instruction_data;
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
