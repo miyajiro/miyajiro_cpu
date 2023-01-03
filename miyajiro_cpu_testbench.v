@@ -31,7 +31,7 @@ endtask
 
 initial begin
     wait_posedge_clk(2);
-    RST <= 1'b0;
+    reset_n <= 1'b0;
     wait_posedge_clk(100);
     $finish;
 end
