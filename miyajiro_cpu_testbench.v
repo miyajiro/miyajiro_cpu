@@ -31,9 +31,9 @@ task wait_posedge_clk;
 endtask
 
 initial begin
-    wait_posedge_clk(2);
+    wait_posedge_clk(10);
     reset_n <= 1'b0;
-    wait_posedge_clk(100);
+    wait_posedge_clk(110);
     $finish;
 end
 
