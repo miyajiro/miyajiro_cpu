@@ -28,7 +28,7 @@ STAGE_CONTROLLER stage_controller(
 );
 
 // IF
-wire wb_next_pc; // WBステージで設定.
+wire [31:0] wb_next_pc; // WBステージで設定.
 wire [31:0] if_pc_data;
 PC pc(
     .reset_n(reset_n),
@@ -66,7 +66,7 @@ wire [31:0] id_imm;
 wire [4:0] id_rd_address;
 wire [3:0] id_alu_rd_operator;
 wire [1:0] id_alu_rd_operand1_src;
-wire [1:0] id_alu_rd_operand2_src;
+wire [2:0] id_alu_rd_operand2_src;
 wire [1:0] id_alu_pc_operand1_src;
 wire [1:0] id_next_pc_src;
 wire id_reg_write_data_src;
@@ -116,7 +116,7 @@ wire [31:0] ex_imm;
 wire [4:0] ex_rd_address;
 wire [3:0] ex_alu_rd_operator;
 wire [1:0] ex_alu_rd_operand1_src;
-wire [1:0] ex_alu_rd_operand2_src;
+wire [2:0] ex_alu_rd_operand2_src;
 wire [1:0] ex_alu_pc_operand1_src;
 wire [1:0] ex_next_pc_src;
 wire ex_reg_write_data_src;
@@ -192,7 +192,7 @@ wire ex_alu_rd_result_is_zero;
 ALU alu_rd(
     .operator(ex_alu_rd_operator),
     .operand1(ex_alu_rd_operand1),
-    .operand2(ex_operand2),
+    .operand2(ex_alu_rd_operand2),
     .result(ex_alu_rd_result),
     .result_is_zero(ex_alu_rd_result_is_zero)
 );
@@ -202,7 +202,7 @@ ALU alu_pc(
     .operator(`ALU_OPERATOR_ADD),
     .operand1(ex_alu_pc_operand1),
     .operand2(ex_imm),
-    .result(ex_branch_pc)
+    .result(ex_alu_pc_result)
 );
 
 // EX -> MEM
