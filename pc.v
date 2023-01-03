@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module PC(
     input reset_n,
     input clk,

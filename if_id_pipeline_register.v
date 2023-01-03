@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module IF_ID_PIPELINE_REGISTER (
     input reset_n,
     input clk,

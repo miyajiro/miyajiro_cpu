@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module EX_MEM_PIPELINE_REGISTER(
     input reset_n,
     input clk,

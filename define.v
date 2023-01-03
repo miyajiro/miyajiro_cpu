@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 // RAM
 `define RAM_SIZE 8192
 `define RAM_ADDRESS_BITWIDTH 13

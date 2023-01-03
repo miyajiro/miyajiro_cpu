@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module REGISTER_FILE (
     input reset_n,
     input clk,
