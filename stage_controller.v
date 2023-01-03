@@ -19,9 +19,11 @@ assign _stage = stage;
 
 always @(posedge clk) begin
     if(!reset_n) begin
-        stage <= `STAGE_INIT;
+        // stage <= `STAGE_INIT;
+        stage <= 2;
     end
     else begin
+        stage <= 1;
         case (_stage)
             `STAGE_INIT:begin
                 stage <= `STAGE_IF;
