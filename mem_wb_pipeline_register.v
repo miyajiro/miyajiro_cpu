@@ -22,7 +22,7 @@ always @(posedge clk) begin
         alu_rd_result <= 0;
         rd_address <= 0;
         reg_write_data_src <= 0;
-        reg_write <= 0;
+        reg_wren <= 0;
         next_pc <= 0;
     end
     else if(wren) begin
@@ -30,7 +30,7 @@ always @(posedge clk) begin
         alu_rd_result <= in_alu_rd_result;
         rd_address <= in_rd_address;
         reg_write_data_src <= in_reg_write_data_src;
-        reg_write <= in_reg_write;
+        reg_wren <= in_reg_wren;
         next_pc <= in_next_pc;
     end
 end
