@@ -209,6 +209,7 @@ ALU alu_pc(
 
 // EX -> MEM
 wire [31:0] mem_pc_data;
+wire [31:0] mem_rs2_data;
 wire [4:0] mem_rd_address;
 wire [31:0] mem_alu_rd_result;
 wire mem_alu_rd_result_is_zero;
@@ -218,12 +219,12 @@ wire mem_reg_write_data_src;
 wire mem_reg_wren;
 wire mem_ram_wren;
 
-wire [31:0] mem_ram_write_data;
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
     .wren(stage_controller_ex_mem_wren),
     .in_pc_data(ex_pc_data),
+    .in_rs2_data(ex_rs2_data),
     .in_rd_address(ex_rd_address),
     .in_alu_rd_result(ex_alu_rd_result),
     .in_alu_rd_result_is_zero(ex_alu_rd_result_is_zero),
@@ -233,6 +234,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .in_reg_wren(ex_reg_wren),
     .in_ram_wren(ex_ram_wren),
     .pc_data(mem_pc_data),
+    .rs2_data(mem_rs2_data),
     .rd_address(mem_rd_address),
     .alu_rd_result(mem_alu_rd_result),
     .alu_rd_result_is_zero(mem_alu_rd_result_is_zero),
@@ -280,7 +282,7 @@ RAM ram(
     .clk(clk),
     .address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
     .data(ram_data),
-    .write_data(mem_ram_write_data),
+    .write_data(mem_rs2_data),
     .wren(ram_combined_wren)
 );
 

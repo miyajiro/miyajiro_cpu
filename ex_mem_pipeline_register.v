@@ -4,6 +4,7 @@ module EX_MEM_PIPELINE_REGISTER(
     input clk,
     input wren,
     input [31:0] in_pc_data,
+    input [31:0] in_rs2_data,
     input [4:0] in_rd_address,
     input [31:0] in_alu_rd_result,
     input in_alu_rd_result_is_zero,
@@ -13,6 +14,7 @@ module EX_MEM_PIPELINE_REGISTER(
     input in_reg_wren,
     input in_ram_wren,
     output reg [31:0] pc_data,
+    output reg [31:0] rs2_data,
     output reg [4:0] rd_address,
     output reg [31:0] alu_rd_result,
     output reg alu_rd_result_is_zero,
@@ -27,6 +29,7 @@ always @(posedge clk) begin
     if(!reset_n) begin
         pc_data <= 0;
         rd_address <= 0;
+        rs2_data <= 0;
         alu_rd_result <= 0;
         alu_rd_result_is_zero <= 0;
         alu_pc_result <= 0;
@@ -38,6 +41,7 @@ always @(posedge clk) begin
     else if(wren) begin
         pc_data <= in_pc_data;
         rd_address <= in_rd_address;
+        rs2_data <= in_rs2_data;
         alu_rd_result <= in_alu_rd_result;
         alu_rd_result_is_zero <= in_alu_rd_result_is_zero;
         alu_pc_result <= in_alu_pc_result;
