@@ -10,7 +10,7 @@ module ROM (
 reg [`ROM_ADDRESS_BITWIDTH - 3:0] _address;
 reg [31:0] _rom [`ROM_SIZE / 4 - 1:0];
 
-initial $readmemh("gcd.bin", _rom);
+initial $readmemh("test/gcd.bin", _rom);
 
 always @(posedge clk) begin
     if(!reset_n) begin
