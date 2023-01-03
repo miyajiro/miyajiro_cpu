@@ -12,6 +12,8 @@ module RAM(
 reg [`RAM_ADDRESS_BITWIDTH - 3:0] _address;
 reg [31:0] _ram [`RAM_SIZE / 4 - 1:0];
 
+initial $readmemb("program.dat", _ram);
+
 always @(posedge clk) begin
     _address <= address[`RAM_ADDRESS_BITWIDTH - 1 : 2];
     if(wren) begin
