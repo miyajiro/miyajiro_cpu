@@ -149,6 +149,7 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .alu_rd_operand1_src(ex_alu_rd_operand1_src),
     .alu_rd_operand2_src(ex_alu_rd_operand2_src),
     .alu_pc_operand1_src(ex_alu_pc_operand1_src),
+    .next_pc_src(ex_next_pc_src),
     .reg_write_data_src(ex_reg_write_data_src),
     .reg_wren(ex_reg_wren),
     .ram_wren(ex_ram_wren)
