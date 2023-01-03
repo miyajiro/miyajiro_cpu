@@ -31,14 +31,14 @@ STAGE_CONTROLLER stage_controller(
 );
 
 // WB -> IF
-wire [31:0] wb_next_pc;
-wire [31:0] if_next_pc;
+wire [31:0] wb_next_pc_data;
+wire [31:0] if_next_pc_data;
 WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
     .wren(stage_controller_wb_if_wren),
     .in_pc_data(wb_pc_data),
-    .pc_data(if_next_pc)
+    .pc_data(if_next_pc_data)
 );
 
 // IF
@@ -47,7 +47,7 @@ PC pc(
     .reset_n(reset_n),
     .clk(clk),
     .wren(stage_controller_pc_wren),
-    .next_pc_data(if_next_pc),
+    .next_pc_data(if_next_pc_data),
     .pc_data(if_pc_data)
 );
 
@@ -265,24 +265,24 @@ end
 
 wire [31:0] mem_pc_data_plus_4;
 assign mem_pc_data_plus_4 = mem_pc_data + 4;
-reg [31:0] mem_next_pc;
+reg [31:0] mem_next_pc_data;
 always @* begin
     case(mem_next_pc_src)
         `NEXT_PC_SRC_ALWAYS_NOT_BRANCH: begin
-            mem_next_pc <= mem_pc_data_plus_4;
+            mem_next_pc_data <= mem_pc_data_plus_4;
         end
         `NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_ZERO: begin
-            mem_next_pc <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_ZERO
+            mem_next_pc_data <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_ZERO
                 ? mem_alu_pc_result
                 : mem_pc_data_plus_4;
         end
         `NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_NOT_ZERO: begin
-            mem_next_pc <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_NOT_ZERO
+            mem_next_pc_data <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_NOT_ZERO
                 ? mem_alu_pc_result
                 : mem_pc_data_plus_4;
         end
         `NEXT_PC_SRC_ALWAYS_BRANCH: begin
-            mem_next_pc <= mem_alu_pc_result;
+            mem_next_pc_data <= mem_alu_pc_result;
         end
     endcase
 end
@@ -312,13 +312,13 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
     .in_rd_address(mem_rd_address),
     .in_reg_write_data_src(mem_reg_write_data_src),
     .in_reg_wren(mem_reg_wren),
-    .in_next_pc(mem_next_pc),
+    .in_next_pc_data(mem_next_pc_data),
     .ram_data(wb_ram_data),
     .alu_rd_result(wb_alu_rd_result),
     .rd_address(wb_rd_address),
     .reg_write_data_src(wb_reg_write_data_src),
     .reg_wren(wb_reg_wren),
-    .next_pc(wb_next_pc)
+    .next_pc_data(wb_next_pc_data)
 );
 
 // WB

@@ -8,13 +8,13 @@ module MEM_WB_PIPELINE_REGISTER(
     input [4:0] in_rd_address,
     input in_reg_write_data_src,
     input in_reg_wren,
-    input [31:0] in_next_pc,
+    input [31:0] in_next_pc_data,
     output reg [31:0] ram_data,
     output reg [31:0] alu_rd_result,
     output reg [4:0] rd_address,
     output reg reg_write_data_src,
     output reg reg_wren,
-    output reg [31:0] next_pc
+    output reg [31:0] next_pc_data
 );
 
 always @(posedge clk) begin
@@ -24,7 +24,7 @@ always @(posedge clk) begin
         rd_address <= 0;
         reg_write_data_src <= 0;
         reg_wren <= 0;
-        next_pc <= 0;
+        next_pc_data <= 0;
     end
     else if(wren) begin
         ram_data <= in_ram_data;
@@ -32,7 +32,7 @@ always @(posedge clk) begin
         rd_address <= in_rd_address;
         reg_write_data_src <= in_reg_write_data_src;
         reg_wren <= in_reg_wren;
-        next_pc <= in_next_pc;
+        next_pc_data <= in_next_pc_data;
     end
 end
 endmodule
