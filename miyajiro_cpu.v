@@ -53,7 +53,7 @@ IF_ID_PIPELINE_REGISTER if_id_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
     .wren(stage_controller_if_id_wren),
-    .in_instructiontruction(if_rom_data),
+    .in_instruction(if_rom_data),
     .in_pc_data(if_pc_data),
     .instruction(id_instruction_data),
     .pc_data(id_pc_data)
