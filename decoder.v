@@ -25,15 +25,17 @@ wire [6:0] funct7;
 assign funct7 = instruction[31:25];
 
 wire [31:0] imm_i;
-assign imm_i = {20'b0, instruction[31:20]};
+assign imm_i = {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:20]};
+wire [31:0] imm_i_unsigned;
+assign imm_i_unsigned = {20'b0, instruction[31:20]};
 wire [31:0] imm_s;
-assign imm_s = {20'b0, instruction[31:25], instruction[11:7]};
+assign imm_s = {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:25], instruction[11:7]};
 wire [31:0] imm_b;
-assign imm_b = {19'b0, imm[31:31], imm[7:7], imm[30:25], imm[11:8], 1'b0};
+assign imm_b = {instruction[31] == 1 ? 19'h7ffff : 19'h0, instruction[31:31], instruction[7:7], instruction[30:25], instruction[11:8], 1'b0};
 wire [31:0] imm_u;
-assign imm_u = {11'b0, instruction[31:12], 11'b0};
+assign imm_u = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:12], 11'b0};
 wire [31:0] imm_j;
-assign imm_j = {11'b0, instruction[31:31], instruction[19:12], instruction[20:20], instruction[30:21], 1'b0};
+assign imm_j = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:31], instruction[19:12], instruction[20:20], instruction[30:21], 1'b0};
 
 always @* begin
     rs1_address <= instruction[19:15];
@@ -91,8 +93,6 @@ always @* begin
             endcase
         end
         `OPCODE_I_BASE_INTEGER_IMM: begin
-            imm <= imm_i;
-
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_RS1;
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_IMM;
             alu_pc_operand1_src <= 0;
@@ -102,21 +102,27 @@ always @* begin
             ram_wren <= `RAM_WRITE_DISABLE;
             case(funct3)
                 `FUNCT3_ADDI: begin
+                    imm <= imm_i;
                     alu_rd_operator <= `ALU_OPERATOR_ADD;
                 end
                 `FUNCT3_XORI: begin
+                    imm <= imm_i;
                     alu_rd_operator <= `ALU_OPERATOR_XOR;
                 end
                 `FUNCT3_ORI: begin
+                    imm <= imm_i;
                     alu_rd_operator <= `ALU_OPERATOR_OR;
                 end
                 `FUNCT3_ANDI: begin
+                    imm <= imm_i;
                     alu_rd_operator <= `ALU_OPERATOR_AND;
                 end
                 `FUNCT3_SLLI: begin
+                    imm <= imm_i_unsigned;
                     alu_rd_operator <= `ALU_OPERATOR_SLL;
                 end
                 `FUNCT3_SRLI_SRAI: begin
+                    imm <= imm_i_unsigned;
                     case(funct7)
                         `FUNCT7_IMM_5_11_SRLI: begin
                             alu_rd_operator <= `ALU_OPERATOR_SRL;
@@ -127,9 +133,11 @@ always @* begin
                     endcase
                 end
                 `FUNCT3_SLTI: begin
+                    imm <= imm_i;
                     alu_rd_operator <= `ALU_OPERATOR_SLT;
                 end
                 `FUNCT3_SLTIU: begin
+                    imm <= imm_i_unsigned;
                     alu_rd_operator <= `ALU_OPERATOR_SLTU;
                 end
             endcase
