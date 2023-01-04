@@ -61,7 +61,7 @@ always @(_stage) begin
             stage_reset_n <= 0;
         end
         `STAGE_IF:begin
-            pc_wren <= 1;
+            pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 1;
             id_ex_wren <= 0;

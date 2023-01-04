@@ -32,25 +32,16 @@ STAGE_CONTROLLER stage_controller(
 
 // WB -> IF
 wire [31:0] wb_next_pc_data;
-wire [31:0] if_next_pc_data;
+wire [31:0] if_pc_data;
 WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
     .wren(stage_controller_wb_if_wren),
     .in_next_pc_data(wb_next_pc_data),
-    .next_pc_data(if_next_pc_data)
+    .next_pc_data(if_pc_data)
 );
 
 // IF
-wire [31:0] if_pc_data;
-PC pc(
-    .reset_n(reset_n),
-    .clk(clk),
-    .wren(stage_controller_pc_wren),
-    .next_pc_data(if_next_pc_data),
-    .pc_data(if_pc_data)
-);
-
 wire [31:0] if_rom_data;
 ROM rom(
     .clk(clk),
