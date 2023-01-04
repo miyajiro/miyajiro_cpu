@@ -47,6 +47,9 @@ always @(posedge clk) begin
                 stage <= `STAGE_MEM_WB;
             end
             `STAGE_MEM_WB: begin
+                stage <= `STAGE_WB;
+            end
+            `STAGE_WB: begin
                 stage <= `STAGE_WB_IF;
             end
             `STAGE_WB_IF: begin
