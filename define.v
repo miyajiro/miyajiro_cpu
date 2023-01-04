@@ -10,12 +10,10 @@
 // STAGE CONTROLLER
 `define STAGE_INIT      3'h0
 `define STAGE_IF        3'h1
-`define STAGE_IF_WAIT   3'h2
-`define STAGE_ID        3'h3
-`define STAGE_EX        3'h4
-`define STAGE_MEM       3'h5
-`define STAGE_MEM_WAIT  3'h6
-`define STAGE_WB        3'h7
+`define STAGE_ID        3'h2
+`define STAGE_EX        3'h3
+`define STAGE_MEM       3'h4
+`define STAGE_WB        3'h5
 
 // CONTROL
 `define ALU_RD_OPERAND1_SRC_RS1         2'h0

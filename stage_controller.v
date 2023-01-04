@@ -29,9 +29,6 @@ always @(posedge clk) begin
                 stage <= `STAGE_IF;
             end
             `STAGE_IF:begin
-                stage <= `STAGE_IF_WAIT;
-            end
-            `STAGE_IF_WAIT:begin
                 stage <= `STAGE_ID;
             end
             `STAGE_ID: begin
@@ -41,9 +38,6 @@ always @(posedge clk) begin
                 stage <= `STAGE_MEM;
             end
             `STAGE_MEM: begin
-                stage <= `STAGE_MEM_WAIT;
-            end
-            `STAGE_MEM_WAIT: begin
                 stage <= `STAGE_WB;
             end
             `STAGE_WB: begin
@@ -67,18 +61,7 @@ always @(_stage) begin
             stage_reset_n <= 0;
         end
         `STAGE_IF:begin
-            pc_wren <= 0;
-            wb_if_wren <= 0;
-            if_id_wren <= 0;
-            id_ex_wren <= 0;
-            ex_mem_wren <= 0;
-            mem_wb_wren <= 0;
-            ram_wren <= 0;
-            reg_wren <= 0;
-            stage_reset_n <= 1;
-        end
-        `STAGE_IF_WAIT:begin
-            pc_wren <= 0;
+            pc_wren <= 1;
             wb_if_wren <= 0;
             if_id_wren <= 1;
             id_ex_wren <= 0;
@@ -111,24 +94,13 @@ always @(_stage) begin
             stage_reset_n <= 1;
         end
         `STAGE_MEM:begin
-            pc_wren <= 1;
-            wb_if_wren <= 0;
-            if_id_wren <= 0;
-            id_ex_wren <= 0;
-            ex_mem_wren <= 0;
-            mem_wb_wren <= 0;
-            ram_wren <= 1;
-            reg_wren <= 0;
-            stage_reset_n <= 1;
-        end
-        `STAGE_MEM_WAIT:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
             ex_mem_wren <= 0;
             mem_wb_wren <= 1;
-            ram_wren <= 0;
+            ram_wren <= 1;
             reg_wren <= 0;
             stage_reset_n <= 1;
         end
