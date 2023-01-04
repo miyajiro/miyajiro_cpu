@@ -8,12 +8,16 @@
 `define ROM_ADDRESS_BITWIDTH 10
 
 // STAGE CONTROLLER
-`define STAGE_INIT      3'h0
-`define STAGE_IF        3'h1
-`define STAGE_ID        3'h2
-`define STAGE_EX        3'h3
-`define STAGE_MEM       3'h4
-`define STAGE_WB        3'h5
+`define STAGE_INIT      4'h0
+`define STAGE_IF        4'h1
+`define STAGE_IF_ID     4'h2
+`define STAGE_ID        4'h3
+`define STAGE_ID_EX     4'h4
+`define STAGE_EX_MEM    4'h5
+`define STAGE_MEM       4'h6
+`define STAGE_MEM_WB    4'h7
+`define STAGE_WB        4'h8
+`define STAGE_WB_IF     4'h9
 
 // CONTROL
 `define ALU_RD_OPERAND1_SRC_RS1         2'h0
