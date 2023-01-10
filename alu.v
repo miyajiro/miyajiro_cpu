@@ -2,7 +2,7 @@
 `include "define.v"
 
 module ALU (
-    input [3:0] operator,
+    input [4:0] operator,
     input [31:0] operand1,
     input [31:0] operand2,
     output reg [31:0] result,
@@ -37,6 +37,30 @@ always @(*) begin
         end
         `ALU_OPERATOR_SLTU: begin
             result <= operand1 < operand2 ? 32'b1 : 32'b0;
+        end
+        `ALU_OPERATOR_MUL: begin
+            result <= ($signed(operand1) * $signed(operand2))[31:0];
+        end
+        `ALU_OPERATOR_MULH: begin
+            result <= ($signed(operand1) * $signed(operand2))[63:32];
+        end
+        `ALU_OPERATOR_MULU: begin
+            result <= (operand1 * operand2)[31:0];
+        end
+        `ALU_OPERATOR_MULHU: begin
+            result <= (operand1 * operand2)[63:32];
+        end
+        `ALU_OPERATOR_DIV: begin
+            result <= $signed(operand1) / $signed(operand2);
+        end
+        `ALU_OPERATOR_DIVU: begin
+            result <= operand1 / operand2;
+        end
+        `ALU_OPERATOR_REM: begin
+            result <= $signed(operand1) % $signed(operand2);
+        end
+        `ALU_OPERATOR_REMU: begin
+            result <= operand1 % operand2;
         end
         default: begin
             result <= 4'bx;
