@@ -1,6 +1,6 @@
 `default_nettype none
 
-module uart_rx #(CLK_PER_HALF_BIT = 5208) (
+module UART_RX #(CLK_PER_HALF_BIT = 5208) (
    input wire         rxd, // status of connection
    input wire         clk,
    input wire         rstn,

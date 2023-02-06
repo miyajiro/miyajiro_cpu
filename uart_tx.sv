@@ -1,6 +1,6 @@
 `default_nettype none
 
-module uart_tx #(CLK_PER_HALF_BIT = 5208) (
+module UART_TX #(CLK_PER_HALF_BIT = 5208) (
    input wire [7:0] sdata,
    input wire       tx_start,
    input wire       clk,
@@ -10,8 +10,7 @@ module uart_tx #(CLK_PER_HALF_BIT = 5208) (
 );
 
    localparam e_clk_bit = CLK_PER_HALF_BIT * 2 - 1;
-
-   localparam e_clk_stop_bit = (CLK_PER_HALF_BIT*2*9)/10 - 1;
+   localparam e_clk_stop_bit = (CLK_PER_HALF_BIT * 2 * 9) / 10 - 1;
 
    logic [7:0]                  txbuf;
    logic [3:0]                  status;
