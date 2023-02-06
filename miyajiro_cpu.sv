@@ -308,7 +308,10 @@ end
 
 logic [31:0] ram_data;
 logic ram_combined_wren;
-assign ram_combined_wren = (stage_controller_ram_wren & (mem_ram_wren == `RAM_WRITE_ENABLE));
+always_comb begin
+    ram_combined_wren <= (stage_controller_ram_wren & (mem_ram_wren == `RAM_WRITE_ENABLE));
+end
+
 RAM ram(
     .clk(clk),
     .address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
@@ -341,7 +344,9 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
 );
 
 // WB
-assign wb_reg_combined_wren = (stage_controller_reg_wren & (wb_reg_wren == `REG_WRITE_ENABLE));
+always_comb begin
+    wb_reg_combined_wren <= (stage_controller_reg_wren & (wb_reg_wren == `REG_WRITE_ENABLE));
+end
 
 always_comb begin
     wb_reg_write_data <=
