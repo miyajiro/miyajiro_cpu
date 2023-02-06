@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "define.v"
+`include "define.sv"
 module MIYAJIRO_CPU(
     input reset_n,
     input clk
