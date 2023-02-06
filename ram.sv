@@ -9,7 +9,7 @@ module RAM(
     output [31:0] data
 );
 
-reg [`RAM_ADDRESS_BITWIDTH - 3:0] _address;
+logic [`RAM_ADDRESS_BITWIDTH - 3:0] _address;
 reg [31:0] _ram [`RAM_SIZE / 4 - 1:0];
 
 initial $readmemb("empty.dat", _ram);

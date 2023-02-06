@@ -7,8 +7,7 @@ module PC(
     output logic [31:0] pc_data
 );
 
-reg [31:0] _pc_data;
-
+logic [31:0] _pc_data;
 assign pc_data = _pc_data;
 
 always_ff @(posedge clk) begin

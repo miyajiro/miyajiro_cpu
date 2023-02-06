@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 module testbench_miyajiro_cpu ();
 // CLK
-reg reset_n;
-reg clk;
+logic reset_n;
+logic clk;
 
 MIYAJIRO_CPU miyajiro_cpu(
     .reset_n(reset_n),
