@@ -1,12 +1,12 @@
 `default_nettype none
 
 module uart_rx #(CLK_PER_HALF_BIT = 5208) (
-   output logic [7:0] rdata,
-   output logic       rdata_ready,
-   output logic       ferr,
    input wire         rxd, // status of connection
    input wire         clk,
-   input wire         rstn
+   input wire         rstn,
+   output logic [7:0] rdata,
+   output logic       rdata_ready,
+   output logic       ferr
 );
    localparam e_clk_bit = CLK_PER_HALF_BIT * 2 - 1;
    localparam e_clk_half_bit = CLK_PER_HALF_BIT - 1;
