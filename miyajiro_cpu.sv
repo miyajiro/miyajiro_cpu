@@ -178,28 +178,44 @@ always_comb begin
     endcase
 end
 
-
 logic [31:0] ex_alu_rd_operand2;
-assign ex_alu_rd_operand2 =
-    ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_RS2
-        ? ex_rs2_data :
-    ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_IMM
-        ? ex_imm :
-    ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_4
-        ? 4 :
-    ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_12
-        ? 12 :
-    ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_UPPER_IMM
-        ? (ex_imm << 12)
-    : 0;
+always_comb begin
+    case(ex_alu_rd_operand2_src)
+        `ALU_RD_OPERAND2_SRC_RS2: begin
+            ex_alu_rd_operand2 <= ex_rs2_data;
+        end
+        `ALU_RD_OPERAND2_SRC_IMM: begin
+            ex_alu_rd_operand2 <= ex_imm;
+        end
+        `ALU_RD_OPERAND2_SRC_4: begin
+            ex_alu_rd_operand2 <= 4;
+        end
+        `ALU_RD_OPERAND2_SRC_12: begin
+            ex_alu_rd_operand2 <= 12;
+        end
+        `ALU_RD_OPERAND2_SRC_UPPER_IMM: begin
+            ex_alu_rd_operand2 <= (ex_imm << 12);
+        end
+        default: begin
+            ex_alu_rd_operand2 <= 0;
+        end
+    endcase
+end
 
 logic [31:0] ex_alu_pc_operand1;
-assign ex_alu_pc_operand1 =
-    ex_alu_pc_operand1_src == `ALU_PC_OPERAND1_SRC_PC
-        ? ex_pc_data :
-    ex_alu_pc_operand1_src == `ALU_PC_OPERAND1_SRC_RS1
-        ? ex_rs1_data
-    : 0;
+always_comb begin
+    case(ex_alu_pc_operand1_src)
+        `ALU_PC_OPERAND1_SRC_PC: begin
+            ex_alu_pc_operand1 <= ex_pc_data;
+        end
+        `ALU_PC_OPERAND1_SRC_RS1: begin
+            ex_alu_pc_operand1 <= ex_rs1_data;
+        end
+        default: begin
+            ex_alu_pc_operand1 <= 0;
+        end
+    endcase
+end
 
 logic [31:0] ex_alu_rd_result;
 logic ex_alu_rd_result_is_zero;
@@ -264,7 +280,10 @@ always_comb begin
 end
 
 logic [31:0] mem_pc_data_plus_4;
-assign mem_pc_data_plus_4 = mem_pc_data + 4;
+always_comb begin
+    mem_pc_data_plus_4 = mem_pc_data + 4;
+end
+
 logic [31:0] mem_next_pc_data;
 always_comb begin
     case(mem_next_pc_src)
