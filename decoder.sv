@@ -18,24 +18,26 @@ module DECODER(
 );
 
 logic [6:0] opcode;
-assign opcode = instruction[6:0];
 logic [2:0] funct3;
-assign funct3 = instruction[14:12];
 logic [6:0] funct7;
-assign funct7 = instruction[31:25];
-
 logic [31:0] imm_i;
-assign imm_i = {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:20]};
 logic [31:0] imm_i_unsigned;
-assign imm_i_unsigned = {20'b0, instruction[31:20]};
 logic [31:0] imm_s;
-assign imm_s = {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:25], instruction[11:7]};
 logic [31:0] imm_b;
-assign imm_b = {instruction[31] == 1 ? 19'h7ffff : 19'h0, instruction[31:31], instruction[7:7], instruction[30:25], instruction[11:8], 1'b0};
 logic [31:0] imm_u;
-assign imm_u = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:12], 11'b0};
 logic [31:0] imm_j;
-assign imm_j = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:31], instruction[19:12], instruction[20:20], instruction[30:21], 1'b0};
+
+always_comb begin :
+    opcode <= instruction[6:0];
+    funct3 <= instruction[14:12];
+    funct7 <= instruction[31:25];
+    imm_i <= {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:20]};
+    imm_i_unsigned <= {20'b0, instruction[31:20]};
+    imm_s <= {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:25], instruction[11:7]};
+    imm_b <= {instruction[31] == 1 ? 19'h7ffff : 19'h0, instruction[31:31], instruction[7:7], instruction[30:25], instruction[11:8], 1'b0};
+    imm_u <= {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:12], 11'b0};
+    imm_j <= {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:31], instruction[19:12], instruction[20:20], instruction[30:21], 1'b0};
+end
 
 always_comb begin
     rs1_address <= instruction[19:15];
