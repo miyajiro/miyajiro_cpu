@@ -44,12 +44,12 @@ WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
 );
 
 // IF
-logic [31:0] if_rom_data;
-ROM rom(
+logic [31:0] if_program_memory_data;
+PROGRAM_MEMORY program_memory(
     .clk(clk),
     .reset_n(reset_n),
-    .address(if_pc_data[`ROM_ADDRESS_BITWIDTH - 1:0]),
-    .data(if_rom_data)
+    .address(if_pc_data[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0]),
+    .data(if_program_memory_data)
 );
 
 // IF -> ID
@@ -59,7 +59,7 @@ IF_ID_PIPELINE_REGISTER if_id_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
     .wren(stage_controller_if_id_wren),
-    .in_instruction(if_rom_data),
+    .in_instruction(if_program_memory_data),
     .in_pc_data(if_pc_data),
     .instruction(id_instruction_data),
     .pc_data(id_pc_data)
