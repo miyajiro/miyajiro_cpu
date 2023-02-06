@@ -7,7 +7,7 @@ module REGISTER (
     output logic [31:0] data
 );
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         data <= 32'b0;
     end

@@ -13,7 +13,7 @@ reg [`ROM_ADDRESS_BITWIDTH - 3:0] _address;
 
 initial $readmemb("program.dat", _rom);
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         _address <= 0;
     end

@@ -14,7 +14,7 @@ reg [31:0] _ram [`RAM_SIZE / 4 - 1:0];
 
 initial $readmemb("empty.dat", _ram);
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     _address <= address[`RAM_ADDRESS_BITWIDTH - 1 : 2];
     if(wren) begin
         _ram[address] <= write_data;

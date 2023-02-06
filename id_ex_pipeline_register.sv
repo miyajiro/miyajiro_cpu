@@ -31,7 +31,7 @@ module ID_EX_PIPELINE_REGISTER (
     output logic ram_wren
 );
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         pc_data <= 0;
         rs1_data <= 0;

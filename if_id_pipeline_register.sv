@@ -9,7 +9,7 @@ module IF_ID_PIPELINE_REGISTER (
     output logic[31:0] pc_data
 );
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         instruction <= 0;
         pc_data <= 0;

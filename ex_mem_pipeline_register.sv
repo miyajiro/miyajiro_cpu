@@ -25,7 +25,7 @@ module EX_MEM_PIPELINE_REGISTER(
     output logic ram_wren
 );
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         pc_data <= 0;
         rd_address <= 0;

@@ -11,7 +11,7 @@ reg [31:0] _pc_data;
 
 assign pc_data = _pc_data;
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         _pc_data <= 0;
     end

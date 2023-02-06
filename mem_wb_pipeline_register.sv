@@ -17,7 +17,7 @@ module MEM_WB_PIPELINE_REGISTER(
     output logic [31:0] next_pc_data
 );
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         ram_data <= 0;
         alu_rd_result <= 0;

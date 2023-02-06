@@ -30,7 +30,7 @@ module uart_rx #(CLK_PER_HALF_BIT = 5208) (
    localparam s_bit_7 = 4'd9;
    localparam s_stop_bit = 4'd10;
 
-   always @(posedge clk) begin
+   always_ff @(posedge clk) begin
       if (~rstn) begin
          counter <= 32'b0;
          next <= 1'b0;
@@ -54,7 +54,7 @@ module uart_rx #(CLK_PER_HALF_BIT = 5208) (
       end
    end
 
-   always @(posedge clk) begin
+   always_ff @(posedge clk) begin
       rdata_ready <= 1'b0;
       if (~rstn) begin
          status <= s_idle;

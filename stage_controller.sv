@@ -19,7 +19,7 @@ reg [3:0] stage;
 wire [3:0] _stage;
 assign _stage = stage;
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
     if(!reset_n) begin
         stage <= `STAGE_INIT;
     end
