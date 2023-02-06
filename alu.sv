@@ -9,7 +9,7 @@ module ALU (
     output logic result_is_zero
 );
 
-always @(*) begin
+always_comb begin
     case(operator)
         `ALU_OPERATOR_ADD: begin
             result <= operand1 + operand2;
