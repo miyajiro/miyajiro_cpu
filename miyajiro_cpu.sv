@@ -98,7 +98,7 @@ wire [31:0] id_rs2_data;
 
 wire wb_reg_combined_wren;
 wire [4:0] wb_rd_address;
-reg [31:0] wb_reg_write_data;
+logic [31:0] wb_reg_write_data;
 
 REGISTER_FILE regfile(
     .reset_n(reset_n),
@@ -249,14 +249,14 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
 );
 
 // MEM
-reg [`RAM_ADDRESS_BITWIDTH - 1:0] ram_addr;
+logic [`RAM_ADDRESS_BITWIDTH - 1:0] ram_addr;
 always_comb begin
     ram_addr <= mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
 end
 
 wire [31:0] mem_pc_data_plus_4;
 assign mem_pc_data_plus_4 = mem_pc_data + 4;
-reg [31:0] mem_next_pc_data;
+logic [31:0] mem_next_pc_data;
 always_comb begin
     case(mem_next_pc_src)
         `NEXT_PC_SRC_ALWAYS_NOT_BRANCH: begin
