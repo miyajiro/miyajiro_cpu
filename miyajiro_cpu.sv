@@ -6,15 +6,15 @@ module MIYAJIRO_CPU(
 );
 
 // STAGE_CONTROLLER
-wire stage_controller_stage_reset_n;
-wire stage_controller_wb_if_wren;
-wire stage_controller_if_id_wren;
-wire stage_controller_id_ex_wren;
-wire stage_controller_ex_mem_wren;
-wire stage_controller_mem_wb_wren;
-wire stage_controller_ram_wren;
-wire stage_controller_reg_wren;
-wire stage_controller_pc_wren;
+logic stage_controller_stage_reset_n;
+logic stage_controller_wb_if_wren;
+logic stage_controller_if_id_wren;
+logic stage_controller_id_ex_wren;
+logic stage_controller_ex_mem_wren;
+logic stage_controller_mem_wb_wren;
+logic stage_controller_ram_wren;
+logic stage_controller_reg_wren;
+logic stage_controller_pc_wren;
 
 STAGE_CONTROLLER stage_controller(
     .reset_n(reset_n),
@@ -31,8 +31,8 @@ STAGE_CONTROLLER stage_controller(
 );
 
 // WB -> IF
-wire [31:0] wb_next_pc_data;
-wire [31:0] if_pc_data;
+logic [31:0] wb_next_pc_data;
+logic [31:0] if_pc_data;
 WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
@@ -42,7 +42,7 @@ WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
 );
 
 // IF
-wire [31:0] if_rom_data;
+logic [31:0] if_rom_data;
 ROM rom(
     .clk(clk),
     .reset_n(reset_n),
@@ -51,8 +51,8 @@ ROM rom(
 );
 
 // IF -> ID
-wire [31:0] id_instruction_data;
-wire [31:0] id_pc_data;
+logic [31:0] id_instruction_data;
+logic [31:0] id_pc_data;
 IF_ID_PIPELINE_REGISTER if_id_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
@@ -64,18 +64,18 @@ IF_ID_PIPELINE_REGISTER if_id_pipeline_register(
 );
 
 // ID
-wire [4:0] id_rs1_address;
-wire [4:0] id_rs2_address;
-wire [31:0] id_imm;
-wire [4:0] id_rd_address;
-wire [4:0] id_alu_rd_operator;
-wire [1:0] id_alu_rd_operand1_src;
-wire [2:0] id_alu_rd_operand2_src;
-wire id_alu_pc_operand1_src;
-wire [1:0] id_next_pc_src;
-wire id_reg_write_data_src;
-wire id_reg_wren;
-wire id_ram_wren;
+logic [4:0] id_rs1_address;
+logic [4:0] id_rs2_address;
+logic [31:0] id_imm;
+logic [4:0] id_rd_address;
+logic [4:0] id_alu_rd_operator;
+logic [1:0] id_alu_rd_operand1_src;
+logic [2:0] id_alu_rd_operand2_src;
+logic id_alu_pc_operand1_src;
+logic [1:0] id_next_pc_src;
+logic id_reg_write_data_src;
+logic id_reg_wren;
+logic id_ram_wren;
 
 DECODER decoder(
     .instruction(id_instruction_data),
@@ -93,11 +93,11 @@ DECODER decoder(
     .ram_wren(id_ram_wren)
 );
 
-wire [31:0] id_rs1_data;
-wire [31:0] id_rs2_data;
+logic [31:0] id_rs1_data;
+logic [31:0] id_rs2_data;
 
-wire wb_reg_combined_wren;
-wire [4:0] wb_rd_address;
+logic wb_reg_combined_wren;
+logic [4:0] wb_rd_address;
 logic [31:0] wb_reg_write_data;
 
 REGISTER_FILE regfile(
@@ -113,19 +113,19 @@ REGISTER_FILE regfile(
 );
 
 // ID -> EX
-wire [31:0] ex_pc_data;
-wire [31:0] ex_rs1_data;
-wire [31:0] ex_rs2_data;
-wire [31:0] ex_imm;
-wire [4:0] ex_rd_address;
-wire [4:0] ex_alu_rd_operator;
-wire [1:0] ex_alu_rd_operand1_src;
-wire [2:0] ex_alu_rd_operand2_src;
-wire ex_alu_pc_operand1_src;
-wire [1:0] ex_next_pc_src;
-wire ex_reg_write_data_src;
-wire ex_reg_wren;
-wire ex_ram_wren;
+logic [31:0] ex_pc_data;
+logic [31:0] ex_rs1_data;
+logic [31:0] ex_rs2_data;
+logic [31:0] ex_imm;
+logic [4:0] ex_rd_address;
+logic [4:0] ex_alu_rd_operator;
+logic [1:0] ex_alu_rd_operand1_src;
+logic [2:0] ex_alu_rd_operand2_src;
+logic ex_alu_pc_operand1_src;
+logic [1:0] ex_next_pc_src;
+logic ex_reg_write_data_src;
+logic ex_reg_wren;
+logic ex_ram_wren;
 
 ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
@@ -160,7 +160,7 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
 );
 
 // EX
-wire [31:0] ex_alu_rd_operand1;
+logic [31:0] ex_alu_rd_operand1;
 assign ex_alu_rd_operand1 =
     ex_alu_rd_operand1_src == `ALU_RD_OPERAND1_SRC_RS1
         ? ex_rs1_data :
@@ -170,7 +170,7 @@ assign ex_alu_rd_operand1 =
         ? ex_pc_data
     : 0;
 
-wire [31:0] ex_alu_rd_operand2;
+logic [31:0] ex_alu_rd_operand2;
 assign ex_alu_rd_operand2 =
     ex_alu_rd_operand2_src == `ALU_RD_OPERAND2_SRC_RS2
         ? ex_rs2_data :
@@ -184,7 +184,7 @@ assign ex_alu_rd_operand2 =
         ? (ex_imm << 12)
     : 0;
 
-wire [31:0] ex_alu_pc_operand1;
+logic [31:0] ex_alu_pc_operand1;
 assign ex_alu_pc_operand1 =
     ex_alu_pc_operand1_src == `ALU_PC_OPERAND1_SRC_PC
         ? ex_pc_data :
@@ -192,8 +192,8 @@ assign ex_alu_pc_operand1 =
         ? ex_rs1_data
     : 0;
 
-wire [31:0] ex_alu_rd_result;
-wire ex_alu_rd_result_is_zero;
+logic [31:0] ex_alu_rd_result;
+logic ex_alu_rd_result_is_zero;
 ALU alu_rd(
     .operator(ex_alu_rd_operator),
     .operand1(ex_alu_rd_operand1),
@@ -202,7 +202,7 @@ ALU alu_rd(
     .result_is_zero(ex_alu_rd_result_is_zero)
 );
 
-wire [31:0] ex_alu_pc_result;
+logic [31:0] ex_alu_pc_result;
 ALU alu_pc(
     .operator(`ALU_OPERATOR_ADD),
     .operand1(ex_alu_pc_operand1),
@@ -211,16 +211,16 @@ ALU alu_pc(
 );
 
 // EX -> MEM
-wire [31:0] mem_pc_data;
-wire [31:0] mem_rs2_data;
-wire [4:0] mem_rd_address;
-wire [31:0] mem_alu_rd_result;
-wire mem_alu_rd_result_is_zero;
-wire [31:0] mem_alu_pc_result;
-wire [1:0] mem_next_pc_src;
-wire mem_reg_write_data_src;
-wire mem_reg_wren;
-wire mem_ram_wren;
+logic [31:0] mem_pc_data;
+logic [31:0] mem_rs2_data;
+logic [4:0] mem_rd_address;
+logic [31:0] mem_alu_rd_result;
+logic mem_alu_rd_result_is_zero;
+logic [31:0] mem_alu_pc_result;
+logic [1:0] mem_next_pc_src;
+logic mem_reg_write_data_src;
+logic mem_reg_wren;
+logic mem_ram_wren;
 
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
@@ -254,7 +254,7 @@ always_comb begin
     ram_addr <= mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
 end
 
-wire [31:0] mem_pc_data_plus_4;
+logic [31:0] mem_pc_data_plus_4;
 assign mem_pc_data_plus_4 = mem_pc_data + 4;
 logic [31:0] mem_next_pc_data;
 always_comb begin
@@ -278,8 +278,8 @@ always_comb begin
     endcase
 end
 
-wire [31:0] ram_data;
-wire ram_combined_wren;
+logic [31:0] ram_data;
+logic ram_combined_wren;
 assign ram_combined_wren = (stage_controller_ram_wren & (mem_ram_wren == `RAM_WRITE_ENABLE));
 RAM ram(
     .clk(clk),
@@ -290,10 +290,10 @@ RAM ram(
 );
 
 // MEM -> WB
-wire [31:0] wb_ram_data;
-wire [31:0] wb_alu_rd_result;
-wire wb_reg_write_data_src;
-wire wb_reg_wren;
+logic [31:0] wb_ram_data;
+logic [31:0] wb_alu_rd_result;
+logic wb_reg_write_data_src;
+logic wb_reg_wren;
 MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
     .reset_n(stage_controller_stage_reset_n),
     .clk(clk),
