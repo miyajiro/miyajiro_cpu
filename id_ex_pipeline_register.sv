@@ -16,19 +16,19 @@ module ID_EX_PIPELINE_REGISTER (
     input in_reg_write_data_src,
     input in_reg_wren,
     input in_ram_wren,
-    output reg [31:0] pc_data,
-    output reg [31:0] rs1_data,
-    output reg [31:0] rs2_data,
-    output reg [31:0] imm,
-    output reg [4:0] rd_address,
-    output reg [4:0] alu_rd_operator,
-    output reg [1:0] alu_rd_operand1_src,
-    output reg [2:0] alu_rd_operand2_src,
-    output reg alu_pc_operand1_src,
-    output reg [1:0] next_pc_src,
-    output reg reg_write_data_src,
-    output reg reg_wren,
-    output reg ram_wren
+    output logic [31:0] pc_data,
+    output logic [31:0] rs1_data,
+    output logic [31:0] rs2_data,
+    output logic [31:0] imm,
+    output logic [4:0] rd_address,
+    output logic [4:0] alu_rd_operator,
+    output logic [1:0] alu_rd_operand1_src,
+    output logic [2:0] alu_rd_operand2_src,
+    output logic alu_pc_operand1_src,
+    output logic [1:0] next_pc_src,
+    output logic reg_write_data_src,
+    output logic reg_wren,
+    output logic ram_wren
 );
 
 always @(posedge clk) begin

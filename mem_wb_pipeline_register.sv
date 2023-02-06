@@ -9,12 +9,12 @@ module MEM_WB_PIPELINE_REGISTER(
     input in_reg_write_data_src,
     input in_reg_wren,
     input [31:0] in_next_pc_data,
-    output reg [31:0] ram_data,
-    output reg [31:0] alu_rd_result,
-    output reg [4:0] rd_address,
-    output reg reg_write_data_src,
-    output reg reg_wren,
-    output reg [31:0] next_pc_data
+    output logic [31:0] ram_data,
+    output logic [31:0] alu_rd_result,
+    output logic [4:0] rd_address,
+    output logic reg_write_data_src,
+    output logic reg_wren,
+    output logic [31:0] next_pc_data
 );
 
 always @(posedge clk) begin

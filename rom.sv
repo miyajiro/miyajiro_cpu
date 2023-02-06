@@ -5,7 +5,7 @@ module ROM (
     input clk,
     input reset_n,
     input [`ROM_ADDRESS_BITWIDTH - 1:0] address,
-    output reg [31:0] data
+    output logic [31:0] data
 );
 
 reg [`ROM_ADDRESS_BITWIDTH - 3:0] _address;

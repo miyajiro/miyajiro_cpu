@@ -4,15 +4,15 @@
 module STAGE_CONTROLLER(
     input reset_n,
     input clk,
-    output reg pc_wren,
-    output reg wb_if_wren,
-    output reg if_id_wren,
-    output reg id_ex_wren,
-    output reg ex_mem_wren,
-    output reg mem_wb_wren,
-    output reg ram_wren,
-    output reg reg_wren,
-    output reg stage_reset_n
+    output logic pc_wren,
+    output logic wb_if_wren,
+    output logic if_id_wren,
+    output logic id_ex_wren,
+    output logic ex_mem_wren,
+    output logic mem_wb_wren,
+    output logic ram_wren,
+    output logic reg_wren,
+    output logic stage_reset_n
 );
 
 reg [3:0] stage;

@@ -4,7 +4,7 @@ module REGISTER (
     input clk,
     input write,
     input [31:0] in_data,
-    output reg [31:0] data
+    output logic [31:0] data
 );
 
 always @(posedge clk) begin

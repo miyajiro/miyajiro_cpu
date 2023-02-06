@@ -13,16 +13,16 @@ module EX_MEM_PIPELINE_REGISTER(
     input in_reg_write_data_src,
     input in_reg_wren,
     input in_ram_wren,
-    output reg [31:0] pc_data,
-    output reg [31:0] rs2_data,
-    output reg [4:0] rd_address,
-    output reg [31:0] alu_rd_result,
-    output reg alu_rd_result_is_zero,
-    output reg [31:0] alu_pc_result,
-    output reg [1:0] next_pc_src,
-    output reg reg_write_data_src,
-    output reg reg_wren,
-    output reg ram_wren
+    output logic [31:0] pc_data,
+    output logic [31:0] rs2_data,
+    output logic [4:0] rd_address,
+    output logic [31:0] alu_rd_result,
+    output logic alu_rd_result_is_zero,
+    output logic [31:0] alu_pc_result,
+    output logic [1:0] next_pc_src,
+    output logic reg_write_data_src,
+    output logic reg_wren,
+    output logic ram_wren
 );
 
 always @(posedge clk) begin

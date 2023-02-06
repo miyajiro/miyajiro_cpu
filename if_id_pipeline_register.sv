@@ -5,8 +5,8 @@ module IF_ID_PIPELINE_REGISTER (
     input wren,
     input [31:0] in_instruction,
     input [31:0] in_pc_data,
-    output reg[31:0] instruction,
-    output reg[31:0] pc_data
+    output logic[31:0] instruction,
+    output logic[31:0] pc_data
 );
 
 always @(posedge clk) begin

@@ -5,8 +5,8 @@ module ALU (
     input [4:0] operator,
     input [31:0] operand1,
     input [31:0] operand2,
-    output reg [31:0] result,
-    output reg result_is_zero
+    output logic [31:0] result,
+    output logic result_is_zero
 );
 
 always @(*) begin
