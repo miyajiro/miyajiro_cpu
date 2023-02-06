@@ -7,38 +7,38 @@ module MIYAJIRO_CPU(
     output logic cpu_uart_txd
 );
 
-// STAGE_CONTROLLER
-logic stage_controller_stage_reset_n;
-logic stage_controller_wb_if_wren;
-logic stage_controller_if_id_wren;
-logic stage_controller_id_ex_wren;
-logic stage_controller_ex_mem_wren;
-logic stage_controller_mem_wb_wren;
-logic stage_controller_ram_wren;
-logic stage_controller_reg_wren;
-logic stage_controller_pc_wren;
+// STATE_CONTROLLER
+logic state_controller_state_reset_n;
+logic state_controller_wb_if_wren;
+logic state_controller_if_id_wren;
+logic state_controller_id_ex_wren;
+logic state_controller_ex_mem_wren;
+logic state_controller_mem_wb_wren;
+logic state_controller_ram_wren;
+logic state_controller_reg_wren;
+logic state_controller_pc_wren;
 
-STAGE_CONTROLLER stage_controller(
+STATE_CONTROLLER state_controller(
     .reset_n(reset_n),
     .clk(clk),
-    .pc_wren(stage_controller_pc_wren),
-    .wb_if_wren(stage_controller_wb_if_wren),
-    .if_id_wren(stage_controller_if_id_wren),
-    .id_ex_wren(stage_controller_id_ex_wren),
-    .ex_mem_wren(stage_controller_ex_mem_wren),
-    .mem_wb_wren(stage_controller_mem_wb_wren),
-    .ram_wren(stage_controller_ram_wren),
-    .reg_wren(stage_controller_reg_wren),
-    .stage_reset_n(stage_controller_stage_reset_n)
+    .pc_wren(state_controller_pc_wren),
+    .wb_if_wren(state_controller_wb_if_wren),
+    .if_id_wren(state_controller_if_id_wren),
+    .id_ex_wren(state_controller_id_ex_wren),
+    .ex_mem_wren(state_controller_ex_mem_wren),
+    .mem_wb_wren(state_controller_mem_wb_wren),
+    .ram_wren(state_controller_ram_wren),
+    .reg_wren(state_controller_reg_wren),
+    .state_reset_n(state_controller_state_reset_n)
 );
 
 // WB -> IF
 logic [31:0] wb_next_pc_data;
 logic [31:0] if_pc_data;
 WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
-    .reset_n(stage_controller_stage_reset_n),
+    .reset_n(state_controller_state_reset_n),
     .clk(clk),
-    .wren(stage_controller_wb_if_wren),
+    .wren(state_controller_wb_if_wren),
     .in_next_pc_data(wb_next_pc_data),
     .next_pc_data(if_pc_data)
 );
@@ -56,9 +56,9 @@ PROGRAM_MEMORY program_memory(
 logic [31:0] id_instruction_data;
 logic [31:0] id_pc_data;
 IF_ID_PIPELINE_REGISTER if_id_pipeline_register(
-    .reset_n(stage_controller_stage_reset_n),
+    .reset_n(state_controller_state_reset_n),
     .clk(clk),
-    .wren(stage_controller_if_id_wren),
+    .wren(state_controller_if_id_wren),
     .in_instruction(if_program_memory_data),
     .in_pc_data(if_pc_data),
     .instruction(id_instruction_data),
@@ -130,9 +130,9 @@ logic ex_reg_wren;
 logic ex_ram_wren;
 
 ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
-    .reset_n(stage_controller_stage_reset_n),
+    .reset_n(state_controller_state_reset_n),
     .clk(clk),
-    .wren(stage_controller_id_ex_wren),
+    .wren(state_controller_id_ex_wren),
     .in_pc_data(id_pc_data),
     .in_rs1_data(id_rs1_data),
     .in_rs2_data(id_rs2_data),
@@ -250,9 +250,9 @@ logic mem_reg_wren;
 logic mem_ram_wren;
 
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
-    .reset_n(stage_controller_stage_reset_n),
+    .reset_n(state_controller_state_reset_n),
     .clk(clk),
-    .wren(stage_controller_ex_mem_wren),
+    .wren(state_controller_ex_mem_wren),
     .in_pc_data(ex_pc_data),
     .in_rs2_data(ex_rs2_data),
     .in_rd_address(ex_rd_address),
@@ -311,7 +311,7 @@ end
 logic [31:0] ram_data;
 logic ram_combined_wren;
 always_comb begin
-    ram_combined_wren <= (stage_controller_ram_wren & (mem_ram_wren == `RAM_WRITE_ENABLE));
+    ram_combined_wren <= (state_controller_ram_wren & (mem_ram_wren == `RAM_WRITE_ENABLE));
 end
 
 RAM ram(
@@ -328,9 +328,9 @@ logic [31:0] wb_alu_rd_result;
 logic wb_reg_write_data_src;
 logic wb_reg_wren;
 MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
-    .reset_n(stage_controller_stage_reset_n),
+    .reset_n(state_controller_state_reset_n),
     .clk(clk),
-    .wren(stage_controller_mem_wb_wren),
+    .wren(state_controller_mem_wb_wren),
     .in_ram_data(ram_data),
     .in_alu_rd_result(mem_alu_rd_result),
     .in_rd_address(mem_rd_address),
@@ -347,7 +347,7 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
 
 // WB
 always_comb begin
-    wb_reg_combined_wren <= (stage_controller_reg_wren & (wb_reg_wren == `REG_WRITE_ENABLE));
+    wb_reg_combined_wren <= (state_controller_reg_wren & (wb_reg_wren == `REG_WRITE_ENABLE));
 end
 
 always_comb begin

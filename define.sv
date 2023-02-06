@@ -7,21 +7,21 @@
 `define PROGRAM_MEMORY_SIZE 1024
 `define PROGRAM_MEMORY_ADDRESS_BITWIDTH 10
 
-// STAGE CONTROLLER
-`define STAGE_INIT                  4'h0
-`define STAGE_SEND_0x99             4'h1
-`define STAGE_RECEIVE_PROGRAM_SIZE  4'h2
-`define STAGE_RECEIVE_PROGRAM       4'h3
-`define STAGE_SEND_0xAA             4'h4
-`define STAGE_IF                    4'h5
-`define STAGE_IF_ID                 4'h6
-`define STAGE_ID                    4'h7
-`define STAGE_ID_EX                 4'h8
-`define STAGE_EX_MEM                4'h9
-`define STAGE_MEM                   4'hA
-`define STAGE_MEM_WB                4'hB
-`define STAGE_WB                    4'hC
-`define STAGE_WB_IF                 4'hD
+// STATE CONTROLLER
+`define STATE_INIT                  4'h0
+`define STATE_SEND_0x99             4'h1
+`define STATE_RECEIVE_PROGRAM_SIZE  4'h2
+`define STATE_RECEIVE_PROGRAM       4'h3
+`define STATE_SEND_0xAA             4'h4
+`define STATE_IF                    4'h5
+`define STATE_IF_ID                 4'h6
+`define STATE_ID                    4'h7
+`define STATE_ID_EX                 4'h8
+`define STATE_EX_MEM                4'h9
+`define STATE_MEM                   4'hA
+`define STATE_MEM_WB                4'hB
+`define STATE_WB                    4'hC
+`define STATE_WB_IF                 4'hD
 
 // CONTROL
 `define ALU_RD_OPERAND1_SRC_RS1         2'h0

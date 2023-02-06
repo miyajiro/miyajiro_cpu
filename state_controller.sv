@@ -1,9 +1,17 @@
 `timescale 1ns / 1ps
 `include "define.sv"
 
-module STAGE_CONTROLLER(
+module STATE_CONTROLLER(
     input logic reset_n,
     input logic clk,
+    input logic stall,
+    input logic program_data_size_fetch_finished,
+    input logic program_data_fetch_finished,
+    output logic transmit_0x99,
+    output logic program_data_size_wren,
+    output logic program_memory_wren,
+    output logic transmit_0xAA,
+    output logic stdin_memory_wren,
     output logic pc_wren,
     output logic wb_if_wren,
     output logic if_id_wren,
@@ -12,54 +20,54 @@ module STAGE_CONTROLLER(
     output logic mem_wb_wren,
     output logic ram_wren,
     output logic reg_wren,
-    output logic stage_reset_n
+    output logic state_reset_n
 );
 
-logic [3:0] stage;
+logic [4:0] state;
 
 always_ff @(posedge clk) begin
     if(!reset_n) begin
-        stage <= `STAGE_INIT;
+        state <= `STATE_INIT;
     end
     else begin
-        case (stage)
-            `STAGE_INIT:begin
-                stage <= `STAGE_IF;
+        case (state)
+            `STATE_INIT:begin
+                state <= `STATE_IF;
             end
-            `STAGE_IF:begin
-                stage <= `STAGE_IF_ID;
+            `STATE_IF:begin
+                state <= `STATE_IF_ID;
             end
-            `STAGE_IF_ID:begin
-                stage <= `STAGE_ID;
+            `STATE_IF_ID:begin
+                state <= `STATE_ID;
             end
-            `STAGE_ID:begin
-                stage <= `STAGE_ID_EX;
+            `STATE_ID:begin
+                state <= `STATE_ID_EX;
             end
-            `STAGE_ID_EX: begin
-                stage <= `STAGE_EX_MEM;
+            `STATE_ID_EX: begin
+                state <= `STATE_EX_MEM;
             end
-            `STAGE_EX_MEM: begin
-                stage <= `STAGE_MEM;
+            `STATE_EX_MEM: begin
+                state <= `STATE_MEM;
             end
-            `STAGE_MEM: begin
-                stage <= `STAGE_MEM_WB;
+            `STATE_MEM: begin
+                state <= `STATE_MEM_WB;
             end
-            `STAGE_MEM_WB: begin
-                stage <= `STAGE_WB;
+            `STATE_MEM_WB: begin
+                state <= `STATE_WB;
             end
-            `STAGE_WB: begin
-                stage <= `STAGE_WB_IF;
+            `STATE_WB: begin
+                state <= `STATE_WB_IF;
             end
-            `STAGE_WB_IF: begin
-                stage <= `STAGE_IF;
+            `STATE_WB_IF: begin
+                state <= `STATE_IF;
             end
         endcase
     end
 end
 
 always_comb begin
-    case(stage)
-        `STAGE_INIT:begin
+    case(state)
+        `STATE_INIT:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
@@ -68,9 +76,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 0;
+            state_reset_n <= 0;
         end
-        `STAGE_IF:begin
+        `STATE_IF:begin
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
@@ -78,9 +86,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_IF_ID:begin
+        `STATE_IF_ID:begin
             wb_if_wren <= 0;
             if_id_wren <= 1;
             id_ex_wren <= 0;
@@ -88,9 +96,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_ID:begin
+        `STATE_ID:begin
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
@@ -98,9 +106,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_ID_EX:begin
+        `STATE_ID_EX:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
@@ -109,9 +117,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_EX_MEM:begin
+        `STATE_EX_MEM:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
@@ -120,9 +128,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_MEM:begin
+        `STATE_MEM:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
@@ -131,9 +139,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 1;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_MEM_WB:begin
+        `STATE_MEM_WB:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
@@ -142,9 +150,9 @@ always_comb begin
             mem_wb_wren <= 1;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_WB:begin
+        `STATE_WB:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
@@ -153,9 +161,9 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 1;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
-        `STAGE_WB_IF:begin
+        `STATE_WB_IF:begin
             pc_wren <= 0;
             wb_if_wren <= 1;
             if_id_wren <= 0;
@@ -164,7 +172,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            stage_reset_n <= 1;
+            state_reset_n <= 1;
         end
         default:begin
         end
