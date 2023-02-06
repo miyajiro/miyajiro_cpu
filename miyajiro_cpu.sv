@@ -16,12 +16,10 @@ logic state_controller_ex_mem_wren;
 logic state_controller_mem_wb_wren;
 logic state_controller_ram_wren;
 logic state_controller_reg_wren;
-logic state_controller_pc_wren;
 
 STATE_CONTROLLER state_controller(
     .reset_n(reset_n),
     .clk(clk),
-    .pc_wren(state_controller_pc_wren),
     .wb_if_wren(state_controller_wb_if_wren),
     .if_id_wren(state_controller_if_id_wren),
     .id_ex_wren(state_controller_id_ex_wren),

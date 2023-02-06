@@ -12,7 +12,6 @@ module STATE_CONTROLLER(
     output logic program_memory_wren,
     output logic transmit_0xAA,
     output logic stdin_memory_wren,
-    output logic pc_wren,
     output logic wb_if_wren,
     output logic if_id_wren,
     output logic id_ex_wren,
@@ -68,7 +67,6 @@ end
 always_comb begin
     case(state)
         `STATE_INIT:begin
-            pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
@@ -109,7 +107,6 @@ always_comb begin
             state_reset_n <= 1;
         end
         `STATE_ID_EX:begin
-            pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 1;
@@ -120,7 +117,6 @@ always_comb begin
             state_reset_n <= 1;
         end
         `STATE_EX_MEM:begin
-            pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
@@ -131,7 +127,6 @@ always_comb begin
             state_reset_n <= 1;
         end
         `STATE_MEM:begin
-            pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
@@ -142,7 +137,6 @@ always_comb begin
             state_reset_n <= 1;
         end
         `STATE_MEM_WB:begin
-            pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
@@ -153,7 +147,6 @@ always_comb begin
             state_reset_n <= 1;
         end
         `STATE_WB:begin
-            pc_wren <= 0;
             wb_if_wren <= 0;
             if_id_wren <= 0;
             id_ex_wren <= 0;
@@ -164,7 +157,6 @@ always_comb begin
             state_reset_n <= 1;
         end
         `STATE_WB_IF:begin
-            pc_wren <= 0;
             wb_if_wren <= 1;
             if_id_wren <= 0;
             id_ex_wren <= 0;
