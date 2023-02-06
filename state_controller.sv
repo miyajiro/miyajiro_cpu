@@ -19,7 +19,7 @@ module STATE_CONTROLLER(
     output logic mem_wb_wren,
     output logic ram_wren,
     output logic reg_wren,
-    output logic state_reset_n
+    output logic pipeline_register_reset_n
 );
 
 logic [4:0] state;
@@ -74,7 +74,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 0;
+            pipeline_register_reset_n <= 0;
         end
         `STATE_IF:begin
             wb_if_wren <= 0;
@@ -84,7 +84,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_IF_ID:begin
             wb_if_wren <= 0;
@@ -94,7 +94,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_ID:begin
             wb_if_wren <= 0;
@@ -104,7 +104,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_ID_EX:begin
             wb_if_wren <= 0;
@@ -114,7 +114,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_EX_MEM:begin
             wb_if_wren <= 0;
@@ -124,7 +124,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_MEM:begin
             wb_if_wren <= 0;
@@ -134,7 +134,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 1;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_MEM_WB:begin
             wb_if_wren <= 0;
@@ -144,7 +144,7 @@ always_comb begin
             mem_wb_wren <= 1;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_WB:begin
             wb_if_wren <= 0;
@@ -154,7 +154,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 1;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         `STATE_WB_IF:begin
             wb_if_wren <= 1;
@@ -164,7 +164,7 @@ always_comb begin
             mem_wb_wren <= 0;
             ram_wren <= 0;
             reg_wren <= 0;
-            state_reset_n <= 1;
+            pipeline_register_reset_n <= 1;
         end
         default:begin
         end
