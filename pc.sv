@@ -7,15 +7,12 @@ module PC(
     output logic [31:0] pc_data
 );
 
-logic [31:0] _pc_data;
-assign pc_data = _pc_data;
-
 always_ff @(posedge clk) begin
     if(!reset_n) begin
-        _pc_data <= 0;
+        pc_data <= 0;
     end
     else if(wren) begin
-        _pc_data <= next_pc_data;
+        pc_data <= next_pc_data;
     end
 end
 

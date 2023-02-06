@@ -161,14 +161,23 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
 
 // EX
 logic [31:0] ex_alu_rd_operand1;
-assign ex_alu_rd_operand1 =
-    ex_alu_rd_operand1_src == `ALU_RD_OPERAND1_SRC_RS1
-        ? ex_rs1_data :
-    ex_alu_rd_operand1_src == `ALU_RD_OPERAND1_SRC_IMM
-        ? ex_imm :
-    ex_alu_rd_operand1_src == `ALU_RD_OPERAND1_SRC_PC
-        ? ex_pc_data
-    : 0;
+always_comb begin
+    case(ex_alu_rd_operand1_src)
+        `ALU_RD_OPERAND1_SRC_RS1: begin
+            ex_alu_rd_operand1 <= ex_rs1_data;
+        end
+        `ALU_RD_OPERAND1_SRC_IMM: begin
+            ex_alu_rd_operand1 <= ex_imm;
+        end
+        `ALU_RD_OPERAND1_SRC_PC: begin
+            ex_alu_rd_operand1 <= ex_pc_data;
+        end
+        default: begin
+            ex_alu_rd_operand1 <= 0;
+        end
+    endcase
+end
+
 
 logic [31:0] ex_alu_rd_operand2;
 assign ex_alu_rd_operand2 =
