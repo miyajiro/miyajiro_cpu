@@ -257,7 +257,7 @@ end
 wire [31:0] mem_pc_data_plus_4;
 assign mem_pc_data_plus_4 = mem_pc_data + 4;
 reg [31:0] mem_next_pc_data;
-always @* begin
+always_comb begin
     case(mem_next_pc_src)
         `NEXT_PC_SRC_ALWAYS_NOT_BRANCH: begin
             mem_next_pc_data <= mem_pc_data_plus_4;
