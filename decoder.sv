@@ -17,24 +17,24 @@ module DECODER(
     output logic ram_wren
 );
 
-wire [6:0] opcode;
+logic [6:0] opcode;
 assign opcode = instruction[6:0];
-wire [2:0] funct3;
+logic [2:0] funct3;
 assign funct3 = instruction[14:12];
-wire [6:0] funct7;
+logic [6:0] funct7;
 assign funct7 = instruction[31:25];
 
-wire [31:0] imm_i;
+logic [31:0] imm_i;
 assign imm_i = {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:20]};
-wire [31:0] imm_i_unsigned;
+logic [31:0] imm_i_unsigned;
 assign imm_i_unsigned = {20'b0, instruction[31:20]};
-wire [31:0] imm_s;
+logic [31:0] imm_s;
 assign imm_s = {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:25], instruction[11:7]};
-wire [31:0] imm_b;
+logic [31:0] imm_b;
 assign imm_b = {instruction[31] == 1 ? 19'h7ffff : 19'h0, instruction[31:31], instruction[7:7], instruction[30:25], instruction[11:8], 1'b0};
-wire [31:0] imm_u;
+logic [31:0] imm_u;
 assign imm_u = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:12], 11'b0};
-wire [31:0] imm_j;
+logic [31:0] imm_j;
 assign imm_j = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:31], instruction[19:12], instruction[20:20], instruction[30:21], 1'b0};
 
 always_comb begin
