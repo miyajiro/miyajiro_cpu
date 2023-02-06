@@ -38,18 +38,19 @@ always @(*) begin
         `ALU_OPERATOR_SLTU: begin
             result <= operand1 < operand2 ? 32'b1 : 32'b0;
         end
-        `ALU_OPERATOR_MUL: begin
-            result <= ($signed(operand1) * $signed(operand2))[31:0];
-        end
-        `ALU_OPERATOR_MULH: begin
-            result <= ($signed(operand1) * $signed(operand2))[63:32];
-        end
-        `ALU_OPERATOR_MULU: begin
-            result <= (operand1 * operand2)[31:0];
-        end
-        `ALU_OPERATOR_MULHU: begin
-            result <= (operand1 * operand2)[63:32];
-        end
+        // TODO
+        // `ALU_OPERATOR_MUL: begin
+        //     result <= ($signed(operand1) * $signed(operand2))[31:0];
+        // end
+        // `ALU_OPERATOR_MULH: begin
+        //     result <= ($signed(operand1) * $signed(operand2))[63:32];
+        // end
+        // `ALU_OPERATOR_MULU: begin
+        //     result <= (operand1 * operand2)[31:0];
+        // end
+        // `ALU_OPERATOR_MULHU: begin
+        //     result <= (operand1 * operand2)[63:32];
+        // end
         `ALU_OPERATOR_DIV: begin
             result <= $signed(operand1) / $signed(operand2);
         end
