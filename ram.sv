@@ -21,6 +21,7 @@ always_ff @(posedge clk) begin
     end
 end
 
-assign data = _ram[_address];
-
+always_comb begin
+    data <= _ram[_address];
+end
 endmodule
