@@ -22,11 +22,8 @@ always_ff @(posedge clk) begin
     end
 end
 
-logic [31:0] _data;
-assign _data = _rom[_address];
-
 always_comb begin
-    data <= _data;
+    data <= _rom[_address];
 end
 
 endmodule
