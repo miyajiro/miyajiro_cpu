@@ -4,7 +4,7 @@ module PC(
     input clk,
     input wren,
     input [31:0] next_pc_data,
-    output [31:0] pc_data
+    output logic [31:0] pc_data
 );
 
 reg [31:0] _pc_data;
