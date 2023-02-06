@@ -6,7 +6,7 @@ module RAM(
     input logic wren,
     input logic [`RAM_ADDRESS_BITWIDTH - 1 : 0] address,
     input logic [31:0] write_data,
-    output [31:0] data
+    output logic[31:0] data
 );
 
 logic [`RAM_ADDRESS_BITWIDTH - 3:0] _address;

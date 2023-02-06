@@ -7,8 +7,8 @@ module REGISTER_FILE (
     input logic [4:0] read_address2,
     input logic [4:0] write_address,
     input logic [31:0] write_data,
-    output [31:0] read_data1,
-    output [31:0] read_data2
+    output logic[31:0] read_data1,
+    output logic[31:0] read_data2
 );
 
 logic [31:0] _write_sel;
