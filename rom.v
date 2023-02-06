@@ -9,7 +9,7 @@ module ROM (
 );
 
 reg [`ROM_ADDRESS_BITWIDTH - 3:0] _address;
-reg [31:0] _rom [`ROM_SIZE / 4 - 1:0];
+(* ram_style = "BLOCK" *) reg [31:0] _rom [`ROM_SIZE / 4 - 1:0];
 
 initial $readmemb("program.dat", _rom);
 
