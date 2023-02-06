@@ -2,7 +2,9 @@
 `include "define.sv"
 module MIYAJIRO_CPU(
     input logic reset_n,
-    input logic clk
+    input logic clk,
+    input logic cpu_uart_rxd,
+    output logic cpu_uart_txd
 );
 
 // STAGE_CONTROLLER
