@@ -27,7 +27,7 @@ logic [31:0] imm_b;
 logic [31:0] imm_u;
 logic [31:0] imm_j;
 
-always_comb begin :
+always_comb begin
     opcode <= instruction[6:0];
     funct3 <= instruction[14:12];
     funct7 <= instruction[31:25];
