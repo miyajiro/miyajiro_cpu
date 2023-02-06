@@ -2,10 +2,10 @@
 `include "define.sv"
 
 module RAM(
-    input clk,
-    input wren,
-    input [`RAM_ADDRESS_BITWIDTH - 1 : 0] address,
-    input [31:0] write_data,
+    input logic clk,
+    input logic wren,
+    input logic [`RAM_ADDRESS_BITWIDTH - 1 : 0] address,
+    input logic [31:0] write_data,
     output [31:0] data
 );
 

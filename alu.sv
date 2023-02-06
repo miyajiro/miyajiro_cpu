@@ -2,9 +2,9 @@
 `include "define.sv"
 
 module ALU (
-    input [4:0] operator,
-    input [31:0] operand1,
-    input [31:0] operand2,
+    input logic [4:0] operator,
+    input logic [31:0] operand1,
+    input logic [31:0] operand2,
     output logic [31:0] result,
     output logic result_is_zero
 );

@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 `include "define.sv"
 module MIYAJIRO_CPU(
-    input reset_n,
-    input clk
+    input logic reset_n,
+    input logic clk
 );
 
 // STAGE_CONTROLLER

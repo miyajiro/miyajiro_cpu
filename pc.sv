@@ -1,9 +1,9 @@
 `timescale 1ns / 1ps
 module PC(
-    input reset_n,
-    input clk,
-    input wren,
-    input [31:0] next_pc_data,
+    input logic reset_n,
+    input logic clk,
+    input logic wren,
+    input logic [31:0] next_pc_data,
     output logic [31:0] pc_data
 );
 

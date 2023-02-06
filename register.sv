@@ -1,9 +1,9 @@
 `timescale 1ns / 1ps
 module REGISTER (
-    input reset_n,
-    input clk,
-    input write,
-    input [31:0] in_data,
+    input logic reset_n,
+    input logic clk,
+    input logic write,
+    input logic [31:0] in_data,
     output logic [31:0] data
 );
 

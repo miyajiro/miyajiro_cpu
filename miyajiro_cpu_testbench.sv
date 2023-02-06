@@ -19,7 +19,7 @@ always #5 begin
 end
 
 task wait_posedge_clk;
-    input   n;
+    input n;
     integer n;
 
     begin

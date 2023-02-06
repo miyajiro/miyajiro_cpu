@@ -1,12 +1,12 @@
 `timescale 1ns / 1ps
 module REGISTER_FILE (
-    input reset_n,
-    input clk,
-    input reg_wren,
-    input [4:0] read_address1,
-    input [4:0] read_address2,
-    input [4:0] write_address,
-    input [31:0] write_data,
+    input logic reset_n,
+    input logic clk,
+    input logic reg_wren,
+    input logic [4:0] read_address1,
+    input logic [4:0] read_address2,
+    input logic [4:0] write_address,
+    input logic [31:0] write_data,
     output [31:0] read_data1,
     output [31:0] read_data2
 );
@@ -122,8 +122,8 @@ REGISTER r30(reset_n, clk, _write_sel[30], write_data, _r30_data);    // t5
 REGISTER r31(reset_n, clk, _write_sel[31], write_data, _r31_data);    // t6
 
 function [31:0] mux_reg;
-    input [4:0] sel;
-    input [1023:0] regs;
+    input logic [4:0] sel;
+    input logic [1023:0] regs;
 
     begin
         case(sel)

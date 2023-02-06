@@ -2,8 +2,8 @@
 `include "define.sv"
 
 module STAGE_CONTROLLER(
-    input reset_n,
-    input clk,
+    input logic reset_n,
+    input logic clk,
     output logic pc_wren,
     output logic wb_if_wren,
     output logic if_id_wren,

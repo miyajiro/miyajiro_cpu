@@ -2,9 +2,9 @@
 `include "define.sv"
 
 module ROM (
-    input clk,
-    input reset_n,
-    input [`ROM_ADDRESS_BITWIDTH - 1:0] address,
+    input logic clk,
+    input logic reset_n,
+    input logic [`ROM_ADDRESS_BITWIDTH - 1:0] address,
     output logic [31:0] data
 );
 

@@ -2,7 +2,7 @@
 `include "define.sv"
 
 module DECODER(
-    input [31:0] instruction,
+    input logic [31:0] instruction,
     output logic [4:0] rs1_address,
     output logic [4:0] rs2_address,
     output logic [31:0] imm,
