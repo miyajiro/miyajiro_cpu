@@ -25,7 +25,7 @@ end
 wire [31:0] _data;
 assign _data = _rom[_address];
 
-always @* begin
+always_comb begin
     data <= _data;
 end
 

@@ -37,7 +37,7 @@ assign imm_u = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:12], 11'b
 wire [31:0] imm_j;
 assign imm_j = {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:31], instruction[19:12], instruction[20:20], instruction[30:21], 1'b0};
 
-always @* begin
+always_comb begin
     rs1_address <= instruction[19:15];
     rs2_address <= instruction[24:20];
     rd_address <= instruction[11:7];
