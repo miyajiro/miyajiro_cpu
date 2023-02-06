@@ -250,7 +250,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
 
 // MEM
 reg [`RAM_ADDRESS_BITWIDTH - 1:0] ram_addr;
-always @* begin
+always_comb begin
     ram_addr <= mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
 end
 
@@ -315,7 +315,7 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
 // WB
 assign wb_reg_combined_wren = (stage_controller_reg_wren & (wb_reg_wren == `REG_WRITE_ENABLE));
 
-always @* begin
+always_comb begin
     wb_reg_write_data <=
         wb_reg_write_data_src == `REG_WRITE_DATA_SRC_ALU
             ? wb_alu_rd_result :
