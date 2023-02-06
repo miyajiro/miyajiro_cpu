@@ -67,6 +67,9 @@ always_comb begin
             result <= 4'bx;
         end
     endcase
+end
+
+always_comb begin
     result_is_zero <= (result == 32'h0) ? `ALU_RESULT_IS_ZERO : `ALU_RESULT_IS_NOT_ZERO;
 end
 
