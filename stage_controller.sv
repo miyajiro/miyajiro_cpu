@@ -16,15 +16,13 @@ module STAGE_CONTROLLER(
 );
 
 logic [3:0] stage;
-logic [3:0] _stage;
-assign _stage = stage;
 
 always_ff @(posedge clk) begin
     if(!reset_n) begin
         stage <= `STAGE_INIT;
     end
     else begin
-        case (_stage)
+        case (stage)
             `STAGE_INIT:begin
                 stage <= `STAGE_IF;
             end
@@ -59,8 +57,8 @@ always_ff @(posedge clk) begin
     end
 end
 
-always @(_stage) begin
-    case(_stage)
+always @(stage) begin
+    case(stage)
         `STAGE_INIT:begin
             pc_wren <= 0;
             wb_if_wren <= 0;
