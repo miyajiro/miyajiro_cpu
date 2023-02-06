@@ -4,7 +4,7 @@ module UART_TX #(CLK_PER_HALF_BIT = 5208) (
    input wire [7:0] sdata,
    input wire       tx_start,
    input wire       clk,
-   input wire       rstn,
+   input wire       reset_n,
    output logic     tx_busy,
    output logic     txd
 );
@@ -33,7 +33,7 @@ module UART_TX #(CLK_PER_HALF_BIT = 5208) (
 
    // generate event signal
    always_ff @(posedge clk) begin
-      if (~rstn) begin
+      if (~reset_n) begin
          counter <= 32'b0;
          next <= 1'b0;
          fin_stop_bit <= 1'b0;
@@ -57,7 +57,7 @@ module UART_TX #(CLK_PER_HALF_BIT = 5208) (
    end
 
    always_ff @(posedge clk) begin
-      if (~rstn) begin
+      if (~reset_n) begin
          txbuf <= 8'b0;
          status <= s_idle;
          rst_ctr <= 1'b0;

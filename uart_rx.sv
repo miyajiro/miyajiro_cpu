@@ -3,7 +3,7 @@
 module UART_RX #(CLK_PER_HALF_BIT = 5208) (
    input wire         rxd, // status of connection
    input wire         clk,
-   input wire         rstn,
+   input wire         reset_n,
    output logic [7:0] rdata,
    output logic       rdata_ready,
    output logic       ferr
@@ -31,7 +31,7 @@ module UART_RX #(CLK_PER_HALF_BIT = 5208) (
    localparam s_stop_bit = 4'd10;
 
    always_ff @(posedge clk) begin
-      if (~rstn) begin
+      if (~reset_n) begin
          counter <= 32'b0;
          next <= 1'b0;
          fin_stop_bit <= 1'b0;
@@ -56,7 +56,7 @@ module UART_RX #(CLK_PER_HALF_BIT = 5208) (
 
    always_ff @(posedge clk) begin
       rdata_ready <= 1'b0;
-      if (~rstn) begin
+      if (~reset_n) begin
          status <= s_idle;
          rst_ctr <= 1'b0;
          ferr <= 1'b0;
