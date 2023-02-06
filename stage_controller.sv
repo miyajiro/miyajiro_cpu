@@ -15,7 +15,7 @@ module STAGE_CONTROLLER(
     output logic stage_reset_n
 );
 
-reg [3:0] stage;
+logic [3:0] stage;
 logic [3:0] _stage;
 assign _stage = stage;
 
