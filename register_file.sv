@@ -12,7 +12,6 @@ module REGISTER_FILE (
 );
 
 logic [31:0] _write_sel;
-
 logic [31:0] _r_data[31:0];
 
 logic [31:0] _r0_data;
@@ -49,44 +48,49 @@ logic [31:0] _r30_data;
 logic [31:0] _r31_data;
 
 logic [1023:0] regs;
-assign regs = {
-    _r31_data,
-    _r30_data,
-    _r29_data,
-    _r28_data,
-    _r27_data,
-    _r26_data,
-    _r25_data,
-    _r24_data,
-    _r23_data,
-    _r22_data,
-    _r21_data,
-    _r20_data,
-    _r19_data,
-    _r18_data,
-    _r17_data,
-    _r16_data,
-    _r15_data,
-    _r14_data,
-    _r13_data,
-    _r12_data,
-    _r11_data,
-    _r10_data,
-    _r9_data,
-    _r8_data,
-    _r7_data,
-    _r6_data,
-    _r5_data,
-    _r4_data,
-    _r3_data,
-    _r2_data,
-    _r1_data,
-    _r0_data
-};
 
-assign _write_sel = (reg_wren == 1) ? (32'b1 << write_address) : (32'b0);
-assign read_data1 = mux_reg(read_address1, regs);
-assign read_data2 = mux_reg(read_address2, regs);
+always_comb begin
+    regs <= {
+        _r31_data,
+        _r30_data,
+        _r29_data,
+        _r28_data,
+        _r27_data,
+        _r26_data,
+        _r25_data,
+        _r24_data,
+        _r23_data,
+        _r22_data,
+        _r21_data,
+        _r20_data,
+        _r19_data,
+        _r18_data,
+        _r17_data,
+        _r16_data,
+        _r15_data,
+        _r14_data,
+        _r13_data,
+        _r12_data,
+        _r11_data,
+        _r10_data,
+        _r9_data,
+        _r8_data,
+        _r7_data,
+        _r6_data,
+        _r5_data,
+        _r4_data,
+        _r3_data,
+        _r2_data,
+        _r1_data,
+        _r0_data
+    };
+end
+
+always_comb begin
+    _write_sel <= (reg_wren == 1) ? (32'b1 << write_address) : (32'b0);
+    read_data1 <= mux_reg(read_address1, regs);
+    read_data2 <= mux_reg(read_address2, regs);
+end
 
 REGISTER r0(reset_n, clk, _write_sel[0], 32'h0, _r0_data);        // zero
 REGISTER r1(reset_n, clk, _write_sel[1], write_data, _r1_data);       // ra
@@ -165,37 +169,39 @@ endfunction
 
 logic [31:0] debug_zero, debug_ra, debug_sp, debug_hp, debug_rc, debug_t0, debug_t1, debug_t2, debug_s0_fp, debug_s1, debug_a0, debug_a1, debug_a2, debug_a3, debug_a4, debug_a5, debug_a6, debug_a7, debug_s2, debug_s3, debug_s4, debug_s5, debug_s6, debug_s7, debug_s8, debug_s9, debug_s10, debug_s11, debug_t3, debug_t4, debug_t5, debug_t6;
 
-assign debug_zero = _r0_data;
-assign debug_ra = _r1_data;
-assign debug_sp = _r2_data;
-assign debug_hp = _r3_data;
-assign debug_rc = _r4_data;
-assign debug_t0 = _r5_data;
-assign debug_t1 = _r6_data;
-assign debug_t2 = _r7_data;
-assign debug_s0_fp = _r8_data;
-assign debug_s1 = _r9_data;
-assign debug_a0 = _r10_data;
-assign debug_a1 = _r11_data;
-assign debug_a2 = _r12_data;
-assign debug_a3 = _r13_data;
-assign debug_a4 = _r14_data;
-assign debug_a5 = _r15_data;
-assign debug_a6 = _r16_data;
-assign debug_a7 = _r17_data;
-assign debug_s2 = _r18_data;
-assign debug_s3 = _r19_data;
-assign debug_s4 = _r20_data;
-assign debug_s5 = _r21_data;
-assign debug_s6 = _r22_data;
-assign debug_s7 = _r23_data;
-assign debug_s8 = _r24_data;
-assign debug_s9 = _r25_data;
-assign debug_s10 = _r26_data;
-assign debug_s11 = _r27_data;
-assign debug_t3 = _r28_data;
-assign debug_t4 = _r29_data;
-assign debug_t5 = _r30_data;
-assign debug_t6 = _r31_data;
+always_comb begin
+    debug_zero <= _r0_data;
+    debug_ra <= _r1_data;
+    debug_sp <= _r2_data;
+    debug_hp <= _r3_data;
+    debug_rc <= _r4_data;
+    debug_t0 <= _r5_data;
+    debug_t1 <= _r6_data;
+    debug_t2 <= _r7_data;
+    debug_s0_fp <= _r8_data;
+    debug_s1 <= _r9_data;
+    debug_a0 <= _r10_data;
+    debug_a1 <= _r11_data;
+    debug_a2 <= _r12_data;
+    debug_a3 <= _r13_data;
+    debug_a4 <= _r14_data;
+    debug_a5 <= _r15_data;
+    debug_a6 <= _r16_data;
+    debug_a7 <= _r17_data;
+    debug_s2 <= _r18_data;
+    debug_s3 <= _r19_data;
+    debug_s4 <= _r20_data;
+    debug_s5 <= _r21_data;
+    debug_s6 <= _r22_data;
+    debug_s7 <= _r23_data;
+    debug_s8 <= _r24_data;
+    debug_s9 <= _r25_data;
+    debug_s10 <= _r26_data;
+    debug_s11 <= _r27_data;
+    debug_t3 <= _r28_data;
+    debug_t4 <= _r29_data;
+    debug_t5 <= _r30_data;
+    debug_t6 <= _r31_data;
+end
 
 endmodule
