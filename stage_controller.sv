@@ -57,7 +57,7 @@ always_ff @(posedge clk) begin
     end
 end
 
-always @(stage) begin
+always_comb begin
     case(stage)
         `STAGE_INIT:begin
             pc_wren <= 0;
