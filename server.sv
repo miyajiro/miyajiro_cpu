@@ -10,30 +10,30 @@ localparam result_memory_size_byte = 128;
 logic clk;
 logic reset_n;
 logic server_uart_rxd;
-logic [7:0] rdata;
-logic rdata_ready;
-logic ferr;
+logic [7:0] server_uart_rx_rdata;
+logic server_uart_rx_rdata_ready;
+logic server_uart_rx_ferr;
 
 UART_RX server_uart_rx(
     .rxd(server_uart_rxd),
     .clk(clk),
     .reset_n(reset_n),
-    .rdata(rdata),
-    .rdata_ready(rdata_ready),
-    .ferr(ferr)
+    .rdata(server_uart_rx_rdata),
+    .rdata_ready(server_uart_rx_rdata_ready),
+    .ferr(server_uart_rx_ferr)
 );
 
 logic [7:0] sdata;
 logic tx_start;
-logic tx_busy;
+logic server_uart_tx_tx_busy;
 logic server_uart_txd;
 
 UART_TX server_uart_tx(
-    .sdata(sdata),
-    .tx_start(tx_start),
     .clk(clk),
     .reset_n(reset_n),
-    .tx_busy(tx_busy),
+    .sdata(sdata),
+    .tx_start(tx_start),
+    .tx_busy(server_uart_tx_tx_busy),
     .txd(server_uart_txd)
 );
 
@@ -86,12 +86,12 @@ always_ff @(posedge clk) begin
 
     case (state)
         state_wait_0x99: begin
-            if (rdata_ready && rdata == 8'h99) begin
+            if (server_uart_rx_rdata_ready && server_uart_rx_rdata == 8'h99) begin
                 state <= state_program_data_send;
             end
         end
         state_program_size_send: begin
-            if (~tx_busy && ~busy_wait) begin
+            if (~server_uart_tx_tx_busy && ~busy_wait) begin
                 if(program_data_size_section < 4) begin
                     sdata <= program_data_size_byte[program_data_size_section * 4 + 3:program_data_size_section * 4];
                     tx_start <= 1;
@@ -107,7 +107,7 @@ always_ff @(posedge clk) begin
             end
         end
         state_program_data_send: begin
-            if (~tx_busy && ~busy_wait) begin
+            if (~server_uart_tx_tx_busy && ~busy_wait) begin
                 if (program_data_index < program_data_size_byte) begin
                     sdata <= program_data[program_data_index];
                     tx_start <= 1;
@@ -123,12 +123,12 @@ always_ff @(posedge clk) begin
             end
         end
         state_wait_0xAA: begin
-            if (rdata_ready && rdata == 8'hAA) begin
+            if (server_uart_rx_rdata_ready && server_uart_rx_rdata == 8'hAA) begin
                 state <= state_stdin_data_send;
             end
         end
         state_stdin_data_send: begin
-            if (~tx_busy && ~busy_wait) begin
+            if (~server_uart_tx_tx_busy && ~busy_wait) begin
                 if (stdin_data_index < stdin_data_size_byte) begin
                     sdata <= stdin_data[stdin_data_index];
                     tx_start <= 1;
@@ -142,14 +142,14 @@ always_ff @(posedge clk) begin
             if (busy_wait) begin
                 busy_wait <= 0;
             end
-            if (rdata_ready) begin
-                result_memory[result_memory_index] <= rdata;
+            if (server_uart_rx_rdata_ready) begin
+                result_memory[result_memory_index] <= server_uart_rx_rdata;
                 result_memory_index <= result_memory_index + 1;
             end
         end
         state_wait_ppm: begin
-            if (rdata_ready) begin
-                result_memory[result_memory_index] <= rdata;
+            if (server_uart_rx_rdata_ready) begin
+                result_memory[result_memory_index] <= server_uart_rx_rdata;
                 result_memory_index <= result_memory_index + 1;
             end
         end
