@@ -16,6 +16,7 @@ module ID_EX_PIPELINE_REGISTER (
     input logic [1:0] in_reg_write_data_src,
     input logic in_reg_write_enable,
     input logic in_ram_write_enable,
+    input logic in_stdout_write_enable,
     output logic [31:0] pc_data,
     output logic [31:0] rs1_data,
     output logic [31:0] rs2_data,
@@ -28,7 +29,8 @@ module ID_EX_PIPELINE_REGISTER (
     output logic [1:0] next_pc_src,
     output logic [1:0] reg_write_data_src,
     output logic reg_write_enable,
-    output logic ram_write_enable
+    output logic ram_write_enable,
+    output logic stdout_write_enable
 );
 
 always_ff @(posedge clk) begin
@@ -46,6 +48,7 @@ always_ff @(posedge clk) begin
         reg_write_data_src <= 0;
         reg_write_enable <= 0;
         ram_write_enable <= 0;
+        stdout_write_enable <= 0;
     end
     else if(write_enable) begin
         pc_data <= in_pc_data;
@@ -61,6 +64,7 @@ always_ff @(posedge clk) begin
         reg_write_data_src <= in_reg_write_data_src;
         reg_write_enable <= in_reg_write_enable;
         ram_write_enable <= in_ram_write_enable;
+        stdout_write_enable <= in_stdout_write_enable;
     end
 end
 

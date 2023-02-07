@@ -165,6 +165,7 @@ logic [1:0] id_next_pc_src;
 logic [1:0] id_reg_write_data_src;
 logic id_reg_write_enable;
 logic id_ram_write_enable;
+logic id_stdout_write_enable;
 
 DECODER decoder(
     .instruction(id_instruction_data),
@@ -179,7 +180,8 @@ DECODER decoder(
     .next_pc_src(id_next_pc_src),
     .reg_write_data_src(id_reg_write_data_src),
     .reg_write_enable(id_reg_write_enable),
-    .ram_write_enable(id_ram_write_enable)
+    .ram_write_enable(id_ram_write_enable),
+    .stdout_write_enable(id_stdout_write_enable),
 );
 
 logic [31:0] id_rs1_data;
@@ -215,6 +217,7 @@ logic [1:0] ex_next_pc_src;
 logic [1:0] ex_reg_write_data_src;
 logic ex_reg_write_enable;
 logic ex_ram_write_enable;
+logic ex_stdout_write_enable;
 
 ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
@@ -233,6 +236,7 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .in_reg_write_data_src(id_reg_write_data_src),
     .in_reg_write_enable(id_reg_write_enable),
     .in_ram_write_enable(id_ram_write_enable),
+    .in_stdout_write_enable(id_stdout_write_enable),
     .pc_data(ex_pc_data),
     .rs1_data(ex_rs1_data),
     .rs2_data(ex_rs2_data),
@@ -245,7 +249,8 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .next_pc_src(ex_next_pc_src),
     .reg_write_data_src(ex_reg_write_data_src),
     .reg_write_enable(ex_reg_write_enable),
-    .ram_write_enable(ex_ram_write_enable)
+    .ram_write_enable(ex_ram_write_enable),
+    .stdout_write_enable(ex_stdout_write_enable)
 );
 
 // EX
@@ -335,6 +340,7 @@ logic [1:0] mem_next_pc_src;
 logic [1:0] mem_reg_write_data_src;
 logic mem_reg_write_enable;
 logic mem_ram_write_enable;
+logic mem_stdout_write_enable;
 
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
@@ -350,6 +356,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .in_reg_write_data_src(ex_reg_write_data_src),
     .in_reg_write_enable(ex_reg_write_enable),
     .in_ram_write_enable(ex_ram_write_enable),
+    .in_stdout_write_enable(ex_stdout_write_enable),
     .pc_data(mem_pc_data),
     .rs2_data(mem_rs2_data),
     .rd_address(mem_rd_address),
@@ -359,7 +366,8 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .next_pc_src(mem_next_pc_src),
     .reg_write_data_src(mem_reg_write_data_src),
     .reg_write_enable(mem_reg_write_enable),
-    .ram_write_enable(mem_ram_write_enable)
+    .ram_write_enable(mem_ram_write_enable),
+    .stdout_write_enable(mem_stdout_write_enable)
 );
 
 // MEM
