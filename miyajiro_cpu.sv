@@ -331,6 +331,7 @@ ALU alu_pc(
 
 // EX -> MEM
 logic [31:0] mem_pc_data;
+logic [31:0] mem_rs1_data;
 logic [31:0] mem_rs2_data;
 logic [4:0] mem_rd_address;
 logic [31:0] mem_alu_rd_result;
@@ -347,6 +348,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .clk(clk),
     .write_enable(state_controller_ex_mem_write_enable),
     .in_pc_data(ex_pc_data),
+    .in_rs1_data(ex_rs1_data),
     .in_rs2_data(ex_rs2_data),
     .in_rd_address(ex_rd_address),
     .in_alu_rd_result(ex_alu_rd_result),
@@ -358,6 +360,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .in_ram_write_enable(ex_ram_write_enable),
     .in_stdout_write_enable(ex_stdout_write_enable),
     .pc_data(mem_pc_data),
+    .rs1_data(mem_rs1_data),
     .rs2_data(mem_rs2_data),
     .rd_address(mem_rd_address),
     .alu_rd_result(mem_alu_rd_result),
