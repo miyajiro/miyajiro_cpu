@@ -20,9 +20,9 @@ module STATE_CONTROLLER(
     output logic id_ex_write_enable,
     output logic ex_mem_write_enable,
     output logic mem_wb_write_enable,
-    output logic stdout_write_enable,
     output logic ram_write_enable,
     output logic reg_write_enable,
+    output logic stdout_write_enable,
     output logic pipeline_register_reset_n
 );
 
@@ -102,9 +102,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
         `STATE_TRANSMIT_0x99: begin
@@ -119,9 +119,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
         `STATE_RECEIVE_PROGRAM_DATA_SIZE: begin
@@ -136,9 +136,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
         `STATE_RECEIVE_PROGRAM_DATA: begin
@@ -153,9 +153,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
         `STATE_TRANSMIT_0xAA: begin
@@ -170,9 +170,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
         `STATE_IF: begin
@@ -187,9 +187,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_IF_ID: begin
@@ -204,9 +204,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_ID: begin
@@ -221,9 +221,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_ID_EX: begin
@@ -238,9 +238,9 @@ always_comb begin
             id_ex_write_enable <= 1;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_EX_MEM: begin
@@ -255,9 +255,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 1;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_MEM: begin
@@ -272,9 +272,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 1;
             ram_write_enable <= 1;
             reg_write_enable <= 0;
+            stdout_write_enable <= 1;
             pipeline_register_reset_n <= 1;
         end
         `STATE_MEM_WB: begin
@@ -289,9 +289,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 1;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_WB: begin
@@ -306,9 +306,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 1;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_WB_IF: begin
@@ -323,9 +323,9 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
-            stdout_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
     endcase
