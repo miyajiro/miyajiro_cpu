@@ -15,6 +15,7 @@ module DECODER(
     output logic [1:0] reg_write_data_src,
     output logic reg_write_enable,
     output logic ram_write_enable,
+    output logic stdin_read_enable,
     output logic stdout_write_enable
 );
 
@@ -54,6 +55,7 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             case(funct3)
                 `FUNCT3_ADD_SUB: begin
@@ -104,6 +106,8 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
             case(funct3)
                 `FUNCT3_ADDI: begin
                     imm <= imm_i;
@@ -157,6 +161,8 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_RAM;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
         end
         `OPCODE_S_BASE_STORE: begin
             imm <= imm_s;
@@ -169,6 +175,8 @@ always_comb begin
             reg_write_data_src <= 0;
             reg_write_enable <= `REG_WRITE_DISABLE;
             ram_write_enable <= `RAM_WRITE_ENABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
         end
         `OPCODE_B_BASE_BRANCH: begin
             imm <= imm_b;
@@ -179,6 +187,8 @@ always_comb begin
             reg_write_data_src <= 0;
             reg_write_enable <= `REG_WRITE_DISABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
             case(funct3)
                 `FUNCT3_BEQ: begin
                     alu_rd_operator <= `ALU_OPERATOR_SUB;
@@ -217,6 +227,8 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
         end
         `OPCODE_I_BASE_JALR: begin
             imm <= imm_i;
@@ -229,6 +241,8 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
         end
         `OPCODE_U_BASE_LUI: begin
             imm <= imm_u;
@@ -241,6 +255,8 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
         end
         `OPCODE_U_BASE_AUIPC: begin
             imm <= imm_u;
@@ -253,6 +269,8 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
         end
         `OPCODE_R_STDIN_STDOUT: begin
             case (funct3)
@@ -261,11 +279,14 @@ always_comb begin
                     reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
                     reg_write_enable <= `REG_WRITE_ENABLE;
                     ram_write_enable <= `RAM_WRITE_DISABLE;
+                    stdin_read_enable <= 1;
+                    stdout_write_enable <= 0;
                 end
                 `FUNCT3_STDOUT: begin
                     next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
                     reg_write_enable <= `REG_WRITE_DISABLE;
                     ram_write_enable <= `RAM_WRITE_DISABLE;
+                    stdin_read_enable <= 0;
                     stdout_write_enable <= 1;
                 end
             endcase

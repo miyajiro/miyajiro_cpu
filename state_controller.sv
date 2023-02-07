@@ -22,6 +22,7 @@ module STATE_CONTROLLER(
     output logic mem_wb_write_enable,
     output logic ram_write_enable,
     output logic reg_write_enable,
+    output logic stdin_read_enable,
     output logic stdout_write_enable,
     output logic pipeline_register_reset_n
 );
@@ -32,7 +33,7 @@ always_ff @(posedge clk) begin
     if(!reset_n) begin
         state <= `STATE_INIT;
     end
-    else begin
+    else if(!stall) begin
         case (state)
             `STATE_INIT: begin
                 state <= `STATE_SEND_0x99;
@@ -104,6 +105,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
@@ -121,6 +123,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
@@ -138,6 +141,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
@@ -155,6 +159,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
@@ -172,6 +177,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
@@ -189,6 +195,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
@@ -206,6 +213,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
@@ -223,6 +231,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
@@ -240,6 +249,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
@@ -257,6 +267,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
@@ -274,6 +285,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 1;
             reg_write_enable <= 0;
+            stdin_read_enable <= 1;
             stdout_write_enable <= 1;
             pipeline_register_reset_n <= 1;
         end
@@ -291,6 +303,7 @@ always_comb begin
             mem_wb_write_enable <= 1;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
@@ -308,6 +321,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 1;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
@@ -325,6 +339,7 @@ always_comb begin
             mem_wb_write_enable <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
+            stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
