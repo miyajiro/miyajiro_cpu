@@ -3,7 +3,7 @@
 
 module RAM(
     input logic clk,
-    input logic wren,
+    input logic wr_en,
     input logic [`RAM_ADDRESS_BITWIDTH - 1 : 0] address,
     input logic [31:0] write_data,
     output logic[31:0] data
@@ -16,7 +16,7 @@ initial $readmemb("empty.dat", _ram);
 
 always_ff @(posedge clk) begin
     _address <= address[`RAM_ADDRESS_BITWIDTH - 1 : 2];
-    if(wren) begin
+    if(wr_en) begin
         _ram[address] <= write_data;
     end
 end

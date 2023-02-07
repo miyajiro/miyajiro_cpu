@@ -2,7 +2,7 @@
 module WB_IF_PIPELINE_REGISTER(
     input logic reset_n,
     input logic clk,
-    input logic wren,
+    input logic wr_en,
     input logic [31:0] in_next_pc_data,
     output logic [31:0] next_pc_data
 );
@@ -11,7 +11,7 @@ always_ff @(posedge clk) begin
     if(!reset_n) begin
         next_pc_data <= 0;
     end
-    else if(wren) begin
+    else if(wr_en) begin
         next_pc_data <= in_next_pc_data;
     end
 end
