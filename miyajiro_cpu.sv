@@ -9,25 +9,25 @@ module MIYAJIRO_CPU(
 
 // STATE_CONTROLLER
 logic state_controller_state_reset_n;
-logic state_controller_wb_if_wr_en;
-logic state_controller_if_id_wr_en;
-logic state_controller_id_ex_wr_en;
-logic state_controller_ex_mem_wr_en;
-logic state_controller_mem_wb_wr_en;
-logic state_controller_ram_wr_en;
-logic state_controller_reg_wr_en;
+logic state_controller_wb_if_write_enable;
+logic state_controller_if_id_write_enable;
+logic state_controller_id_ex_write_enable;
+logic state_controller_ex_mem_write_enable;
+logic state_controller_mem_wb_write_enable;
+logic state_controller_ram_write_enable;
+logic state_controller_reg_write_enable;
 logic state_controller_pipeline_register_reset_n;
 
 STATE_CONTROLLER state_controller(
     .reset_n(reset_n),
     .clk(clk),
-    .wb_if_wr_en(state_controller_wb_if_wr_en),
-    .if_id_wr_en(state_controller_if_id_wr_en),
-    .id_ex_wr_en(state_controller_id_ex_wr_en),
-    .ex_mem_wr_en(state_controller_ex_mem_wr_en),
-    .mem_wb_wr_en(state_controller_mem_wb_wr_en),
-    .ram_wr_en(state_controller_ram_wr_en),
-    .reg_wr_en(state_controller_reg_wr_en),
+    .wb_if_write_enable(state_controller_wb_if_write_enable),
+    .if_id_write_enable(state_controller_if_id_write_enable),
+    .id_ex_write_enable(state_controller_id_ex_write_enable),
+    .ex_mem_write_enable(state_controller_ex_mem_write_enable),
+    .mem_wb_write_enable(state_controller_mem_wb_write_enable),
+    .ram_write_enable(state_controller_ram_write_enable),
+    .reg_write_enable(state_controller_reg_write_enable),
     .pipeline_register_reset_n(state_controller_pipeline_register_reset_n)
 );
 
@@ -37,7 +37,7 @@ logic [31:0] if_pc_data;
 WB_IF_PIPELINE_REGISTER wb_if_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
     .clk(clk),
-    .wr_en(state_controller_wb_if_wr_en),
+    .write_enable(state_controller_wb_if_write_enable),
     .in_next_pc_data(wb_next_pc_data),
     .next_pc_data(if_pc_data)
 );
@@ -57,7 +57,7 @@ logic [31:0] id_pc_data;
 IF_ID_PIPELINE_REGISTER if_id_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
     .clk(clk),
-    .wr_en(state_controller_if_id_wr_en),
+    .write_enable(state_controller_if_id_write_enable),
     .in_instruction(if_program_memory_data),
     .in_pc_data(if_pc_data),
     .instruction(id_instruction_data),
@@ -75,8 +75,8 @@ logic [2:0] id_alu_rd_operand2_src;
 logic id_alu_pc_operand1_src;
 logic [1:0] id_next_pc_src;
 logic id_reg_write_data_src;
-logic id_reg_wr_en;
-logic id_ram_wr_en;
+logic id_reg_write_enable;
+logic id_ram_write_enable;
 
 DECODER decoder(
     .instruction(id_instruction_data),
@@ -90,21 +90,21 @@ DECODER decoder(
     .alu_pc_operand1_src(id_alu_pc_operand1_src),
     .next_pc_src(id_next_pc_src),
     .reg_write_data_src(id_reg_write_data_src),
-    .reg_wr_en(id_reg_wr_en),
-    .ram_wr_en(id_ram_wr_en)
+    .reg_write_enable(id_reg_write_enable),
+    .ram_write_enable(id_ram_write_enable)
 );
 
 logic [31:0] id_rs1_data;
 logic [31:0] id_rs2_data;
 
-logic wb_reg_combined_wr_en;
+logic wb_reg_combined_write_enable;
 logic [4:0] wb_rd_address;
 logic [31:0] wb_reg_write_data;
 
 REGISTER_FILE regfile(
     .reset_n(reset_n),
     .clk(clk),
-    .reg_wr_en(wb_reg_combined_wr_en),
+    .reg_write_enable(wb_reg_combined_write_enable),
     .read_address1(id_rs1_address),
     .read_address2(id_rs2_address),
     .write_address(wb_rd_address), // WBステージで設定.
@@ -125,13 +125,13 @@ logic [2:0] ex_alu_rd_operand2_src;
 logic ex_alu_pc_operand1_src;
 logic [1:0] ex_next_pc_src;
 logic ex_reg_write_data_src;
-logic ex_reg_wr_en;
-logic ex_ram_wr_en;
+logic ex_reg_write_enable;
+logic ex_ram_write_enable;
 
 ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
     .clk(clk),
-    .wr_en(state_controller_id_ex_wr_en),
+    .write_enable(state_controller_id_ex_write_enable),
     .in_pc_data(id_pc_data),
     .in_rs1_data(id_rs1_data),
     .in_rs2_data(id_rs2_data),
@@ -143,8 +143,8 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .in_alu_pc_operand1_src(id_alu_pc_operand1_src),
     .in_next_pc_src(id_next_pc_src),
     .in_reg_write_data_src(id_reg_write_data_src),
-    .in_reg_wr_en(id_reg_wr_en),
-    .in_ram_wr_en(id_ram_wr_en),
+    .in_reg_write_enable(id_reg_write_enable),
+    .in_ram_write_enable(id_ram_write_enable),
     .pc_data(ex_pc_data),
     .rs1_data(ex_rs1_data),
     .rs2_data(ex_rs2_data),
@@ -156,8 +156,8 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .alu_pc_operand1_src(ex_alu_pc_operand1_src),
     .next_pc_src(ex_next_pc_src),
     .reg_write_data_src(ex_reg_write_data_src),
-    .reg_wr_en(ex_reg_wr_en),
-    .ram_wr_en(ex_ram_wr_en)
+    .reg_write_enable(ex_reg_write_enable),
+    .ram_write_enable(ex_ram_write_enable)
 );
 
 // EX
@@ -245,13 +245,13 @@ logic mem_alu_rd_result_is_zero;
 logic [31:0] mem_alu_pc_result;
 logic [1:0] mem_next_pc_src;
 logic mem_reg_write_data_src;
-logic mem_reg_wr_en;
-logic mem_ram_wr_en;
+logic mem_reg_write_enable;
+logic mem_ram_write_enable;
 
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
     .clk(clk),
-    .wr_en(state_controller_ex_mem_wr_en),
+    .write_enable(state_controller_ex_mem_write_enable),
     .in_pc_data(ex_pc_data),
     .in_rs2_data(ex_rs2_data),
     .in_rd_address(ex_rd_address),
@@ -260,8 +260,8 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .in_alu_pc_result(ex_alu_pc_result),
     .in_next_pc_src(ex_next_pc_src),
     .in_reg_write_data_src(ex_reg_write_data_src),
-    .in_reg_wr_en(ex_reg_wr_en),
-    .in_ram_wr_en(ex_ram_wr_en),
+    .in_reg_write_enable(ex_reg_write_enable),
+    .in_ram_write_enable(ex_ram_write_enable),
     .pc_data(mem_pc_data),
     .rs2_data(mem_rs2_data),
     .rd_address(mem_rd_address),
@@ -270,8 +270,8 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .alu_pc_result(mem_alu_pc_result),
     .next_pc_src(mem_next_pc_src),
     .reg_write_data_src(mem_reg_write_data_src),
-    .reg_wr_en(mem_reg_wr_en),
-    .ram_wr_en(mem_ram_wr_en)
+    .reg_write_enable(mem_reg_write_enable),
+    .ram_write_enable(mem_ram_write_enable)
 );
 
 // MEM
@@ -308,9 +308,9 @@ always_comb begin
 end
 
 logic [31:0] ram_data;
-logic ram_combined_wr_en;
+logic ram_combined_write_enable;
 always_comb begin
-    ram_combined_wr_en <= (state_controller_ram_wr_en & (mem_ram_wr_en == `RAM_WRITE_ENABLE));
+    ram_combined_write_enable <= (state_controller_ram_write_enable & (mem_ram_write_enable == `RAM_WRITE_ENABLE));
 end
 
 RAM ram(
@@ -318,35 +318,35 @@ RAM ram(
     .address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
     .data(ram_data),
     .write_data(mem_rs2_data),
-    .wr_en(ram_combined_wr_en)
+    .write_enable(ram_combined_write_enable)
 );
 
 // MEM -> WB
 logic [31:0] wb_ram_data;
 logic [31:0] wb_alu_rd_result;
 logic wb_reg_write_data_src;
-logic wb_reg_wr_en;
+logic wb_reg_write_enable;
 MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
     .clk(clk),
-    .wr_en(state_controller_mem_wb_wr_en),
+    .write_enable(state_controller_mem_wb_write_enable),
     .in_ram_data(ram_data),
     .in_alu_rd_result(mem_alu_rd_result),
     .in_rd_address(mem_rd_address),
     .in_reg_write_data_src(mem_reg_write_data_src),
-    .in_reg_wr_en(mem_reg_wr_en),
+    .in_reg_write_enable(mem_reg_write_enable),
     .in_next_pc_data(mem_next_pc_data),
     .ram_data(wb_ram_data),
     .alu_rd_result(wb_alu_rd_result),
     .rd_address(wb_rd_address),
     .reg_write_data_src(wb_reg_write_data_src),
-    .reg_wr_en(wb_reg_wr_en),
+    .reg_write_enable(wb_reg_write_enable),
     .next_pc_data(wb_next_pc_data)
 );
 
 // WB
 always_comb begin
-    wb_reg_combined_wr_en <= (state_controller_reg_wr_en & (wb_reg_wr_en == `REG_WRITE_ENABLE));
+    wb_reg_combined_write_enable <= (state_controller_reg_write_enable & (wb_reg_write_enable == `REG_WRITE_ENABLE));
 end
 
 always_comb begin

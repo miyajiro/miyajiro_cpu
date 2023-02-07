@@ -2,7 +2,7 @@
 module IF_ID_PIPELINE_REGISTER (
     input logic reset_n,
     input logic clk,
-    input logic wr_en,
+    input logic write_enable,
     input logic [31:0] in_instruction,
     input logic [31:0] in_pc_data,
     output logic[31:0] instruction,
@@ -14,7 +14,7 @@ always_ff @(posedge clk) begin
         instruction <= 0;
         pc_data <= 0;
     end
-    else if(wr_en) begin
+    else if(write_enable) begin
         instruction <= in_instruction;
         pc_data <= in_pc_data;
     end

@@ -2,7 +2,7 @@
 module REGISTER_FILE (
     input logic reset_n,
     input logic clk,
-    input logic reg_wr_en,
+    input logic reg_write_enable,
     input logic [4:0] read_address1,
     input logic [4:0] read_address2,
     input logic [4:0] write_address,
@@ -87,7 +87,7 @@ always_comb begin
 end
 
 always_comb begin
-    _write_sel <= (reg_wr_en == 1) ? (32'b1 << write_address) : (32'b0);
+    _write_sel <= (reg_write_enable == 1) ? (32'b1 << write_address) : (32'b0);
     read_data1 <= mux_reg(read_address1, regs);
     read_data2 <= mux_reg(read_address2, regs);
 end

@@ -8,17 +8,17 @@ module STATE_CONTROLLER(
     input logic program_data_size_fetch_finished,
     input logic program_data_fetch_finished,
     output logic transmit_0x99,
-    output logic program_data_size_wr_en,
-    output logic program_memory_wr_en,
+    output logic program_data_size_write_enable,
+    output logic program_memory_write_enable,
     output logic transmit_0xAA,
-    output logic stdin_memory_wr_en,
-    output logic wb_if_wr_en,
-    output logic if_id_wr_en,
-    output logic id_ex_wr_en,
-    output logic ex_mem_wr_en,
-    output logic mem_wb_wr_en,
-    output logic ram_wr_en,
-    output logic reg_wr_en,
+    output logic stdin_memory_write_enable,
+    output logic wb_if_write_enable,
+    output logic if_id_write_enable,
+    output logic id_ex_write_enable,
+    output logic ex_mem_write_enable,
+    output logic mem_wb_write_enable,
+    output logic ram_write_enable,
+    output logic reg_write_enable,
     output logic pipeline_register_reset_n
 );
 
@@ -67,103 +67,103 @@ end
 always_comb begin
     case(state)
         `STATE_INIT:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 0;
         end
         `STATE_IF:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_IF_ID:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 1;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 1;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_ID:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_ID_EX:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 1;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 1;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_EX_MEM:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 1;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 1;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_MEM:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 1;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 1;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_MEM_WB:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 1;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 1;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         `STATE_WB:begin
-            wb_if_wr_en <= 0;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 1;
+            wb_if_write_enable <= 0;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 1;
             pipeline_register_reset_n <= 1;
         end
         `STATE_WB_IF:begin
-            wb_if_wr_en <= 1;
-            if_id_wr_en <= 0;
-            id_ex_wr_en <= 0;
-            ex_mem_wr_en <= 0;
-            mem_wb_wr_en <= 0;
-            ram_wr_en <= 0;
-            reg_wr_en <= 0;
+            wb_if_write_enable <= 1;
+            if_id_write_enable <= 0;
+            id_ex_write_enable <= 0;
+            ex_mem_write_enable <= 0;
+            mem_wb_write_enable <= 0;
+            ram_write_enable <= 0;
+            reg_write_enable <= 0;
             pipeline_register_reset_n <= 1;
         end
         default:begin

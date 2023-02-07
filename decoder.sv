@@ -13,8 +13,8 @@ module DECODER(
     output logic alu_pc_operand1_src,
     output logic [1:0] next_pc_src,
     output logic reg_write_data_src,
-    output logic reg_wr_en,
-    output logic ram_wr_en
+    output logic reg_write_enable,
+    output logic ram_write_enable
 );
 
 logic [6:0] opcode;
@@ -51,8 +51,8 @@ always_comb begin
             alu_pc_operand1_src <= 0;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
-            reg_wr_en <= `REG_WRITE_ENABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
             case(funct3)
                 `FUNCT3_ADD_SUB: begin
                     case(funct7)
@@ -100,8 +100,8 @@ always_comb begin
             alu_pc_operand1_src <= 0;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
-            reg_wr_en <= `REG_WRITE_ENABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
             case(funct3)
                 `FUNCT3_ADDI: begin
                     imm <= imm_i;
@@ -153,8 +153,8 @@ always_comb begin
             alu_pc_operand1_src <= 0;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_RAM;
-            reg_wr_en <= `REG_WRITE_ENABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_S_BASE_STORE: begin
             imm <= imm_s;
@@ -165,8 +165,8 @@ always_comb begin
             alu_pc_operand1_src <= 0;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= 0;
-            reg_wr_en <= `REG_WRITE_DISABLE;
-            ram_wr_en <= `RAM_WRITE_ENABLE;
+            reg_write_enable <= `REG_WRITE_DISABLE;
+            ram_write_enable <= `RAM_WRITE_ENABLE;
         end
         `OPCODE_B_BASE_BRANCH: begin
             imm <= imm_b;
@@ -175,8 +175,8 @@ always_comb begin
             alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_RS2;
             alu_pc_operand1_src <= `ALU_PC_OPERAND1_SRC_PC;
             reg_write_data_src <= 0;
-            reg_wr_en <= `REG_WRITE_DISABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_DISABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
             case(funct3)
                 `FUNCT3_BEQ: begin
                     alu_rd_operator <= `ALU_OPERATOR_SUB;
@@ -213,8 +213,8 @@ always_comb begin
             alu_pc_operand1_src <= `ALU_PC_OPERAND1_SRC_PC;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
-            reg_wr_en <= `REG_WRITE_ENABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_I_BASE_JALR: begin
             imm <= imm_i;
@@ -225,8 +225,8 @@ always_comb begin
             alu_pc_operand1_src <= `ALU_PC_OPERAND1_SRC_RS1;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
-            reg_wr_en <= `REG_WRITE_ENABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_U_BASE_LUI: begin
             imm <= imm_u;
@@ -237,8 +237,8 @@ always_comb begin
             alu_pc_operand1_src <= 0;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
-            reg_wr_en <= `REG_WRITE_ENABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
         end
         `OPCODE_U_BASE_AUIPC: begin
             imm <= imm_u;
@@ -249,8 +249,8 @@ always_comb begin
             alu_pc_operand1_src <= 0;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
-            reg_wr_en <= `REG_WRITE_ENABLE;
-            ram_wr_en <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
         end
     endcase
 end

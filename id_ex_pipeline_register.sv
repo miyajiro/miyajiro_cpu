@@ -2,7 +2,7 @@
 module ID_EX_PIPELINE_REGISTER (
     input logic reset_n,
     input logic clk,
-    input logic wr_en,
+    input logic write_enable,
     input logic [31:0] in_pc_data,
     input logic [31:0] in_rs1_data,
     input logic [31:0] in_rs2_data,
@@ -14,8 +14,8 @@ module ID_EX_PIPELINE_REGISTER (
     input logic in_alu_pc_operand1_src,
     input logic [1:0] in_next_pc_src,
     input logic in_reg_write_data_src,
-    input logic in_reg_wr_en,
-    input logic in_ram_wr_en,
+    input logic in_reg_write_enable,
+    input logic in_ram_write_enable,
     output logic [31:0] pc_data,
     output logic [31:0] rs1_data,
     output logic [31:0] rs2_data,
@@ -27,8 +27,8 @@ module ID_EX_PIPELINE_REGISTER (
     output logic alu_pc_operand1_src,
     output logic [1:0] next_pc_src,
     output logic reg_write_data_src,
-    output logic reg_wr_en,
-    output logic ram_wr_en
+    output logic reg_write_enable,
+    output logic ram_write_enable
 );
 
 always_ff @(posedge clk) begin
@@ -44,10 +44,10 @@ always_ff @(posedge clk) begin
         alu_pc_operand1_src <= 0;
         next_pc_src <= 0;
         reg_write_data_src <= 0;
-        reg_wr_en <= 0;
-        ram_wr_en <= 0;
+        reg_write_enable <= 0;
+        ram_write_enable <= 0;
     end
-    else if(wr_en) begin
+    else if(write_enable) begin
         pc_data <= in_pc_data;
         rs1_data <= in_rs1_data;
         rs2_data <= in_rs2_data;
@@ -59,8 +59,8 @@ always_ff @(posedge clk) begin
         alu_pc_operand1_src <= in_alu_pc_operand1_src;
         next_pc_src <= in_next_pc_src;
         reg_write_data_src <= in_reg_write_data_src;
-        reg_wr_en <= in_reg_wr_en;
-        ram_wr_en <= in_ram_wr_en;
+        reg_write_enable <= in_reg_write_enable;
+        ram_write_enable <= in_ram_write_enable;
     end
 end
 
