@@ -1,10 +1,10 @@
 `default_nettype none
 
 module UART_TX #(CLK_PER_HALF_BIT = 5208) (
-   input wire [7:0] sdata,
-   input wire       tx_start,
    input wire       clk,
    input wire       reset_n,
+   input wire [7:0] sdata,
+   input wire       tx_start,
    output logic     tx_busy,
    output logic     txd
 );
