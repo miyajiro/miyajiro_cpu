@@ -7,21 +7,25 @@
 `define PROGRAM_MEMORY_SIZE 1024
 `define PROGRAM_MEMORY_ADDRESS_BITWIDTH 10
 
+// STDIN_MEMORY
+`define FIFO_CAPACITY_BITWIDTH 16
+`define FIFO_CAPACITY_BYTE 65536
+
 // STATE CONTROLLER
-`define STATE_INIT                  4'h0
-`define STATE_SEND_0x99             4'h1
-`define STATE_RECEIVE_PROGRAM_SIZE  4'h2
-`define STATE_RECEIVE_PROGRAM       4'h3
-`define STATE_SEND_0xAA             4'h4
-`define STATE_IF                    4'h5
-`define STATE_IF_ID                 4'h6
-`define STATE_ID                    4'h7
-`define STATE_ID_EX                 4'h8
-`define STATE_EX_MEM                4'h9
-`define STATE_MEM                   4'hA
-`define STATE_MEM_WB                4'hB
-`define STATE_WB                    4'hC
-`define STATE_WB_IF                 4'hD
+`define STATE_INIT                      4'h0
+`define STATE_TRANSMIT_0x99             4'h1
+`define STATE_RECEIVE_PROGRAM_DATA_SIZE 4'h2
+`define STATE_RECEIVE_PROGRAM_DATA      4'h3
+`define STATE_TRANSMIT_0xAA             4'h4
+`define STATE_IF                        4'h5
+`define STATE_IF_ID                     4'h6
+`define STATE_ID                        4'h7
+`define STATE_ID_EX                     4'h8
+`define STATE_EX_MEM                    4'h9
+`define STATE_MEM                       4'hA
+`define STATE_MEM_WB                    4'hB
+`define STATE_WB                        4'hC
+`define STATE_WB_IF                     4'hD
 
 // CONTROL
 `define ALU_RD_OPERAND1_SRC_RS1         2'h0
@@ -48,8 +52,9 @@
 `define RAM_WRITE_ENABLE        1'b1
 `define RAM_WRITE_DISABLE       1'b0
 
-`define REG_WRITE_DATA_SRC_ALU  1'b0
-`define REG_WRITE_DATA_SRC_RAM  1'b1
+`define REG_WRITE_DATA_SRC_ALU      2'b0
+`define REG_WRITE_DATA_SRC_RAM      2'b1
+`define REG_WRITE_DATA_SRC_STDIN    2'h2
 
 `define ALU_RD_RESULT_IS_ZERO      1'b1
 `define ALU_RD_RESULT_IS_NOT_ZERO  1'b0
@@ -67,6 +72,7 @@
 `define OPCODE_R_FLOAT_ARITHMETIC   7'b0111011
 `define OPCODE_I_FLOAT_LOAD         7'b0001011
 `define OPCODE_S_FLOAT_STORE        7'b0101011
+`define OPCODE_R_STDIN_STDOUT       7'b1111111
 
 // FUNCT3
 `define FUNCT3_ADD_SUB      3'h0
@@ -102,12 +108,15 @@
 
 `define FUNCT3_MUL          3'h0
 `define FUNCT3_MULH         3'h1
-`define FUNCT3_MULU        3'h2
-`define FUNCT3_MULHU         3'h3
+`define FUNCT3_MULU         3'h2
+`define FUNCT3_MULHU        3'h3
 `define FUNCT3_DIV          3'h4
 `define FUNCT3_DIVU         3'h5
 `define FUNCT3_REM          3'h6
 `define FUNCT3_REMU         3'h7
+
+`define FUNCT3_STDIN        3'h0
+`define FUNCT3_STDOUT       3'h1
 
 // FUNCT7
 `define FUNCT7_ADD              7'h00
@@ -133,6 +142,9 @@
 `define FUNCT7_DIVU             7'h01
 `define FUNCT7_REM              7'h01
 `define FUNCT7_REMU             7'h01
+
+`define FUNCT7_STDIN            7'h0
+`define FUNCT7_STDOUT           7'h0
 
 // ALU_OPERATOR
 `define ALU_OPERATOR_ADD      5'h0
