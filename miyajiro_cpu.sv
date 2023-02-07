@@ -98,6 +98,9 @@ UART_CONTROLLER uart_controller(
 );
 
 // STDIN_MEMORY
+logic [7:0] stdin_memory_read_data;
+logic stdin_memory_read_ready;
+logic mem_stdin_memory_read_enable;
 FIFO stdin_memory(
     .reset_n(reset_n),
     .clk(clk),
@@ -105,22 +108,23 @@ FIFO stdin_memory(
     .write_enable(uart_controller_stdin_memory_write_enable),
     .write_data(uart_controller_stdin_memory_write_data),
 
-    .read_data(),
-    .read_ready(),
+    .read_data(stdin_memory_read_data),
+    .read_ready(stdin_memory_read_ready),
     .write_ready(stdin_memory_stdin_memory_write_ready)
 );
 
 // STDOUT_MEMORY
+logic stdout_memory_stdout_memory_write_ready;
 FIFO stdout_memory(
     .reset_n(reset_n),
     .clk(clk),
     .read_enable(uart_controller_stdout_memory_read_enable),
-    .write_enable(),
-    .write_data(),
+    .write_enable(state_controller_stdout_write_enable & mem_stdout_write_enable),
+    .write_data(mem_rs1_data),
 
     .read_data(stdout_memory_stdout_memory_read_data),
     .read_ready(stdout_memory_stdout_memory_read_ready),
-    .write_ready()
+    .write_ready(stdout_memory_stdout_memory_write_ready)
 );
 
 // WB -> IF
@@ -419,6 +423,7 @@ always_comb begin
     endcase
 end
 
+// ram access
 logic [31:0] ram_data;
 logic ram_combined_write_enable;
 always_comb begin
@@ -432,6 +437,19 @@ RAM ram(
     .write_data(mem_rs2_data),
     .write_enable(ram_combined_write_enable)
 );
+
+// stdin access
+always_comb begin
+    if(state_controller_stdin_read_enable & mem_stdin_read_enable) begin
+        if (stdin_memory_read_ready) begin
+            mem_stdin_memory_read_enable <= 1;
+            stall <= 0;
+        end else begin
+            mem_stdin_memory_read_enable <= 0;
+            stall <= 1;
+        end
+    end
+end
 
 // MEM -> WB
 logic [31:0] wb_ram_data;
