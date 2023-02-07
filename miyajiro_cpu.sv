@@ -8,7 +8,19 @@ module MIYAJIRO_CPU(
 );
 
 // STATE_CONTROLLER
-logic state_controller_state_reset_n;
+logic stall;
+
+logic uart_controller_transmit_0x99_finished,
+logic uart_controller_receive_program_data_size_finished,
+logic uart_controller_receive_program_data_finished,
+logic uart_controller_transmit_0xAA_finished,
+
+logic state_controller_transmit_0x99;
+logic state_controller_receive_program_data_size;
+logic state_controller_receive_program_data;
+logic state_controller_transmit_0xAA,
+logic state_controller_receive_stdin_data,
+logic state_controller_transmit_stdout_data,
 logic state_controller_wb_if_write_enable;
 logic state_controller_if_id_write_enable;
 logic state_controller_id_ex_write_enable;
@@ -21,6 +33,18 @@ logic state_controller_pipeline_register_reset_n;
 STATE_CONTROLLER state_controller(
     .reset_n(reset_n),
     .clk(clk),
+    .stall(stall),
+    .transmit_0x99_finished(uart_controller_transmit_0x99_finished),
+    .receive_program_data_size_finished(uart_controller_receive_program_data_size_finished),
+    .receive_program_data_finished(uart_controller_receive_program_data_finished),
+    .transmit_0xAA_finished(uart_controller_transmit_0xAA_finished),
+
+    .transmit_0x99(state_controller_transmit_0x99),
+    .receive_program_data_size(state_controller_receive_program_data_size),
+    .receive_program_data(state_controller_receive_program_data),
+    .transmit_0xAA(state_controller_transmit_0xAA),
+    .receive_stdin_data(state_controller_receive_stdin_data),
+    .transmit_stdout_data(state_controller_transmit_stdout_data),
     .wb_if_write_enable(state_controller_wb_if_write_enable),
     .if_id_write_enable(state_controller_if_id_write_enable),
     .id_ex_write_enable(state_controller_id_ex_write_enable),
@@ -29,6 +53,70 @@ STATE_CONTROLLER state_controller(
     .ram_write_enable(state_controller_ram_write_enable),
     .reg_write_enable(state_controller_reg_write_enable),
     .pipeline_register_reset_n(state_controller_pipeline_register_reset_n)
+);
+
+// UART CONTROLLER
+logic stdin_memory_stdin_memory_write_ready;
+logic stdout_memory_stdin_memory_read_ready;
+logic [7:0] stdout_memory_stdout_memory_read_data;
+
+logic uart_controller_program_memory_write_address,
+logic uart_controller_program_memory_write_enable,
+logic [31:0] uart_controller_program_memory_write_data,
+logic uart_controller_stdin_memory_write_enable,
+logic [7:0] uart_controller_stdin_memory_write_data,
+logic uart_controller_stdout_memory_read_enable,
+UART_CONTROLLER uart_controller(
+    .reset_n(reset_n),
+    .clk(clk),
+    .cpu_uart_rxd(cpu_uart_rxd),
+    .transmit_0x99(state_controller_transmit_0x99),
+    .receive_program_data_size(state_controller_receive_program_data_size),
+    .receive_program_data(state_controller_receive_program_data),
+    .transmit_0xAA(state_controller_transmit_0xAA),
+    .receive_stdin_data(state_controller_receive_stdin_data),
+    .transmit_stdout_data(state_controller_transmit_stdout_data),
+    .stdin_memory_write_ready(stdin_memory_stdin_memory_write_ready),
+    .stdout_memory_read_ready(stdout_memory_stdout_memory_read_ready),
+    .stdout_memory_read_data(stdout_memory_stdout_memory_read_data),
+
+    .cpu_uart_txd(cpu_uart_txd),
+    .transmit_0x99_finished(uart_controller_transmit_0x99_finished),
+    .receive_program_data_size_finished(uart_controller_receive_program_data_size_finished),
+    .receive_program_data_finished(uart_controller_receive_program_data_finished),
+    .transmit_0xAA_finished(uart_controller_transmit_0xAA_finished),
+    .program_memory_write_address(uart_controller_program_memory_write_address),
+    .program_memory_write_enable(uart_controller_program_memory_write_enable),
+    .program_memory_write_data(uart_controller_program_memory_write_data),
+    .stdin_memory_write_enable(uart_controller_stdin_memory_write_enable),
+    .stdin_memory_write_data(uart_controller_stdin_memory_write_data),
+    .stdout_memory_read_enable(uart_controller_stdout_memory_read_enable),
+);
+
+// STDIN_MEMORY
+FIFO stdin_memory(
+    .reset_n(reset_n),
+    .clk(clk),
+    .read_enable(),
+    .write_enable(uart_controller_stdin_memory_write_enable),
+    .write_data(uart_controller_stdin_memory_write_data),
+
+    .read_data(),
+    .read_ready(),
+    .write_ready(stdin_memory_stdin_memory_write_ready)
+);
+
+// STDOUT_MEMORY
+FIFO stdout_memory(
+    .reset_n(reset_n),
+    .clk(clk),
+    .read_enable(uart_controller_stdout_memory_read_enable),
+    .write_enable(),
+    .write_data(),
+
+    .read_data(stdout_memory_stdout_memory_read_data),
+    .read_ready(stdout_memory_stdout_memory_read_ready),
+    .write_ready()
 );
 
 // WB -> IF
@@ -74,7 +162,7 @@ logic [1:0] id_alu_rd_operand1_src;
 logic [2:0] id_alu_rd_operand2_src;
 logic id_alu_pc_operand1_src;
 logic [1:0] id_next_pc_src;
-logic id_reg_write_data_src;
+logic [1:0] id_reg_write_data_src;
 logic id_reg_write_enable;
 logic id_ram_write_enable;
 
@@ -124,7 +212,7 @@ logic [1:0] ex_alu_rd_operand1_src;
 logic [2:0] ex_alu_rd_operand2_src;
 logic ex_alu_pc_operand1_src;
 logic [1:0] ex_next_pc_src;
-logic ex_reg_write_data_src;
+logic [1:0] ex_reg_write_data_src;
 logic ex_reg_write_enable;
 logic ex_ram_write_enable;
 
@@ -244,7 +332,7 @@ logic [31:0] mem_alu_rd_result;
 logic mem_alu_rd_result_is_zero;
 logic [31:0] mem_alu_pc_result;
 logic [1:0] mem_next_pc_src;
-logic mem_reg_write_data_src;
+logic [1:0] mem_reg_write_data_src;
 logic mem_reg_write_enable;
 logic mem_ram_write_enable;
 
@@ -324,7 +412,7 @@ RAM ram(
 // MEM -> WB
 logic [31:0] wb_ram_data;
 logic [31:0] wb_alu_rd_result;
-logic wb_reg_write_data_src;
+logic [1:0] wb_reg_write_data_src;
 logic wb_reg_write_enable;
 MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
