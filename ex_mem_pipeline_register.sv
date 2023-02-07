@@ -10,7 +10,7 @@ module EX_MEM_PIPELINE_REGISTER(
     input logic in_alu_rd_result_is_zero,
     input logic [31:0] in_alu_pc_result,
     input logic [1:0] in_next_pc_src,
-    input logic in_reg_write_data_src,
+    input logic [1:0] in_reg_write_data_src,
     input logic in_reg_write_enable,
     input logic in_ram_write_enable,
     output logic [31:0] pc_data,
@@ -20,7 +20,7 @@ module EX_MEM_PIPELINE_REGISTER(
     output logic alu_rd_result_is_zero,
     output logic [31:0] alu_pc_result,
     output logic [1:0] next_pc_src,
-    output logic reg_write_data_src,
+    output logic [1:0] reg_write_data_src,
     output logic reg_write_enable,
     output logic ram_write_enable
 );
