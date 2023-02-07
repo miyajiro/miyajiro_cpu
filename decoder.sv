@@ -12,7 +12,7 @@ module DECODER(
     output logic [2:0] alu_rd_operand2_src,
     output logic alu_pc_operand1_src,
     output logic [1:0] next_pc_src,
-    output logic reg_write_data_src,
+    output logic [1:0] reg_write_data_src,
     output logic reg_write_enable,
     output logic ram_write_enable
 );
@@ -251,6 +251,21 @@ always_comb begin
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
             ram_write_enable <= `RAM_WRITE_DISABLE;
+        end
+        `OPCODE_R_STDIN_STDOUT: begin
+            case (funct3)
+                `FUNCT3_STDIN: begin
+                    next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
+                    reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
+                    reg_write_enable <= `REG_WRITE_ENABLE;
+                    ram_write_enable <= `RAM_WRITE_DISABLE;
+                end
+                `FUNCT3_STDOUT: begin
+                    next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
+                    reg_write_enable <= `REG_WRITE_DISABLE;
+                    ram_write_enable <= `RAM_WRITE_DISABLE;
+                end
+            endcase
         end
     endcase
 end
