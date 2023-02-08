@@ -405,9 +405,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
 
 // MEM
 logic [`RAM_ADDRESS_BITWIDTH - 1:0] ram_addr;
-always_comb begin
-    ram_addr <= mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
-end
+assign ram_addr = mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
 
 logic [31:0] mem_pc_data_plus_4;
 always_comb begin
