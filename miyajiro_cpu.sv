@@ -196,7 +196,7 @@ logic [4:0] id_alu_rd_operator;
 logic [1:0] id_alu_rd_operand1_src;
 logic [2:0] id_alu_rd_operand2_src;
 logic id_alu_pc_operand1_src;
-logic [1:0] id_next_pc_src;
+logic [2:0] id_next_pc_src;
 logic [1:0] id_reg_write_data_src;
 logic id_reg_write_enable;
 logic id_ram_read;
@@ -252,7 +252,7 @@ logic [4:0] ex_alu_rd_operator;
 logic [1:0] ex_alu_rd_operand1_src;
 logic [2:0] ex_alu_rd_operand2_src;
 logic ex_alu_pc_operand1_src;
-logic [1:0] ex_next_pc_src;
+logic [2:0] ex_next_pc_src;
 logic [1:0] ex_reg_write_data_src;
 logic ex_reg_write_enable;
 logic ex_ram_read;
@@ -381,7 +381,7 @@ logic [4:0] mem_rd_address;
 logic [31:0] mem_alu_rd_result;
 logic mem_alu_rd_result_is_zero;
 logic [31:0] mem_alu_pc_result;
-logic [1:0] mem_next_pc_src;
+logic [2:0] mem_next_pc_src;
 logic [1:0] mem_reg_write_data_src;
 logic mem_reg_write_enable;
 logic mem_ram_read;
@@ -434,6 +434,9 @@ end
 logic [31:0] mem_next_pc_data;
 always_comb begin
     case(mem_next_pc_src)
+        `NEXT_PC_SRC_FINISH: begin
+            mem_next_pc_data <= mem_next_pc_data;
+        end
         `NEXT_PC_SRC_ALWAYS_NOT_BRANCH: begin
             mem_next_pc_data <= mem_pc_data_plus_2;
         end

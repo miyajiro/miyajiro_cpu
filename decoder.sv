@@ -11,7 +11,7 @@ module DECODER(
     output logic [1:0] alu_rd_operand1_src,
     output logic [2:0] alu_rd_operand2_src,
     output logic alu_pc_operand1_src,
-    output logic [1:0] next_pc_src,
+    output logic [2:0] next_pc_src,
     output logic [1:0] reg_write_data_src,
     output logic reg_write_enable,
     output logic ram_read,
@@ -377,6 +377,14 @@ always_comb begin
                     stdout_write_enable <= 1;
                 end
             endcase
+        end
+        `OPCODE_I_FINISH: begin
+            next_pc_src <= `NEXT_PC_SRC_FINISH;
+            ram_read <= 0;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
+            reg_write_enable <= `REG_WRITE_DISABLE;
+            stdin_read_enable <= 0;
+            stdout_write_enable <= 0;
         end
     endcase
 end

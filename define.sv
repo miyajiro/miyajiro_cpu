@@ -45,10 +45,11 @@
 `define ALU_PC_OPERAND1_SRC_PC  1'b0
 `define ALU_PC_OPERAND1_SRC_RS1 1'b1
 
-`define NEXT_PC_SRC_ALWAYS_NOT_BRANCH                   2'h0
-`define NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_ZERO        2'h1
-`define NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_NOT_ZERO    2'h2
-`define NEXT_PC_SRC_ALWAYS_BRANCH                       2'h3
+`define NEXT_PC_SRC_FINISH                              3'h0
+`define NEXT_PC_SRC_ALWAYS_NOT_BRANCH                   3'h1
+`define NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_ZERO        3'h2
+`define NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_NOT_ZERO    3'h3
+`define NEXT_PC_SRC_ALWAYS_BRANCH                       3'h4
 
 `define REG_WRITE_ENABLE        1'b1
 `define REG_WRITE_DISABLE       1'b0
@@ -77,6 +78,7 @@
 `define OPCODE_I_FLOAT_LOAD         7'b0001011
 `define OPCODE_S_FLOAT_STORE        7'b0101011
 `define OPCODE_R_STDIN_STDOUT       7'b1111111
+`define OPCODE_I_FINISH             7'b0000000
 
 // FUNCT3
 `define FUNCT3_ADD_SUB_MUL       3'h0
@@ -112,6 +114,8 @@
 
 `define FUNCT3_STDIN        3'h0
 `define FUNCT3_STDOUT       3'h1
+
+`define FUNCT3_FINISH       3'h0
 
 // FUNCT7
 `define FUNCT7_ADD              7'h00
