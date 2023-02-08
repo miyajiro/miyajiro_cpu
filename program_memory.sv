@@ -21,9 +21,7 @@ assign inner_write_address = write_address[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:
 // initial $readmemb("program.dat", _program_memory);
 
 always_ff @(posedge clk) begin
-    if(!reset_n) begin
-        read_data <= 0;
-    end else if (write_enable) begin
+    if (write_enable) begin
         inner_program_memory[inner_write_address] <= write_data;
     end
 end
