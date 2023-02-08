@@ -452,30 +452,39 @@ always_comb begin
 end
 
 // ram access
-logic [31:0] ram_data;
-logic ram_combined_write_enable;
+logic [31:0] mem_ram_data;
+logic mem_ram_read_ready;
+logic mem_ram_combined_write_enable;
 always_comb begin
-    ram_combined_write_enable <= (state_controller_ram_write_enable & (mem_ram_write_enable == `RAM_WRITE_ENABLE));
+    mem_ram_combined_write_enable <= (state_controller_ram_write_enable & (mem_ram_write_enable == `RAM_WRITE_ENABLE));
 end
 
 RAM ram(
     .clk(clk),
-    .address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
-    .data(ram_data),
+    .read_address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
+    .write_address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
     .write_data(mem_rs2_data),
-    .write_enable(ram_combined_write_enable)
+    .write_enable(mem_ram_combined_write_enable),
+    .read_data(mem_ram_data)
 );
 
-// stdin access
+
+logic ram_read_stall;
+always_comb begin
+    if(state_controller_ram_read & mem_ram_read) begin
+        ram_read_stall <= ~ram_read_ready;
+    end else begin
+        ram_read_stall <= 0;
+    end
+end
+
+logic stdin_read_stall;
 always_comb begin
     if(state_controller_stdin_read_enable & mem_stdin_read_enable) begin
-        if (stdin_memory_read_ready) begin
-            mem_stdin_memory_read_enable <= 1;
-            stall <= 0;
-        end else begin
-            mem_stdin_memory_read_enable <= 0;
-            stall <= 1;
-        end
+        mem_stdin_memory_read_enable <= stdin_memory_read_ready;
+        stdin_read_stall <= ~stdin_memory_read_ready;
+    end else begin
+        stdin_read_stall <= 0;
     end
 end
 
@@ -488,7 +497,7 @@ MEM_WB_PIPELINE_REGISTER mem_wb_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
     .clk(clk),
     .write_enable(state_controller_mem_wb_write_enable),
-    .in_ram_data(ram_data),
+    .in_ram_data(mem_ram_data),
     .in_alu_rd_result(mem_alu_rd_result),
     .in_rd_address(mem_rd_address),
     .in_reg_write_data_src(mem_reg_write_data_src),
