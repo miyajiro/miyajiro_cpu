@@ -40,6 +40,8 @@ logic uart_rx_rdata_ready;
 logic uart_rx_ferr;
 logic uart_tx_tx_busy;
 
+logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0] next_program_memory_write_address;
+
 // uart_rx周り
 always_ff @(posedge clk) begin
     if(~reset_n) begin
@@ -50,6 +52,7 @@ always_ff @(posedge clk) begin
         receive_program_data_size_finished <= 0;
         receive_program_data_finished <= 0;
         program_memory_write_address <= 0;
+        next_program_memory_write_address <= 0;
         program_memory_write_enable <= 0;
         program_memory_write_data <= 0;
         stdin_memory_write_enable <= 0;
@@ -67,7 +70,8 @@ always_ff @(posedge clk) begin
             if(receiving_data_section == 3) begin
                 program_memory_write_enable <= 1;
                 program_memory_write_data <= {uart_rx_rdata, received_program_data_flagment};
-                program_memory_write_address <= program_memory_write_address + 4;
+                program_memory_write_address <= next_program_memory_write_address;
+                next_program_memory_write_address <= next_program_memory_write_address + 4;
                 received_program_data_flagment <= 0;
             end else begin
                 received_program_data_flagment <= received_program_data_flagment | (uart_rx_rdata << (receiving_data_section * 8));
