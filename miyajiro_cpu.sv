@@ -83,7 +83,7 @@ logic stdin_memory_stdin_memory_write_ready;
 logic stdout_memory_stdin_memory_read_ready;
 logic [7:0] stdout_memory_stdout_memory_read_data;
 
-logic uart_controller_program_memory_write_address;
+logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0] uart_controller_program_memory_write_address;
 logic uart_controller_program_memory_write_enable;
 logic [31:0] uart_controller_program_memory_write_data;
 logic uart_controller_stdin_memory_write_enable;
@@ -136,12 +136,13 @@ FIFO stdin_memory(
 logic [31:0] mem_rs1_data;
 logic mem_stdout_write_enable;
 logic stdout_memory_stdout_memory_write_ready;
+
 FIFO stdout_memory(
     .reset_n(reset_n),
     .clk(clk),
     .read_enable(uart_controller_stdout_memory_read_enable),
     .write_enable(state_controller_stdout_write_enable & mem_stdout_write_enable),
-    .write_data(mem_rs1_data),
+    .write_data(mem_rs1_data[7:0]),
 
     .read_data(stdout_memory_stdout_memory_read_data),
     .read_ready(stdout_memory_stdout_memory_read_ready),
@@ -165,6 +166,9 @@ PROGRAM_MEMORY program_memory(
     .clk(clk),
     .reset_n(reset_n),
     .read_address(if_pc_data[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0]),
+    .write_address(uart_controller_program_memory_write_address),
+    .write_data(uart_controller_program_memory_write_data),
+    .write_enable(uart_controller_program_memory_write_enable),
     .read_data(if_program_memory_data)
 );
 
