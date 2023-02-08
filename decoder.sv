@@ -14,6 +14,7 @@ module DECODER(
     output logic [1:0] next_pc_src,
     output logic [1:0] reg_write_data_src,
     output logic reg_write_enable,
+    output logic ram_read,
     output logic ram_write_enable,
     output logic stdin_read_enable,
     output logic stdout_write_enable
@@ -84,6 +85,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -135,6 +137,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -190,6 +193,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_RAM;
             reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_read <= 1;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -204,6 +208,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= 0;
             reg_write_enable <= `REG_WRITE_DISABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_ENABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -216,6 +221,7 @@ always_comb begin
             alu_pc_operand1_src <= `ALU_PC_OPERAND1_SRC_PC;
             reg_write_data_src <= 0;
             reg_write_enable <= `REG_WRITE_DISABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -256,6 +262,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -270,6 +277,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -284,6 +292,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
@@ -298,6 +307,7 @@ always_comb begin
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
             reg_write_enable <= `REG_WRITE_ENABLE;
+            ram_read <= 0;
             ram_write_enable <= `RAM_WRITE_DISABLE;
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;

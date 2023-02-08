@@ -13,6 +13,7 @@ module EX_MEM_PIPELINE_REGISTER(
     input logic [1:0] in_next_pc_src,
     input logic [1:0] in_reg_write_data_src,
     input logic in_reg_write_enable,
+    input logic in_ram_read,
     input logic in_ram_write_enable,
     input logic in_stdin_read_enable,
     input logic in_stdout_write_enable,
@@ -26,6 +27,7 @@ module EX_MEM_PIPELINE_REGISTER(
     output logic [1:0] next_pc_src,
     output logic [1:0] reg_write_data_src,
     output logic reg_write_enable,
+    output logic ram_read,
     output logic ram_write_enable,
     output logic stdin_read_enable,
     output logic stdout_write_enable
@@ -43,6 +45,7 @@ always_ff @(posedge clk) begin
         next_pc_src <= 0;
         reg_write_data_src <= 0;
         reg_write_enable <= 0;
+        ram_read <= 0;
         ram_write_enable <= 0;
         stdin_read_enable <= 0;
         stdout_write_enable <= 0;
@@ -58,6 +61,7 @@ always_ff @(posedge clk) begin
         next_pc_src <= in_next_pc_src;
         reg_write_data_src <= in_reg_write_data_src;
         reg_write_enable <= in_reg_write_enable;
+        ram_read <= in_ram_read;
         ram_write_enable <= in_ram_write_enable;
         stdin_read_enable <= in_stdin_read_enable;
         stdout_write_enable <= in_stdout_write_enable;

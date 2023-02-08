@@ -197,6 +197,7 @@ logic id_alu_pc_operand1_src;
 logic [1:0] id_next_pc_src;
 logic [1:0] id_reg_write_data_src;
 logic id_reg_write_enable;
+logic id_ram_read;
 logic id_ram_write_enable;
 logic id_stdin_read_enable;
 logic id_stdout_write_enable;
@@ -214,6 +215,7 @@ DECODER decoder(
     .next_pc_src(id_next_pc_src),
     .reg_write_data_src(id_reg_write_data_src),
     .reg_write_enable(id_reg_write_enable),
+    .ram_read(id_ram_read),
     .ram_write_enable(id_ram_write_enable),
     .stdin_read_enable(id_stdin_read_enable),
     .stdout_write_enable(id_stdout_write_enable)
@@ -251,6 +253,7 @@ logic ex_alu_pc_operand1_src;
 logic [1:0] ex_next_pc_src;
 logic [1:0] ex_reg_write_data_src;
 logic ex_reg_write_enable;
+logic ex_ram_read;
 logic ex_ram_write_enable;
 logic ex_stdin_read_enable;
 logic ex_stdout_write_enable;
@@ -271,6 +274,7 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .in_next_pc_src(id_next_pc_src),
     .in_reg_write_data_src(id_reg_write_data_src),
     .in_reg_write_enable(id_reg_write_enable),
+    .in_ram_read(id_ram_read),
     .in_ram_write_enable(id_ram_write_enable),
     .in_stdin_read_enable(id_stdin_read_enable),
     .in_stdout_write_enable(id_stdout_write_enable),
@@ -286,6 +290,7 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .next_pc_src(ex_next_pc_src),
     .reg_write_data_src(ex_reg_write_data_src),
     .reg_write_enable(ex_reg_write_enable),
+    .ram_read(ex_ram_read),
     .ram_write_enable(ex_ram_write_enable),
     .stdin_read_enable(ex_stdin_read_enable),
     .stdout_write_enable(ex_stdout_write_enable)
@@ -377,6 +382,7 @@ logic [31:0] mem_alu_pc_result;
 logic [1:0] mem_next_pc_src;
 logic [1:0] mem_reg_write_data_src;
 logic mem_reg_write_enable;
+logic mem_ram_read;
 logic mem_ram_write_enable;
 logic mem_stdin_read_enable;
 
@@ -394,6 +400,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .in_next_pc_src(ex_next_pc_src),
     .in_reg_write_data_src(ex_reg_write_data_src),
     .in_reg_write_enable(ex_reg_write_enable),
+    .in_ram_read(ex_ram_read),
     .in_ram_write_enable(ex_ram_write_enable),
     .in_stdin_read_enable(ex_stdin_read_enable),
     .in_stdout_write_enable(ex_stdout_write_enable),
@@ -407,6 +414,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .next_pc_src(mem_next_pc_src),
     .reg_write_data_src(mem_reg_write_data_src),
     .reg_write_enable(mem_reg_write_enable),
+    .ram_read(mem_ram_read),
     .ram_write_enable(mem_ram_write_enable),
     .stdin_read_enable(mem_stdin_read_enable),
     .stdout_write_enable(mem_stdout_write_enable)
