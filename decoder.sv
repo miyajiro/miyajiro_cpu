@@ -18,6 +18,37 @@ module DECODER(
     output logic stdin_read_enable,
     output logic stdout_write_enable
 );
+logic instruction_31;
+logic [6:0] instruction_31_25;
+logic [11:0] instruction_31_20;
+logic [19:0] instruction_31_12;
+logic [5:0] instruction_30_25;
+logic [9:0] instruction_30_21;
+logic [4:0] instruction_24_20;
+logic instruction_20;
+logic [4:0] instruction_19_15;
+logic [7:0] instruction_19_12;
+logic [2:0] instruction_14_12;
+logic [3:0] instruction_11_8;
+logic [4:0] instruction_11_7;
+logic instruction_7;
+logic [6:0] instruction_6_0;
+
+assign instruction_31 = instruction[31];
+assign instruction_31_25 = instruction[31:25];
+assign instruction_31_20 = instruction[31:20];
+assign instruction_31_12 = instruction[31:12];
+assign instruction_30_25 = instruction[30:25];
+assign instruction_30_21 = instruction[30:21];
+assign instruction_24_20 = instruction[24:20];
+assign instruction_20 = instruction[20];
+assign instruction_19_15 = instruction[19:15];
+assign instruction_19_12 = instruction[19:12];
+assign instruction_14_12 = instruction[14:12];
+assign instruction_11_8 = instruction[11:8];
+assign instruction_11_7 = instruction[11:7];
+assign instruction_7 = instruction[7];
+assign instruction_6_0 = instruction[6:0];
 
 logic [6:0] opcode;
 logic [2:0] funct3;
@@ -29,24 +60,22 @@ logic [31:0] imm_b;
 logic [31:0] imm_u;
 logic [31:0] imm_j;
 
-assign opcode = instruction[6:0];
-assign funct3 = instruction[14:12];
-assign funct7 = instruction[31:25];
-
 always_comb begin
-    imm_i <= {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:20]};
-    imm_i_unsigned <= {20'b0, instruction[31:20]};
-    imm_s <= {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:25], instruction[11:7]};
-    imm_b <= {instruction[31] == 1 ? 19'h7ffff : 19'h0, instruction[31:31], instruction[7:7], instruction[30:25], instruction[11:8], 1'b0};
-    imm_u <= {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:12], 11'b0};
-    imm_j <= {instruction[31] == 1 ? 11'h7ff : 11'h0, instruction[31:31], instruction[19:12], instruction[20:20], instruction[30:21], 1'b0};
+    opcode <= instruction_6_0;
+    funct3 <= instruction_14_12;
+    funct7 <= instruction_31_25;
+    rs1_address <= instruction_19_15;
+    rs2_address <= instruction_24_20;
+    rd_address <= instruction_11_7;
+    imm_i <= {instruction_31 ? 20'hfffff : 20'h0, instruction_31_20};
+    imm_i_unsigned <= {20'b0, instruction_31_20};
+    imm_s <= {instruction_31 ? 20'hfffff : 20'h0, instruction_31_25, instruction_11_7};
+    imm_b <= {instruction_31 ? 19'h7ffff : 19'h0, instruction_31, instruction_7, instruction_30_25, instruction_11_8, 1'b0};
+    imm_u <= {instruction_31 ? 11'h7ff : 11'h0, instruction_31_12, 11'b0};
+    imm_j <= {instruction_31 ? 11'h7ff : 11'h0, instruction_31, instruction_19_12, instruction_20, instruction_30_21, 1'b0};
 end
 
 always_comb begin
-    rs1_address <= instruction[19:15];
-    rs2_address <= instruction[24:20];
-    rd_address <= instruction[11:7];
-
     case(opcode)
         `OPCODE_R_BASE_INTEGER_REG: begin
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_RS1;
