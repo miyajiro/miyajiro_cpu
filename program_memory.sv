@@ -9,7 +9,7 @@ module PROGRAM_MEMORY (
 );
 
 logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 3:0] _address;
-(* ram_style = "BLOCK" *) reg [31:0] _program_memory [`PROGRAM_MEMORY_SIZE / 4 - 1:0];
+(* ram_style = "BLOCK" *) reg [31:0] _program_memory [`PROGRAM_MEMORY_SIZE_BYTE / 4 - 1:0];
 
 // initial $readmemb("program.dat", _program_memory);
 
