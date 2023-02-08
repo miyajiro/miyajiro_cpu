@@ -79,14 +79,14 @@
 `define OPCODE_R_STDIN_STDOUT       7'b1111111
 
 // FUNCT3
-`define FUNCT3_ADD_SUB      3'h0
-`define FUNCT3_XOR          3'h4
-`define FUNCT3_OR           3'h6
-`define FUNCT3_AND          3'h7
-`define FUNCT3_SLL          3'h1
-`define FUNCT3_SRL_SRA      3'h5
-`define FUNCT3_SLT          3'h2
-`define FUNCT3_SLTU         3'h3
+`define FUNCT3_ADD_SUB_MUL       3'h0
+`define FUNCT3_XOR_DIV           3'h4
+`define FUNCT3_OR_REM            3'h6
+`define FUNCT3_AND_REMU          3'h7
+`define FUNCT3_SLL_MULH          3'h1
+`define FUNCT3_SRL_SRA_DIVU      3'h5
+`define FUNCT3_SLT_MULU          3'h2
+`define FUNCT3_SLTU_MULHU        3'h3
 
 `define FUNCT3_ADDI         3'h0
 `define FUNCT3_XORI         3'h4
@@ -109,15 +109,6 @@
 `define FUNCT3_BGEU         3'h7
 
 `define FUNCT3_JALR         3'h0
-
-`define FUNCT3_MUL          3'h0
-`define FUNCT3_MULH         3'h1
-`define FUNCT3_MULU         3'h2
-`define FUNCT3_MULHU        3'h3
-`define FUNCT3_DIV          3'h4
-`define FUNCT3_DIVU         3'h5
-`define FUNCT3_REM          3'h6
-`define FUNCT3_REMU         3'h7
 
 `define FUNCT3_STDIN        3'h0
 `define FUNCT3_STDOUT       3'h1

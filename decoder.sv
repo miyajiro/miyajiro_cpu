@@ -90,7 +90,7 @@ always_comb begin
             stdin_read_enable <= 0;
             stdout_write_enable <= 0;
             case(funct3)
-                `FUNCT3_ADD_SUB: begin
+                `FUNCT3_ADD_SUB_MUL: begin
                     case(funct7)
                         `FUNCT7_ADD: begin
                             alu_rd_operator <= `ALU_OPERATOR_ADD;
@@ -98,21 +98,52 @@ always_comb begin
                         `FUNCT7_SUB: begin
                             alu_rd_operator <= `ALU_OPERATOR_SUB;
                         end
+                        `FUNCT7_MUL: begin
+                            alu_rd_operator <= `ALU_OPERATOR_MUL;
+                        end
                     endcase
                 end
-                `FUNCT3_XOR: begin
-                    alu_rd_operator <= `ALU_OPERATOR_XOR;
+                `FUNCT3_XOR_DIV: begin
+                    case(funct7)
+                        `FUNCT7_XOR: begin
+                            alu_rd_operator <= `ALU_OPERATOR_XOR;
+                        end
+                        `FUNCT7_DIV: begin
+                            alu_rd_operator <= `ALU_OPERATOR_DIV;
+                        end
+                    endcase
                 end
-                `FUNCT3_OR: begin
-                    alu_rd_operator <= `ALU_OPERATOR_OR;
+                `FUNCT3_OR_REM: begin
+                    case(funct7)
+                        `FUNCT7_OR: begin
+                            alu_rd_operator <= `ALU_OPERATOR_OR;
+                        end
+                        `FUNCT7_REM: begin
+                            alu_rd_operator <= `ALU_OPERATOR_REM;
+                        end
+                    endcase
                 end
-                `FUNCT3_AND: begin
-                    alu_rd_operator <= `ALU_OPERATOR_AND;
+                `FUNCT3_AND_REMU: begin
+                    case(funct7)
+                        `FUNCT7_AND: begin
+                            alu_rd_operator <= `ALU_OPERATOR_AND;
+                        end
+                        `FUNCT7_REMU: begin
+                            alu_rd_operator <= `ALU_OPERATOR_REMU;
+                        end
+                    endcase
                 end
-                `FUNCT3_SLL: begin
-                    alu_rd_operator <= `ALU_OPERATOR_SLL;
+                `FUNCT3_SLL_MULH: begin
+                    case(funct7)
+                        `FUNCT7_SLL: begin
+                            alu_rd_operator <= `ALU_OPERATOR_SLL;
+                        end
+                        `FUNCT7_MULH: begin
+                            alu_rd_operator <= `ALU_OPERATOR_MULH;
+                        end
+                    endcase
                 end
-                `FUNCT3_SRL_SRA: begin
+                `FUNCT3_SRL_SRA_DIVU: begin
                     case(funct7)
                         `FUNCT7_SRL: begin
                             alu_rd_operator <= `ALU_OPERATOR_SRL;
@@ -120,13 +151,30 @@ always_comb begin
                         `FUNCT7_SRA: begin
                             alu_rd_operator <= `ALU_OPERATOR_SRA;
                         end
+                        `FUNCT7_DIVU: begin
+                            alu_rd_operator <= `ALU_OPERATOR_DIVU;
+                        end
                     endcase
                 end
-                `FUNCT3_SLT: begin
-                    alu_rd_operator <= `ALU_OPERATOR_SLT;
+                `FUNCT3_SLT_MULU: begin
+                    case(funct7)
+                        `FUNCT7_SLT: begin
+                            alu_rd_operator <= `ALU_OPERATOR_SLT;
+                        end
+                        `FUNCT7_MULU: begin
+                            alu_rd_operator <= `ALU_OPERATOR_MULU;
+                        end
+                    endcase
                 end
-                `FUNCT3_SLTU: begin
-                    alu_rd_operator <= `ALU_OPERATOR_SLTU;
+                `FUNCT3_SLTU_MULHU: begin
+                    case(funct7)
+                        `FUNCT7_SLTU: begin
+                            alu_rd_operator <= `ALU_OPERATOR_SLTU;
+                        end
+                        `FUNCT7_MULHU: begin
+                            alu_rd_operator <= `ALU_OPERATOR_MULHU;
+                        end
+                    endcase
                 end
             endcase
         end
