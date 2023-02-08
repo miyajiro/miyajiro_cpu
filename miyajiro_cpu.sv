@@ -123,7 +123,7 @@ logic mem_stdin_memory_read_enable;
 FIFO stdin_memory(
     .reset_n(reset_n),
     .clk(clk),
-    .read_enable(),
+    .read_enable(mem_stdin_memory_read_enable),
     .write_enable(uart_controller_stdin_memory_write_enable),
     .write_data(uart_controller_stdin_memory_write_data),
 
