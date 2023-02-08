@@ -49,7 +49,7 @@ always_ff @(posedge clk) begin
                 end
             end
             `STATE_RECEIVE_PROGRAM_DATA: begin
-                if (receive_program_data) begin
+                if (receive_program_data_finished) begin
                     state <= `STATE_TRANSMIT_0xAA;
                 end
             end
