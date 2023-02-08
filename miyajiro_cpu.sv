@@ -207,7 +207,6 @@ DECODER decoder(
     .reg_write_enable(id_reg_write_enable),
     .ram_write_enable(id_ram_write_enable),
     .stdin_read_enable(id_stdin_read_enable),
-    .stdout_write_enable(id_stdout_write_enable),
     .stdout_write_enable(id_stdout_write_enable)
 );
 
