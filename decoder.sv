@@ -71,7 +71,7 @@ always_comb begin
     imm_i_unsigned <= {20'b0, instruction_31_20};
     imm_s <= {instruction_31 ? 20'hfffff : 20'h0, instruction_31_25, instruction_11_7};
     imm_b <= {instruction_31 ? 19'h7ffff : 19'h0, instruction_31, instruction_7, instruction_30_25, instruction_11_8, 1'b0};
-    imm_u <= {instruction_31 ? 11'h7ff : 11'h0, instruction_31_12, 11'b0};
+    imm_u <= {instruction_31 ? 12'hfff : 12'h0, instruction_31_12};
     imm_j <= {instruction_31 ? 11'h7ff : 11'h0, instruction_31, instruction_19_12, instruction_20, instruction_30_21, 1'b0};
 end
 
