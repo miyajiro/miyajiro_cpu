@@ -71,7 +71,7 @@ always_ff @(posedge clk) begin
                 program_memory_write_enable <= 1;
                 program_memory_write_data <= {uart_rx_rdata, received_program_data_flagment};
                 program_memory_write_address <= next_program_memory_write_address;
-                next_program_memory_write_address <= next_program_memory_write_address + 4;
+                next_program_memory_write_address <= next_program_memory_write_address + 2;
                 received_program_data_flagment <= 0;
             end else begin
                 received_program_data_flagment <= received_program_data_flagment | (uart_rx_rdata << (receiving_data_section * 8));
