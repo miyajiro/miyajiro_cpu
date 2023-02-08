@@ -8,7 +8,7 @@ localparam PROGRAM_DATA_SIZE_BYTE = 128;
 localparam STDIN_DATA_SIZE_BYTE = 128;
 localparam RESULT_MEMORY_SIZE_BYTE = 128;
 localparam STATE_WAIT_0x99 = 3'h0;
-localparam STATE_PROGRAM_SIZE_SEND = 3'h1;
+localparam STATE_PROGRAM_DATA_SIZE_SEND = 3'h1;
 localparam STATE_PROGRAM_DATA_SEND = 3'h2;
 localparam STATE_WAIT_0xAA = 3'h2;
 localparam STATE_STDIN_DATA_SEND = 3'h3;
@@ -91,10 +91,10 @@ always_ff @(posedge clk) begin
     case (state)
         STATE_WAIT_0x99: begin
             if (server_uart_rx_rdata_ready && server_uart_rx_rdata == 8'h99) begin
-                state <= STATE_PROGRAM_DATA_SEND;
+                state <= STATE_PROGRAM_DATA_SIZE_SEND;
             end
         end
-        STATE_PROGRAM_SIZE_SEND: begin
+        STATE_PROGRAM_DATA_SIZE_SEND: begin
             if (~server_uart_tx_tx_busy && ~busy_wait) begin
                 if(program_data_size_section < 4) begin
                     sdata <= program_data_size_byte[7:0];
@@ -104,7 +104,7 @@ always_ff @(posedge clk) begin
                     busy_wait <= 1;
                 end
                 else begin
-                    state <= STATE_STDIN_DATA_SEND;
+                    state <= STATE_PROGRAM_DATA_SEND;
                 end
             end
             if (busy_wait) begin
