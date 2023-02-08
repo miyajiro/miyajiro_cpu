@@ -29,10 +29,11 @@ logic [31:0] imm_b;
 logic [31:0] imm_u;
 logic [31:0] imm_j;
 
+assign opcode = instruction[6:0];
+assign funct3 = instruction[14:12];
+assign funct7 = instruction[31:25];
+
 always_comb begin
-    opcode <= instruction[6:0];
-    funct3 <= instruction[14:12];
-    funct7 <= instruction[31:25];
     imm_i <= {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:20]};
     imm_i_unsigned <= {20'b0, instruction[31:20]};
     imm_s <= {instruction[31] == 1 ? 20'hfffff : 20'h0, instruction[31:25], instruction[11:7]};
