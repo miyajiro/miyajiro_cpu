@@ -5,7 +5,7 @@ module PROGRAM_MEMORY (
     input logic clk,
     input logic reset_n,
     input logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0] read_address,
-    output logic [31:0] data
+    output logic [31:0] read_data
 );
 
 logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 3:0] _read_address;
@@ -23,7 +23,7 @@ always_ff @(posedge clk) begin
 end
 
 always_comb begin
-    data <= _program_memory[_read_address];
+    read_data <= _program_memory[_read_address];
 end
 
 endmodule
