@@ -10,9 +10,9 @@ localparam RESULT_MEMORY_SIZE_BYTE = 128;
 localparam STATE_WAIT_0x99 = 3'h0;
 localparam STATE_PROGRAM_DATA_SIZE_SEND = 3'h1;
 localparam STATE_PROGRAM_DATA_SEND = 3'h2;
-localparam STATE_WAIT_0xAA = 3'h2;
-localparam STATE_STDIN_DATA_SEND = 3'h3;
-localparam STATE_WAIT_PPM  = 3'h4;
+localparam STATE_WAIT_0xAA = 3'h3;
+localparam STATE_STDIN_DATA_SEND = 3'h4;
+localparam STATE_WAIT_PPM  = 3'h5;
 
 logic clk;
 logic reset_n;
