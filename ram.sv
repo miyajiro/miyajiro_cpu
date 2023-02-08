@@ -12,7 +12,7 @@ module RAM(
 logic [`RAM_ADDRESS_BITWIDTH - 3:0] _address;
 reg [31:0] _ram [`RAM_SIZE / 4 - 1:0];
 
-initial $readmemb("empty.dat", _ram);
+// initial $readmemb("empty.dat", _ram);
 
 always_ff @(posedge clk) begin
     _address <= address[`RAM_ADDRESS_BITWIDTH - 1 : 2];
