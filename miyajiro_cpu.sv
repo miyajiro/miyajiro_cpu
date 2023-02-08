@@ -471,12 +471,12 @@ RAM ram(
 );
 
 
-logic ram_read_stall;
+logic mem_ram_read_stall;
 always_comb begin
     if(state_controller_ram_read & mem_ram_read) begin
-        ram_read_stall <= ~ram_read_ready;
+        mem_ram_read_stall <= ~mem_ram_read_ready;
     end else begin
-        ram_read_stall <= 0;
+        mem_ram_read_stall <= 0;
     end
 end
 
