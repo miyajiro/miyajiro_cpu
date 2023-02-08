@@ -313,19 +313,18 @@ always_comb begin
             stdout_write_enable <= 0;
         end
         `OPCODE_R_STDIN_STDOUT: begin
+            next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
+            ram_read <= 0;
+            ram_write_enable <= `RAM_WRITE_DISABLE;
             case (funct3)
                 `FUNCT3_STDIN: begin
-                    next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
-                    reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
+                    reg_write_data_src <= `REG_WRITE_DATA_SRC_STDIN;
                     reg_write_enable <= `REG_WRITE_ENABLE;
-                    ram_write_enable <= `RAM_WRITE_DISABLE;
                     stdin_read_enable <= 1;
                     stdout_write_enable <= 0;
                 end
                 `FUNCT3_STDOUT: begin
-                    next_pc_src <= `NEXT_PC_SRC_ALWAYS_NOT_BRANCH;
                     reg_write_enable <= `REG_WRITE_DISABLE;
-                    ram_write_enable <= `RAM_WRITE_DISABLE;
                     stdin_read_enable <= 0;
                     stdout_write_enable <= 1;
                 end
