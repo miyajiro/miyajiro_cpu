@@ -11,12 +11,12 @@ module PROGRAM_MEMORY (
     output logic [31:0] read_data
 );
 
-logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 3:0] inner_read_address;
-logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 3:0] inner_write_address;
-assign inner_read_address = read_address[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:2];
-assign inner_write_address = write_address[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:2];
+logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 2:0] inner_read_address;
+logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 2:0] inner_write_address;
+assign inner_read_address = read_address[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:1];
+assign inner_write_address = write_address[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:1];
 
-(* ram_style = "BLOCK" *) reg [31:0] inner_program_memory [`PROGRAM_MEMORY_SIZE_BYTE / 4 - 1:0];
+(* ram_style = "BLOCK" *) reg [31:0] inner_program_memory [`PROGRAM_MEMORY_SIZE_BYTE / 2 - 1:0];
 
 // initial $readmemb("program.dat", inner_program_memory);
 
