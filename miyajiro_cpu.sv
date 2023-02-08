@@ -23,6 +23,11 @@ module MIYAJIRO_CPU(
 
 // STATE_CONTROLLER
 logic stall;
+always_ff @(posedge clk) begin
+    if(~reset_n) begin
+        stall = 0;
+    end
+end
 
 logic uart_controller_transmit_0x99_finished;
 logic uart_controller_receive_program_data_size_finished;
