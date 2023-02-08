@@ -114,7 +114,7 @@ always_ff @(posedge clk) begin
             uart_transmit_start <= 1;
             transmit_0xAA_finished <= 1;
         end
-        if (transmit_stdout & stdout_memory_read_ready) begin
+        if (transmit_stdout_data & stdout_memory_read_ready) begin
             uart_transmit_data <= stdout_memory_read_data;
             stdout_memory_read_enable <= 1;
             uart_transmit_start <= 1;
