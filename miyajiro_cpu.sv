@@ -164,8 +164,8 @@ logic [31:0] if_program_memory_data;
 PROGRAM_MEMORY program_memory(
     .clk(clk),
     .reset_n(reset_n),
-    .address(if_pc_data[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0]),
-    .data(if_program_memory_data)
+    .read_address(if_pc_data[`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0]),
+    .read_data(if_program_memory_data)
 );
 
 // IF -> ID
