@@ -1,3 +1,4 @@
+`include "miyajiro_cpu.sv"
 `timescale 1ns / 1ps
 module testbench_miyajiro_cpu ();
 // CLK

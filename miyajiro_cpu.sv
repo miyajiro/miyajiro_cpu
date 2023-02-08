@@ -1,5 +1,19 @@
 `timescale 1ns / 1ps
 `include "define.sv"
+`include "alu.sv"
+`include "decoder.sv"
+`include "ex_mem_pipeline_register.sv"
+`include "fifo.sv"
+`include "id_ex_pipeline_register.sv"
+`include "if_id_pipeline_register.sv"
+`include "mem_wb_pipeline_register.sv"
+`include "wb_if_pipeline_register.sv"
+`include "program_memory.sv"
+`include "ram.sv"
+`include "register_file.sv"
+`include "state_controller.sv"
+`include "uart_controller.sv"
+
 module MIYAJIRO_CPU(
     input logic reset_n,
     input logic clk,
@@ -10,17 +24,17 @@ module MIYAJIRO_CPU(
 // STATE_CONTROLLER
 logic stall;
 
-logic uart_controller_transmit_0x99_finished,
-logic uart_controller_receive_program_data_size_finished,
-logic uart_controller_receive_program_data_finished,
-logic uart_controller_transmit_0xAA_finished,
+logic uart_controller_transmit_0x99_finished;
+logic uart_controller_receive_program_data_size_finished;
+logic uart_controller_receive_program_data_finished;
+logic uart_controller_transmit_0xAA_finished;
 
 logic state_controller_transmit_0x99;
 logic state_controller_receive_program_data_size;
 logic state_controller_receive_program_data;
-logic state_controller_transmit_0xAA,
-logic state_controller_receive_stdin_data,
-logic state_controller_transmit_stdout_data,
+logic state_controller_transmit_0xAA;
+logic state_controller_receive_stdin_data;
+logic state_controller_transmit_stdout_data;
 logic state_controller_wb_if_write_enable;
 logic state_controller_if_id_write_enable;
 logic state_controller_id_ex_write_enable;
@@ -64,12 +78,12 @@ logic stdin_memory_stdin_memory_write_ready;
 logic stdout_memory_stdin_memory_read_ready;
 logic [7:0] stdout_memory_stdout_memory_read_data;
 
-logic uart_controller_program_memory_write_address,
-logic uart_controller_program_memory_write_enable,
-logic [31:0] uart_controller_program_memory_write_data,
-logic uart_controller_stdin_memory_write_enable,
-logic [7:0] uart_controller_stdin_memory_write_data,
-logic uart_controller_stdout_memory_read_enable,
+logic uart_controller_program_memory_write_address;
+logic uart_controller_program_memory_write_enable;
+logic [31:0] uart_controller_program_memory_write_data;
+logic uart_controller_stdin_memory_write_enable;
+logic [7:0] uart_controller_stdin_memory_write_data;
+logic uart_controller_stdout_memory_read_enable;
 UART_CONTROLLER uart_controller(
     .reset_n(reset_n),
     .clk(clk),
@@ -94,7 +108,7 @@ UART_CONTROLLER uart_controller(
     .program_memory_write_data(uart_controller_program_memory_write_data),
     .stdin_memory_write_enable(uart_controller_stdin_memory_write_enable),
     .stdin_memory_write_data(uart_controller_stdin_memory_write_data),
-    .stdout_memory_read_enable(uart_controller_stdout_memory_read_enable),
+    .stdout_memory_read_enable(uart_controller_stdout_memory_read_enable)
 );
 
 // STDIN_MEMORY
@@ -114,6 +128,8 @@ FIFO stdin_memory(
 );
 
 // STDOUT_MEMORY
+logic [31:0] mem_rs1_data;
+logic mem_stdout_write_enable;
 logic stdout_memory_stdout_memory_write_ready;
 FIFO stdout_memory(
     .reset_n(reset_n),
@@ -192,7 +208,7 @@ DECODER decoder(
     .ram_write_enable(id_ram_write_enable),
     .stdin_read_enable(id_stdin_read_enable),
     .stdout_write_enable(id_stdout_write_enable),
-    .stdout_write_enable(id_stdout_write_enable),
+    .stdout_write_enable(id_stdout_write_enable)
 );
 
 logic [31:0] id_rs1_data;
@@ -263,7 +279,7 @@ ID_EX_PIPELINE_REGISTER id_ex_pipeline_register(
     .reg_write_data_src(ex_reg_write_data_src),
     .reg_write_enable(ex_reg_write_enable),
     .ram_write_enable(ex_ram_write_enable),
-    .stdin_read_enable(ex_stdin_read_enable)
+    .stdin_read_enable(ex_stdin_read_enable),
     .stdout_write_enable(ex_stdout_write_enable)
 );
 
@@ -345,7 +361,6 @@ ALU alu_pc(
 
 // EX -> MEM
 logic [31:0] mem_pc_data;
-logic [31:0] mem_rs1_data;
 logic [31:0] mem_rs2_data;
 logic [4:0] mem_rd_address;
 logic [31:0] mem_alu_rd_result;
@@ -356,7 +371,6 @@ logic [1:0] mem_reg_write_data_src;
 logic mem_reg_write_enable;
 logic mem_ram_write_enable;
 logic mem_stdin_read_enable;
-logic mem_stdout_write_enable;
 
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
@@ -386,7 +400,7 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reg_write_data_src(mem_reg_write_data_src),
     .reg_write_enable(mem_reg_write_enable),
     .ram_write_enable(mem_ram_write_enable),
-    .stdin_read_enable(mem_stdin_read_enable)
+    .stdin_read_enable(mem_stdin_read_enable),
     .stdout_write_enable(mem_stdout_write_enable)
 );
 
