@@ -87,11 +87,9 @@ always_comb begin
     };
 end
 
-always_comb begin
-    _write_sel <= (reg_write_enable == 1) ? (32'b1 << write_address) : (32'b0);
-    read_data1 <= mux_reg(read_address1, regs);
-    read_data2 <= mux_reg(read_address2, regs);
-end
+assign _write_sel = (reg_write_enable == 1) ? (32'b1 << write_address) : (32'b0);
+assign read_data1 = mux_reg(read_address1, regs);
+assign read_data2 = mux_reg(read_address2, regs);
 
 REGISTER r0(reset_n, clk, _write_sel[0], 32'h0, _r0_data);        // zero
 REGISTER r1(reset_n, clk, _write_sel[1], write_data, _r1_data);       // ra
