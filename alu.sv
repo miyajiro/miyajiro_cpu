@@ -9,6 +9,23 @@ module ALU (
     output logic result_is_zero
 );
 
+logic [63:0] signed_mul_result;
+logic [63:0] unsigned_mul_result;
+always_comb begin
+    signed_mul_result = ($signed(operand1) * $signed(operand2));
+    unsigned_mul_result = (operand1 * operand2);
+end
+
+logic [31:0] upper_signed_mul_result;
+logic [31:0] lower_signed_mul_result;
+logic [31:0] upper_unsigned_mul_result;
+logic [31:0] lower_unsigned_mul_result;
+
+assign upper_signed_mul_result = signed_mul_result[63:32];
+assign lower_signed_mul_result = signed_mul_result[31:0];
+assign upper_unsigned_mul_result = unsigned_mul_result[63:32];
+assign lower_unsigned_mul_result = unsigned_mul_result[31:0];
+
 always_comb begin
     case(operator)
         `ALU_OPERATOR_ADD: begin
@@ -38,19 +55,18 @@ always_comb begin
         `ALU_OPERATOR_SLTU: begin
             result <= operand1 < operand2 ? 32'b1 : 32'b0;
         end
-        // TODO
-        // `ALU_OPERATOR_MUL: begin
-        //     result <= ($signed(operand1) * $signed(operand2))[31:0];
-        // end
-        // `ALU_OPERATOR_MULH: begin
-        //     result <= ($signed(operand1) * $signed(operand2))[63:32];
-        // end
-        // `ALU_OPERATOR_MULU: begin
-        //     result <= (operand1 * operand2)[31:0];
-        // end
-        // `ALU_OPERATOR_MULHU: begin
-        //     result <= (operand1 * operand2)[63:32];
-        // end
+        `ALU_OPERATOR_MUL: begin
+            result <= lower_signed_mul_result;
+        end
+        `ALU_OPERATOR_MULH: begin
+            result <= upper_signed_mul_result;
+        end
+        `ALU_OPERATOR_MULU: begin
+            result <= lower_unsigned_mul_result;
+        end
+        `ALU_OPERATOR_MULHU: begin
+            result <= upper_unsigned_mul_result;
+        end
         `ALU_OPERATOR_DIV: begin
             result <= $signed(operand1) / $signed(operand2);
         end
