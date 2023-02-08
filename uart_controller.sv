@@ -20,7 +20,7 @@ module UART_CONTROLLER(
     output logic receive_program_data_size_finished,
     output logic receive_program_data_finished,
     output logic transmit_0xAA_finished,
-    output logic program_memory_write_address,
+    output logic [`PROGRAM_MEMORY_ADDRESS_BITWIDTH - 1:0] program_memory_write_address,
     output logic program_memory_write_enable,
     output logic [31:0] program_memory_write_data,
     output logic stdin_memory_write_enable,
