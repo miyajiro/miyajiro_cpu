@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "register.sv"
 module REGISTER_FILE (
     input logic reset_n,
     input logic clk,

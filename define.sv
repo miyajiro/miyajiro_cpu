@@ -1,4 +1,7 @@
 `timescale 1ns / 1ps
+// CLK PAR
+`define CLK_PER_HALF_BIT 5208
+
 // RAM
 `define RAM_SIZE 8192
 `define RAM_ADDRESS_BITWIDTH 13
