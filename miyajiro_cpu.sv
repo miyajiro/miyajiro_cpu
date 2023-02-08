@@ -29,29 +29,6 @@ always_ff @(posedge clk) begin
     end
 end
 
-logic uart_controller_transmit_0x99_finished;
-logic uart_controller_receive_program_data_size_finished;
-logic uart_controller_receive_program_data_finished;
-logic uart_controller_transmit_0xAA_finished;
-
-// logic state_controller_transmit_0x99;
-// logic state_controller_receive_program_data_size;
-// logic state_controller_receive_program_data;
-// logic state_controller_transmit_0xAA;
-// logic state_controller_receive_stdin_data;
-// logic state_controller_transmit_stdout_data;
-// logic state_controller_wb_if_write_enable;
-// logic state_controller_if_id_write_enable;
-// logic state_controller_id_ex_write_enable;
-// logic state_controller_ex_mem_write_enable;
-// logic state_controller_mem_wb_write_enable;
-// logic state_controller_ram_read;
-// logic state_controller_ram_write_enable;
-// logic state_controller_reg_write_enable;
-// logic state_controller_stdin_read_enable;
-// logic state_controller_stdout_write_enable;
-// logic state_controller_pipeline_register_reset_n;
-
 STATE_CONTROLLER state_controller(
     .reset_n(reset_n),
     .clk(clk),
