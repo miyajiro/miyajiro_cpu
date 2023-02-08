@@ -251,7 +251,7 @@ always_comb begin
 
             alu_rd_operator <= `ALU_OPERATOR_ADD;
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_PC;
-            alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_4;
+            alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_2;
             alu_pc_operand1_src <= `ALU_PC_OPERAND1_SRC_PC;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;
@@ -265,7 +265,7 @@ always_comb begin
 
             alu_rd_operator <= `ALU_OPERATOR_ADD;
             alu_rd_operand1_src <= `ALU_RD_OPERAND1_SRC_PC;
-            alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_4;
+            alu_rd_operand2_src <= `ALU_RD_OPERAND2_SRC_2;
             alu_pc_operand1_src <= `ALU_PC_OPERAND1_SRC_RS1;
             next_pc_src <= `NEXT_PC_SRC_ALWAYS_BRANCH;
             reg_write_data_src <= `REG_WRITE_DATA_SRC_ALU;

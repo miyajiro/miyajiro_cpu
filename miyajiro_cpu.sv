@@ -319,8 +319,8 @@ always_comb begin
         `ALU_RD_OPERAND2_SRC_IMM: begin
             ex_alu_rd_operand2 <= ex_imm;
         end
-        `ALU_RD_OPERAND2_SRC_4: begin
-            ex_alu_rd_operand2 <= 4;
+        `ALU_RD_OPERAND2_SRC_2: begin
+            ex_alu_rd_operand2 <= 2;
         end
         `ALU_RD_OPERAND2_SRC_12: begin
             ex_alu_rd_operand2 <= 12;
@@ -416,26 +416,26 @@ EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
 logic [`RAM_ADDRESS_BITWIDTH - 1:0] ram_addr;
 assign ram_addr = mem_alu_rd_result[`RAM_ADDRESS_BITWIDTH - 1:0];
 
-logic [31:0] mem_pc_data_plus_4;
+logic [31:0] mem_pc_data_plus_2;
 always_comb begin
-    mem_pc_data_plus_4 = mem_pc_data + 4;
+    mem_pc_data_plus_2 = mem_pc_data + 2;
 end
 
 logic [31:0] mem_next_pc_data;
 always_comb begin
     case(mem_next_pc_src)
         `NEXT_PC_SRC_ALWAYS_NOT_BRANCH: begin
-            mem_next_pc_data <= mem_pc_data_plus_4;
+            mem_next_pc_data <= mem_pc_data_plus_2;
         end
         `NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_ZERO: begin
             mem_next_pc_data <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_ZERO
                 ? mem_alu_pc_result
-                : mem_pc_data_plus_4;
+                : mem_pc_data_plus_2;
         end
         `NEXT_PC_SRC_BRANCH_ON_ALU_PC_RESULT_NOT_ZERO: begin
             mem_next_pc_data <= mem_alu_rd_result_is_zero == `ALU_RD_RESULT_IS_NOT_ZERO
                 ? mem_alu_pc_result
-                : mem_pc_data_plus_4;
+                : mem_pc_data_plus_2;
         end
         `NEXT_PC_SRC_ALWAYS_BRANCH: begin
             mem_next_pc_data <= mem_alu_pc_result;

@@ -38,7 +38,7 @@
 
 `define ALU_RD_OPERAND2_SRC_RS2         3'h0
 `define ALU_RD_OPERAND2_SRC_IMM         3'h1
-`define ALU_RD_OPERAND2_SRC_4           3'h2
+`define ALU_RD_OPERAND2_SRC_2           3'h2
 `define ALU_RD_OPERAND2_SRC_12          3'h3
 `define ALU_RD_OPERAND2_SRC_UPPER_IMM   3'h4
 
