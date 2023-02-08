@@ -53,7 +53,9 @@ end
 
 logic [31:0] program_data_size_byte;
 logic [2:0] program_data_size_section;
-logic [7:0] program_data [PROGRAM_DATA_SIZE_BYTE - 1:0];
+logic [31:0] transmitting_program_data;
+logic [2:0] transmitting_program_data_section;
+logic [31:0] program_data [PROGRAM_DATA_SIZE_BYTE / 4 - 1:0];
 logic [16:0] program_data_index;
 logic [7:0] stdin_data [STDIN_DATA_SIZE_BYTE:0];
 logic [16:0] stdin_data_index;
@@ -78,6 +80,8 @@ always_ff @(posedge clk) begin
         tx_start <= 0;
         program_data_size_byte <= PROGRAM_DATA_SIZE_BYTE;
         program_data_size_section <= 0;
+        transmitting_program_data <= 0;
+        transmitting_program_data_section <= 0;
         program_data_index <= 0;
         stdin_data_index <= 0;
         result_memory_index <= 0;
@@ -114,10 +118,19 @@ always_ff @(posedge clk) begin
         STATE_PROGRAM_DATA_SEND: begin
             if (~server_uart_tx_tx_busy && ~busy_wait) begin
                 if (program_data_index < PROGRAM_DATA_SIZE_BYTE) begin
-                    sdata <= program_data[program_data_index];
+                    sdata <= transmitting_program_data[7:0];
+                    transmitting_program_data <= (transmitting_program_data >> 8);
                     tx_start <= 1;
-                    program_data_index <= program_data_index + 1;
                     busy_wait <= 1;
+                    if(transmitting_program_data_section == 3) begin
+                        program_data_index <= program_data_index + 1;
+                        transmitting_program_data_section <= 0;
+                        if(program_data_index + 1 < PROGRAM_DATA_SIZE_BYTE) begin
+                            transmitting_program_data <= program_data[program_data_index + 1];
+                        end
+                    end else begin
+                        transmitting_program_data_section <= transmitting_program_data_section + 1;
+                    end
                 end
                 else begin
                     state <= STATE_WAIT_0xAA;
