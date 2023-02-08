@@ -126,10 +126,10 @@ REGISTER r29(reset_n, clk, _write_sel[29], write_data, _r29_data);    // t4
 REGISTER r30(reset_n, clk, _write_sel[30], write_data, _r30_data);    // t5
 REGISTER r31(reset_n, clk, _write_sel[31], write_data, _r31_data);    // t6
 
-function [31:0] mux_reg;
-    input logic [4:0] sel;
-    input logic [1023:0] regs;
-
+function [31:0] mux_reg(
+    input logic [4:0] sel,
+    input logic [1023:0] regs
+);
     begin
         case(sel)
             0: mux_reg = regs[(32*1)-1:32*0];
