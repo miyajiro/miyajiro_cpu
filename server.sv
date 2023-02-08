@@ -57,7 +57,7 @@ logic [31:0] transmitting_program_data;
 logic [2:0] transmitting_program_data_section;
 logic [31:0] program_data [PROGRAM_DATA_SIZE_BYTE / 4 - 1:0];
 logic [16:0] program_data_index;
-logic [7:0] stdin_data [STDIN_DATA_SIZE_BYTE:0];
+logic [7:0] stdin_data [STDIN_DATA_SIZE_BYTE - 1:0];
 logic [16:0] stdin_data_index;
 
 initial begin
