@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "miyajiro_cpu.sv"
 
 module server(
 );
@@ -160,6 +161,6 @@ MIYAJIRO_CPU miyajiro_cpu(
     .reset_n(reset_n),
     .clk(clk),
     .cpu_uart_rxd(server_uart_txd),
-    .cpu_uart_txd(server_uart_rxd),
+    .cpu_uart_txd(server_uart_rxd)
 );
 endmodule

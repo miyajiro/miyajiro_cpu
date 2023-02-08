@@ -36,7 +36,7 @@ always_ff @(posedge clk) begin
     else if(!stall) begin
         case (state)
             `STATE_INIT: begin
-                state <= `STATE_SEND_0x99;
+                state <= `STATE_TRANSMIT_0x99;
             end
             `STATE_TRANSMIT_0x99: begin
                 if (transmit_0x99_finished) begin

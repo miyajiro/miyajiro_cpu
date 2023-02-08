@@ -1,5 +1,7 @@
 `timescale 1ns / 1ps
 `include "define.sv"
+`include "uart_tx.sv"
+`include "uart_rx.sv"
 module UART_CONTROLLER(
     input logic reset_n,
     input logic clk,
@@ -23,7 +25,7 @@ module UART_CONTROLLER(
     output logic [31:0] program_memory_write_data,
     output logic stdin_memory_write_enable,
     output logic [7:0] stdin_memory_write_data,
-    output logic stdout_memory_read_enable,
+    output logic stdout_memory_read_enable
 );
 
 logic [31:0] program_data_size_byte;
