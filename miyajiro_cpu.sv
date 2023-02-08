@@ -45,6 +45,7 @@ logic state_controller_if_id_write_enable;
 logic state_controller_id_ex_write_enable;
 logic state_controller_ex_mem_write_enable;
 logic state_controller_mem_wb_write_enable;
+logic state_controller_ram_read;
 logic state_controller_ram_write_enable;
 logic state_controller_reg_write_enable;
 logic state_controller_stdin_read_enable;
@@ -71,6 +72,7 @@ STATE_CONTROLLER state_controller(
     .id_ex_write_enable(state_controller_id_ex_write_enable),
     .ex_mem_write_enable(state_controller_ex_mem_write_enable),
     .mem_wb_write_enable(state_controller_mem_wb_write_enable),
+    .ram_read(state_controller_ram_read),
     .ram_write_enable(state_controller_ram_write_enable),
     .reg_write_enable(state_controller_reg_write_enable),
     .stdin_read_enable(state_controller_stdin_read_enable),

@@ -20,6 +20,7 @@ module STATE_CONTROLLER(
     output logic id_ex_write_enable,
     output logic ex_mem_write_enable,
     output logic mem_wb_write_enable,
+    output logic ram_read,
     output logic ram_write_enable,
     output logic reg_write_enable,
     output logic stdin_read_enable,
@@ -103,6 +104,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -121,6 +123,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -139,6 +142,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -157,6 +161,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -175,6 +180,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -193,6 +199,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -211,6 +218,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -229,6 +237,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -247,6 +256,7 @@ always_comb begin
             id_ex_write_enable <= 1;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -265,6 +275,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 1;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -283,6 +294,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 1;
             ram_write_enable <= 1;
             reg_write_enable <= 0;
             stdin_read_enable <= 1;
@@ -301,6 +313,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 1;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
@@ -319,6 +332,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 1;
             stdin_read_enable <= 0;
@@ -337,6 +351,7 @@ always_comb begin
             id_ex_write_enable <= 0;
             ex_mem_write_enable <= 0;
             mem_wb_write_enable <= 0;
+            ram_read <= 0;
             ram_write_enable <= 0;
             reg_write_enable <= 0;
             stdin_read_enable <= 0;
