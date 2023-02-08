@@ -125,7 +125,7 @@ always_ff @(posedge clk) begin
                     if(transmitting_program_data_section == 3) begin
                         program_data_index <= program_data_index + 1;
                         transmitting_program_data_section <= 0;
-                        if(program_data_index + 1 < PROGRAM_DATA_SIZE_BYTE) begin
+                        if(program_data_index + 1 < PROGRAM_DATA_SIZE_BYTE / 4) begin
                             transmitting_program_data <= program_data[program_data_index + 1];
                         end
                     end else begin
