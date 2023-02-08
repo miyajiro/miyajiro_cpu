@@ -117,7 +117,7 @@ always_ff @(posedge clk) begin
         end
         STATE_PROGRAM_DATA_SEND: begin
             if (~server_uart_tx_tx_busy && ~busy_wait) begin
-                if (program_data_index < PROGRAM_DATA_SIZE_BYTE) begin
+                if (program_data_index < PROGRAM_DATA_SIZE_BYTE / 4) begin
                     sdata <= transmitting_program_data[7:0];
                     transmitting_program_data <= (transmitting_program_data >> 8);
                     tx_start <= 1;
