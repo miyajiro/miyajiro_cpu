@@ -77,6 +77,7 @@ always_ff @(posedge clk) begin
     if (~reset_n) begin
         tx_start <= 0;
         program_data_size_byte <= PROGRAM_DATA_SIZE_BYTE;
+        program_data_size_section <= 0;
         program_data_index <= 0;
         stdin_data_index <= 0;
         result_memory_index <= 0;
