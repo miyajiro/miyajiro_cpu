@@ -25,7 +25,7 @@ module MIYAJIRO_CPU(
 
 // stall
 logic stall;
-always_ff @(posedge clk) begin
+always_comb begin
     if(~reset_n) begin
         stall = 0;
     end
