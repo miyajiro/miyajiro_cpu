@@ -7,7 +7,7 @@ module server(
 localparam PROGRAM_DATA_SIZE_BYTE = 256;
 
 localparam STDIN_DATA_SIZE_BYTE = 32;
-localparam RESULT_MEMORY_SIZE_BYTE = 1048576;
+localparam RESULT_MEMORY_SIZE_BYTE = 1024;
 
 localparam STATE_WAIT_0x99 = 3'h0;
 localparam STATE_PROGRAM_DATA_SIZE_SEND = 3'h1;
