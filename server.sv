@@ -5,6 +5,7 @@ module server(
 );
 
 localparam PROGRAM_DATA_SIZE_BYTE = 256;
+
 localparam STDIN_DATA_SIZE_BYTE = 32;
 localparam RESULT_MEMORY_SIZE_BYTE = 1048576;
 
