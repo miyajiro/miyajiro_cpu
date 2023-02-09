@@ -22,11 +22,14 @@ module MIYAJIRO_CPU(
 );
 
 // STATE_CONTROLLER
+
+// stall
 logic stall;
 always_ff @(posedge clk) begin
     if(~reset_n) begin
         stall = 0;
     end
+    stall <= mem_ram_read_stall & stdin_read_stall & stdout_write_stall;
 end
 
 STATE_CONTROLLER state_controller(
@@ -98,14 +101,13 @@ UART_CONTROLLER uart_controller(
 // STDIN_MEMORY
 logic [7:0] stdin_memory_read_data;
 logic stdin_memory_read_ready;
-logic mem_stdin_memory_read_enable;
 FIFO #(
     .FIFO_BRAM_ADDRESS_SIZE(`STDIN_MEMORY_FIFO_BRAM_ADDRESS_SIZE),
     .FIFO_BRAM_ADDRESS_BITWIDTH(`STDIN_MEMORY_FIFO_BRAM_ADDRESS_BITWIDTH)
 ) stdin_memory(
     .reset_n(reset_n),
     .clk(clk),
-    .read_enable(mem_stdin_memory_read_enable),
+    .read_enable(combined_stdin_read_enable),
     .write_enable(uart_controller_stdin_memory_write_enable),
     .write_data(uart_controller_stdin_memory_write_data),
 
@@ -116,8 +118,8 @@ FIFO #(
 
 // STDOUT_MEMORY
 logic [31:0] mem_rs1_data;
-logic mem_stdout_write_enable;
 logic stdout_memory_stdout_memory_write_ready;
+logic combined_stdout_write_enable;
 
 FIFO #(
     .FIFO_BRAM_ADDRESS_SIZE(`STDOUT_MEMORY_FIFO_BRAM_ADDRESS_SIZE),
@@ -126,7 +128,7 @@ FIFO #(
     .reset_n(reset_n),
     .clk(clk),
     .read_enable(uart_controller_stdout_memory_read_enable),
-    .write_enable(state_controller_stdout_write_enable & mem_stdout_write_enable),
+    .write_enable(combined_stdout_write_enable),
     .write_data(mem_rs1_data[7:0]),
 
     .read_data(stdout_memory_stdout_memory_read_data),
@@ -370,6 +372,7 @@ logic mem_reg_write_enable;
 logic mem_ram_read;
 logic mem_ram_write_enable;
 logic mem_stdin_read_enable;
+logic mem_stdout_write_enable;
 
 EX_MEM_PIPELINE_REGISTER ex_mem_pipeline_register(
     .reset_n(state_controller_pipeline_register_reset_n),
@@ -439,14 +442,9 @@ always_comb begin
     endcase
 end
 
-// ram access
 logic [31:0] mem_ram_data;
 logic mem_ram_read_ready;
 logic mem_ram_combined_write_enable;
-always_comb begin
-    mem_ram_combined_write_enable <= (state_controller_ram_write_enable & (mem_ram_write_enable == `RAM_WRITE_ENABLE));
-end
-
 RAM ram(
     .clk(clk),
     .read_address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
@@ -456,7 +454,12 @@ RAM ram(
     .read_data(mem_ram_data)
 );
 
+// ram access
+always_comb begin
+    mem_ram_combined_write_enable <= (state_controller_ram_write_enable & (mem_ram_write_enable == `RAM_WRITE_ENABLE));
+end
 
+// ram read stall
 logic mem_ram_read_stall;
 always_comb begin
     if(state_controller_ram_read & mem_ram_read) begin
@@ -466,13 +469,34 @@ always_comb begin
     end
 end
 
+// stdin read access
+logic combined_stdin_read_enable;
+always_comb begin
+    combined_stdin_read_enable <= state_controller_stdin_read_enable & mem_stdin_read_enable & stdin_memory_read_ready;
+end
+
+// stdin read stall
 logic stdin_read_stall;
 always_comb begin
     if(state_controller_stdin_read_enable & mem_stdin_read_enable) begin
-        mem_stdin_memory_read_enable <= stdin_memory_read_ready;
         stdin_read_stall <= ~stdin_memory_read_ready;
     end else begin
         stdin_read_stall <= 0;
+    end
+end
+
+// stdout write access
+always_comb begin
+    combined_stdout_write_enable <= state_controller_stdout_write_enable & mem_stdout_write_enable & stdout_memory_stdout_memory_write_ready;
+end
+
+// stdout write stall
+logic stdout_write_stall;
+always_comb begin
+    if(state_controller_stdout_write_enable & mem_stdout_write_enable) begin
+        stdout_write_stall <= ~stdout_memory_stdout_memory_write_ready;
+    end else begin
+        stdout_write_stall <= 0;
     end
 end
 
