@@ -5,7 +5,7 @@ module server(
 );
 
 // localparam PROGRAM_DATA_SIZE_BYTE = 64 * 4; // gcd
-localparam PROGRAM_DATA_SIZE_BYTE = 146 * 4; flag
+localparam PROGRAM_DATA_SIZE_BYTE = 146 * 4; // flag
 
 localparam STDIN_DATA_SIZE_BYTE = 32;
 localparam RESULT_MEMORY_SIZE_BYTE = 1048576; // large
