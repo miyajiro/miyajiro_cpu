@@ -49,7 +49,7 @@ assign read_address = read_position[FIFO_BRAM_ADDRESS_BITWIDTH - 1:0];
 assign read_position_prefix = read_position[FIFO_BRAM_ADDRESS_BITWIDTH];
 
 assign write_address = write_position[FIFO_BRAM_ADDRESS_BITWIDTH - 1:0];
-assign write_position_prefix = read_position[FIFO_BRAM_ADDRESS_BITWIDTH];
+assign write_position_prefix = write_position[FIFO_BRAM_ADDRESS_BITWIDTH];
 
 always_comb begin
     fifo_empty <= (read_address == write_address) & (read_position_prefix == write_position_prefix);
