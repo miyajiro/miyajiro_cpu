@@ -29,7 +29,7 @@ always_ff @(posedge clk) begin
     if(~reset_n) begin
         stall = 0;
     end
-    stall <= mem_ram_read_stall & stdin_read_stall & stdout_write_stall;
+    stall <= mem_ram_read_stall | stdin_read_stall | stdout_write_stall;
 end
 
 STATE_CONTROLLER state_controller(
