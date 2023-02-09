@@ -99,7 +99,10 @@ UART_CONTROLLER uart_controller(
 logic [7:0] stdin_memory_read_data;
 logic stdin_memory_read_ready;
 logic mem_stdin_memory_read_enable;
-FIFO stdin_memory(
+FIFO #(
+    .FIFO_BRAM_ADDRESS_SIZE(`STDIN_MEMORY_FIFO_BRAM_ADDRESS_SIZE),
+    .FIFO_BRAM_ADDRESS_BITWIDTH(`STDIN_MEMORY_FIFO_BRAM_ADDRESS_BITWIDTH)
+) stdin_memory(
     .reset_n(reset_n),
     .clk(clk),
     .read_enable(mem_stdin_memory_read_enable),
@@ -116,7 +119,10 @@ logic [31:0] mem_rs1_data;
 logic mem_stdout_write_enable;
 logic stdout_memory_stdout_memory_write_ready;
 
-FIFO stdout_memory(
+FIFO #(
+    .FIFO_BRAM_ADDRESS_SIZE(`STDOUT_MEMORY_FIFO_BRAM_ADDRESS_SIZE),
+    .FIFO_BRAM_ADDRESS_BITWIDTH(`STDOUT_MEMORY_FIFO_BRAM_ADDRESS_BITWIDTH)
+) stdout_memory(
     .reset_n(reset_n),
     .clk(clk),
     .read_enable(uart_controller_stdout_memory_read_enable),
