@@ -451,7 +451,8 @@ RAM ram(
     .write_address(ram_addr[`RAM_ADDRESS_BITWIDTH - 1:0]),
     .write_data(mem_rs2_data),
     .write_enable(mem_ram_combined_write_enable),
-    .read_data(mem_ram_data)
+    .read_data(mem_ram_data),
+    .read_ready(mem_ram_read_ready)
 );
 
 // ram access
