@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
 module TMP_CLOCK (
-    input clk,
-    input reset_n,
-    input cpu_uart_rxd,
-    output cpu_uart_txd
+    input CLK100MHZ,
+    input CPU_RESETN,
+    input UART_TXD_IN,
+    output UART_RXD_OUT
 );
 
 reg [4:0] count;
