@@ -103,33 +103,24 @@ always_comb begin
                         end
                     endcase
                 end
-                `FUNCT3_XOR_DIV: begin
+                `FUNCT3_XOR: begin
                     case(funct7)
                         `FUNCT7_XOR: begin
                             alu_rd_operator <= `ALU_OPERATOR_XOR;
                         end
-                        `FUNCT7_DIV: begin
-                            alu_rd_operator <= `ALU_OPERATOR_DIV;
-                        end
                     endcase
                 end
-                `FUNCT3_OR_REM: begin
+                `FUNCT3_OR: begin
                     case(funct7)
                         `FUNCT7_OR: begin
                             alu_rd_operator <= `ALU_OPERATOR_OR;
                         end
-                        `FUNCT7_REM: begin
-                            alu_rd_operator <= `ALU_OPERATOR_REM;
-                        end
                     endcase
                 end
-                `FUNCT3_AND_REMU: begin
+                `FUNCT3_AND: begin
                     case(funct7)
                         `FUNCT7_AND: begin
                             alu_rd_operator <= `ALU_OPERATOR_AND;
-                        end
-                        `FUNCT7_REMU: begin
-                            alu_rd_operator <= `ALU_OPERATOR_REMU;
                         end
                     endcase
                 end
@@ -143,16 +134,13 @@ always_comb begin
                         end
                     endcase
                 end
-                `FUNCT3_SRL_SRA_DIVU: begin
+                `FUNCT3_SRL_SRA: begin
                     case(funct7)
                         `FUNCT7_SRL: begin
                             alu_rd_operator <= `ALU_OPERATOR_SRL;
                         end
                         `FUNCT7_SRA: begin
                             alu_rd_operator <= `ALU_OPERATOR_SRA;
-                        end
-                        `FUNCT7_DIVU: begin
-                            alu_rd_operator <= `ALU_OPERATOR_DIVU;
                         end
                     endcase
                 end

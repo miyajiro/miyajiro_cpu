@@ -98,11 +98,11 @@
 
 // FUNCT3
 `define FUNCT3_ADD_SUB_MUL       3'h0
-`define FUNCT3_XOR_DIV           3'h4
-`define FUNCT3_OR_REM            3'h6
-`define FUNCT3_AND_REMU          3'h7
+`define FUNCT3_XOR               3'h4
+`define FUNCT3_OR                3'h6
+`define FUNCT3_AND               3'h7
 `define FUNCT3_SLL_MULH          3'h1
-`define FUNCT3_SRL_SRA_DIVU      3'h5
+`define FUNCT3_SRL_SRA           3'h5
 `define FUNCT3_SLT_MULU          3'h2
 `define FUNCT3_SLTU_MULHU        3'h3
 
@@ -153,10 +153,6 @@
 `define FUNCT7_MULH             7'h01
 `define FUNCT7_MULU             7'h01
 `define FUNCT7_MULHU            7'h01
-`define FUNCT7_DIV              7'h01
-`define FUNCT7_DIVU             7'h01
-`define FUNCT7_REM              7'h01
-`define FUNCT7_REMU             7'h01
 
 `define FUNCT7_STDIN            7'h0
 `define FUNCT7_STDOUT           7'h0
@@ -176,10 +172,6 @@
 `define ALU_OPERATOR_MULH     5'h11
 `define ALU_OPERATOR_MULU     5'h12
 `define ALU_OPERATOR_MULHU    5'h13
-`define ALU_OPERATOR_DIV      5'h14
-`define ALU_OPERATOR_DIVU     5'h15
-`define ALU_OPERATOR_REM      5'h16
-`define ALU_OPERATOR_REMU     5'h17
 
 // ALU_RESULT
 `define ALU_RESULT_IS_NOT_ZERO  2'h0

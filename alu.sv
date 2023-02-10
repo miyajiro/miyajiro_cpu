@@ -67,18 +67,6 @@ always_comb begin
         `ALU_OPERATOR_MULHU: begin
             result <= upper_unsigned_mul_result;
         end
-        `ALU_OPERATOR_DIV: begin
-            result <= $signed(operand1) / $signed(operand2);
-        end
-        `ALU_OPERATOR_DIVU: begin
-            result <= operand1 / operand2;
-        end
-        `ALU_OPERATOR_REM: begin
-            result <= $signed(operand1) % $signed(operand2);
-        end
-        `ALU_OPERATOR_REMU: begin
-            result <= operand1 % operand2;
-        end
         default: begin
             result <= 4'bx;
         end
