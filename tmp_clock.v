@@ -8,10 +8,12 @@ module TMP_CLOCK (
 );
 
 reg [4:0] count;
+reg [4:0] mod;
 
-always @(posedge clk) begin
+always @(posedge CLK100MHZ) begin
     if (~reset_n) begin
         count <= 0;
+        mode <= 20;
     end
     count <= count + 1;
 end

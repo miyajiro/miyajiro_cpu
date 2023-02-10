@@ -1,7 +1,9 @@
 `timescale 1ns / 1ps
 // CLK PAR
 // `define CLK_PER_HALF_BIT 5208 // 100 MHz,   9600 baud
-`define CLK_PER_HALF_BIT 434  // 100 MHz, 115200 baud
+// `define CLK_PER_HALF_BIT 434  // 100 MHz, 115200 baud
+`define CLK_PER_HALF_BIT 260 // 5 MHz,   9600 baud
+// `define CLK_PER_HALF_BIT 21  // 5 MHz, 115200 baud
 
 // RAM
 // `define RAM_ADDRESS_BITWIDTH 17 // 本番
