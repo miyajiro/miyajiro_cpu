@@ -13,9 +13,13 @@ reg [4:0] mod;
 always @(posedge CLK100MHZ) begin
     if (~reset_n) begin
         count <= 0;
-        mode <= 20;
+        mod <= 20;
     end
-    count <= count + 1;
+    if (count + 1 == mod) begin
+        count <= 0;
+    end else begin
+        count <= count + 1;
+    end
 end
 
 
